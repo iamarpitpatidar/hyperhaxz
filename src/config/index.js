@@ -6,4 +6,3 @@ const config = {
 }
 
 module.exports = defaultsDeep(config, baseConfig)
-export default module.exports
