@@ -26,5 +26,3 @@ app.listen(config.port, () => {
   systemInfo()
   logger.info('----------------------------------------------')
 })
-
-export default app
