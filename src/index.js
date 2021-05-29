@@ -10,11 +10,7 @@ logger.info(chalk.bold('---------------------[ Server starting at %s ]----------
 logger.info(chalk.bold('Application root path: %s'), global.rootPath)
 
 const app = express()
-// initServer(app)
-
-app.get('/', (req, res) => {
-  res.send('Hello from HyperHaxz')
-})
+initServer(app)
 
 app.listen(config.port, () => {
   logger.info('')
