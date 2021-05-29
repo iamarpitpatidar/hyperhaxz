@@ -6,7 +6,6 @@
   "private": true,
   "main": "src",
   "scripts": {
-    "build": "webpack --progress --colors",
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src",
     "lint": "eslint --ext=.js,.vue src",
     "lint:fix": "eslint --fix --ext=.js,.vue src"
@@ -24,7 +23,7 @@
     "express-session": "^1.17.2",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
-    "mongoose": "^5.12.11",
+    "mongoose": "^5.12.12",
     "pretty-bytes": "^5.6.0",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.5"
@@ -32,7 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/node": "^7.14.2",
-    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
     "eslint": "^7.27.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.3",
