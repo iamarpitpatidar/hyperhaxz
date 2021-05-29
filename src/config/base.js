@@ -15,6 +15,22 @@ export default {
     contactEmail: 'support@hyperhaxz.com'
   },
   port: requireProcessEnv('PORT'),
+  database: {
+    mongo: {
+      uri: requireProcessEnv('MONGO_URI'),
+      options: {
+        user: '',
+        pass: '',
+        keepAlive: 1,
+        useNewUrlParser: true
+      }
+    },
+    redis: {
+      enabled: false,
+      uri: requireProcessEnv('REDIS_URI'),
+      options: null
+    }
+  },
   logging: {
     console: {
       level: 'debug'
