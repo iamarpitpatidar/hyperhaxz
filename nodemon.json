@@ -1,7 +1,6 @@
 {
   "ignore": ["node_modules", ".git"],
-  "__exec": "nodejs-dashboard node src/dev.index.js",
-  "verbose": false,
+  "verbose": true,
   "watch": [
     "src",
     "*.config.js"
