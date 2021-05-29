@@ -12,6 +12,7 @@
     "lint:fix": "eslint --fix --ext=.js,.vue src"
   },
   "dependencies": {
+    "bluebird": "^3.7.2",
     "chalk": "^4.1.1",
     "clui": "^0.3.6",
     "cross-env": "^7.0.3",

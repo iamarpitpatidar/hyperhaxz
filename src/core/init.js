@@ -1,15 +1,8 @@
-import path from 'path'
-import dotenv from 'dotenv-safe'
+import mongoose from './mongoose'
+import express from './express'
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({
-    path: path.join(__dirname, '../../.env'),
-    example: path.join(__dirname, '../../.env.example')
-  })
-}
+export default async function () {
+  const database = await mongoose()
 
-export default function (app) {
-  app.get('/', (req, res) => {
-    res.send('Hello from HyperHaxZ')
-  })
+  return await express(database)
 }

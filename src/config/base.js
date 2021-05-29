@@ -1,6 +1,14 @@
 import path from 'path'
+import dotenv from 'dotenv-safe'
 import { requireProcessEnv } from '../utils'
 import pkg from '../../package.json'
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({
+    path: path.join(__dirname, '../../.env'),
+    example: path.join(__dirname, '../../.env.example')
+  })
+}
 
 global.rootPath = path.normalize(path.join(__dirname, '..', '..'))
 
@@ -19,10 +27,9 @@ export default {
     mongo: {
       uri: requireProcessEnv('MONGO_URI'),
       options: {
-        user: '',
-        pass: '',
         keepAlive: 1,
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
       }
     },
     redis: {
