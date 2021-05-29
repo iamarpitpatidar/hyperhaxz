@@ -1,6 +1,6 @@
 {
   "ignore": ["node_modules", ".git"],
-  "verbose": true,
+  "verbose": false,
   "watch": [
     "src",
     "*.config.js"

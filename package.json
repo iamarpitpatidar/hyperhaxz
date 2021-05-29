@@ -1,12 +1,13 @@
 {
   "name": "hyperhaxz",
   "version": "0.0.1",
+  "title": "HyperHaxZ",
   "author": "Arpit Patidar <arpit.ptdr@hotmail.com>",
   "private": true,
   "main": "src",
   "scripts": {
     "build": "webpack --progress --colors",
-    "dev": "nodemon --exec babel-node src",
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src",
     "lint": "eslint --ext=.js,.vue src",
     "lint:fix": "eslint --fix --ext=.js,.vue src"
   },
@@ -14,6 +15,7 @@
     "chalk": "^4.1.1",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.5",
+    "dotenv-safe": "^8.2.0",
     "ejs": "^3.1.6",
     "ejs-locals": "^1.0.2",
     "express": "^4.17.1",
