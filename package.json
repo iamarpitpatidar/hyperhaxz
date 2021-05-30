@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
     "chalk": "^4.1.1",
     "clui": "^0.3.6",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.5",
     "dotenv-safe": "^8.2.0",
@@ -40,7 +43,9 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-unicorn": "^32.0.1",
-    "nodemon": "^2.0.7"
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
+    "stream": "^0.0.2"
   },
   "repository": "git@github.com:iamarpitpatidar/hyperhaxz.git",
   "license": "MIT"
