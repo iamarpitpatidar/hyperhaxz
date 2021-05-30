@@ -7,7 +7,7 @@ import routes from '../app/routes'
 
 const serverFolder = path.join(config.rootPath, 'src', 'app')
 
-export default async function (database) {
+export default async function () {
   const app = express()
 
   // initMiddleware(app)
