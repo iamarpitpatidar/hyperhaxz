@@ -23,6 +23,7 @@ export default {
     contactEmail: 'support@hyperhaxz.com'
   },
   port: requireProcessEnv('PORT'),
+  rootPath: global.rootPath,
   database: {
     mongo: {
       uri: requireProcessEnv('MONGO_URI'),
