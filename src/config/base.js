@@ -39,6 +39,17 @@ export default {
       options: null
     }
   },
+  session: {
+    name: 'sessionIdentifier',
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      domain: requireProcessEnv('DOMAIN'),
+      maxAge: 7 * 24 * (60 * 60 * 1000)
+    },
+    collection: 'sessions',
+    secret: 'WFQbmD59BIIm8esVS0y7mWDL2JM8h9eg'
+  },
   logging: {
     console: {
       level: 'debug'

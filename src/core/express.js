@@ -1,5 +1,7 @@
 import path from 'path'
 import express from 'express'
+import helmet from 'helmet'
+import session from 'express-session'
 import config from '../config'
 import routes from '../app/routes'
 
@@ -11,8 +13,15 @@ export default async function (database) {
   // initMiddleware(app)
   app.set('views', path.join(serverFolder, 'views'))
   app.set('view engine', 'ejs')
-  // initHelmetHeaders(app)
-  // initSession(app, db)
+
+  app.use(helmet())
+  app.use(session({
+    saveUninitialized: true,
+    resave: false,
+    name: config.session.name,
+    cookie: config.session.cookie,
+    secret: config.session.secret
+  }))
   // initAuth(app)
   app.use(routes)
 
