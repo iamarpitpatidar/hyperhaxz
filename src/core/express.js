@@ -1,6 +1,7 @@
 import path from 'path'
 import express from 'express'
 import helmet from 'helmet'
+import engine from 'ejs-locals'
 import compress from 'compression'
 import session from 'express-session'
 import bodyParser from 'body-parser'
@@ -14,6 +15,7 @@ const serverFolder = path.join(config.rootPath, 'src', 'app')
 export default function () {
   const app = express()
 
+  app.engine('ejs', engine)
   app.set('views', path.join(serverFolder, 'views'))
   app.set('view engine', 'ejs')
   app.set('etag', true)
@@ -49,6 +51,7 @@ export default function () {
   }))
   // initAuth(app)
   app.use(routes)
+  app.use('/public', express.static(path.join(__dirname, '..', 'app', 'public')))
 
   return app
 }
