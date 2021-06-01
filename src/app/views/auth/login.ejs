@@ -25,7 +25,7 @@
                 required
                 :class="[user.username.$error ? 'border-red-500' : 'border-blueGray-700 focus:ring-blue-500 focus:border-blue-500', 'bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm']"
                 @blur="validate"
-                @input.once="input('username')"
+                @input="input('username')"
               >
               <template x-if="user.username.$error">
                 <div class="p-1 text-red-500 rounded">Please enter your username</div>
@@ -43,7 +43,7 @@
                 required
                 :class="[user.password.$error ? 'border-red-500' : 'border-blueGray-700 focus:ring-blue-500 focus:border-blue-500' ,'bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm']"
                 @blur="validate"
-                @input.once="input('password')"
+                @input="input('password')"
               >
               <template x-if="user.password.$error">
                 <div class="p-1 text-red-500 rounded">Please enter your password</div>
