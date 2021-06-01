@@ -1,7 +1,8 @@
 {
 	"root": true,
   "plugins": [
-    "prettier"
+    "prettier",
+    "ejs"
   ],
   "extends": [
     "eslint:recommended",

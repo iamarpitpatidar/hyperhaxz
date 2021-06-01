@@ -38,6 +38,7 @@
     "@babel/preset-env": "^7.14.4",
     "eslint": "^7.27.0",
     "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-ejs": "^0.0.2",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
