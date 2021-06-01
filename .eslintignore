@@ -1,2 +1,2 @@
-src/public/**/*.js
+src/public/scripts/vendors
 node_modules
