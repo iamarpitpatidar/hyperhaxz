@@ -45,7 +45,7 @@ export default function () {
     level: 3,
     threshold: 512
   }))
-  app.use(helmet())
+  app.use(helmet({ contentSecurityPolicy: false }))
   app.use(session({
     saveUninitialized: true,
     resave: false,
