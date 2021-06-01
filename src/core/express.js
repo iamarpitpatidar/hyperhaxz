@@ -18,7 +18,7 @@ export default function () {
   app.engine('ejs', engine)
   app.set('views', path.join(serverFolder, 'views'))
   app.set('view engine', 'ejs')
-  app.set('etag', true)
+  app.set('etag', config.isProductionMode)
 
   if (config.isDevMode) {
     const morgan = require('morgan')
@@ -30,6 +30,10 @@ export default function () {
     app.use(morgan('dev', {
       stream: lmStream
     }))
+    app.get('/*', (req, res, next) => {
+      res.setHeader('Last-Modified', (new Date()).toUTCString())
+      next()
+    })
   }
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
