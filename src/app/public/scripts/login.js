@@ -14,8 +14,10 @@ function loginData () {
       isValid: false
     },
     submit: function () {
-      this.input('username')
-      this.input('password')
+      for (const _ in this.user) {
+        if (_ === 'isValid') continue
+        this.user[_].hasVal = true
+      }
       this.validate()
 
       if (this.user.isValid === true) {
