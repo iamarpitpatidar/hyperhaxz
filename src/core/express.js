@@ -1,9 +1,10 @@
 import path from 'path'
 import express from 'express'
+import csrf from 'csurf'
 import helmet from 'helmet'
 import engine from 'ejs-locals'
-import compress from 'compression'
 import session from 'express-session'
+import compress from 'compression'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import config from '../config'
@@ -38,6 +39,7 @@ export default function () {
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
   app.use(cookieParser())
+  app.use(csrf({ cookie: true }))
   app.use(compress({
     filter: function (req, res) {
       return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
@@ -56,6 +58,10 @@ export default function () {
   // initAuth(app)
   app.use(routes)
   app.use('/public', express.static(path.join(__dirname, '..', 'app', 'public')))
+  app.use(function (err, req, res, next) {
+    if (err.code !== 'EBADCSRFTOKEN') return next(err)
+    res.status(403).send('Forbidden')
+  })
 
   return app
 }

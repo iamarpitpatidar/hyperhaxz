@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <title><%= title %> - HyperHaxZ</title>
+  <% if (typeof csrfToken !== "undefined") { %>
+    <meta name="session-identifier" content="<%= csrfToken  %>">
+  <% } %>
   <link rel="stylesheet" href="/public/styles/main.css">
   <%-scripts%>
 </head>
