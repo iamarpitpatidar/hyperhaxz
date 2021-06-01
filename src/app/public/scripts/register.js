@@ -56,7 +56,6 @@ function signupData () {
 }
 
 function registerUser (user) {
-  console.log(user)
   axios({
     method: 'post',
     url: '/auth/register',
