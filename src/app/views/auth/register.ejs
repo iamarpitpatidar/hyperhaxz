@@ -40,6 +40,7 @@
                 x-model.trim="user.password.$val"
                 name="password"
                 type="password"
+                autocomplete="off"
                 required
                 :class="[user.password.$error ? 'border-red-500' : 'border-blueGray-700 focus:ring-blue-500 focus:border-blue-500' ,'bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm']"
                 @blur="validate"
@@ -58,6 +59,7 @@
                 x-model.trim="user.activationKey.$val"
                 name="activationKey"
                 type="text"
+                autocomplete="off"
                 required
                 :class="[user.activationKey.$error ? 'border-red-500' : 'border-blueGray-700 focus:ring-blue-500 focus:border-blue-500' ,'bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm']"
                 @blur="validate"
