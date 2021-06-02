@@ -1,6 +1,10 @@
 import { Router } from 'express'
+import { middleware as body } from 'bodymen'
+import { create } from './controller'
+import { schema } from '../user'
 
 const router = Router()
+const { username, password } = schema.tree
 
 router.get('/login', (req, res) => {
   res.render('auth/login', {
@@ -18,8 +22,12 @@ router.get('/register', (req, res) => {
     csrfToken: req.csrfToken()
   })
 })
-router.post('/register', (req, res) => {
-  console.log(req.body)
-})
+router.post('/register',
+  body({
+    username,
+    password,
+    activationKey: { type: String, required: true }
+  }),
+  create)
 
 export default router
