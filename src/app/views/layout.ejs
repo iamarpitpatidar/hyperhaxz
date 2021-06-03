@@ -5,6 +5,7 @@
   <% if (typeof csrfToken !== "undefined") { %>
     <meta name="session-identifier" content="<%= csrfToken  %>">
   <% } %>
+  <%-stylesheets%>
   <link rel="stylesheet" href="/public/styles/main.css">
   <%-scripts%>
 </head>
