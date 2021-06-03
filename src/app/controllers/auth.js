@@ -4,7 +4,6 @@ import Invite from '../models/invite'
 import Subscription from '../models/subscription'
 import { success, error } from '../services/response'
 import logger from '../../core/logger'
-import subscription from '../models/subscription'
 
 export const create = ({ bodymen: { body } }, res) => {
   if (!body.activationKey) { error(res, 'InviteCode Required', 401); return }
@@ -25,10 +24,10 @@ export const create = ({ bodymen: { body } }, res) => {
       .then(success(res, 201))
       .then(() => {
         key.used = true
-        key.save().then(() => logger.info(`ActivationKey used by ${body.username} with id: ${key._id}`))
+        return key.save().then(() => logger.info(`ActivationKey used by ${body.username} with id: ${key._id}`))
       })
       .then(() => {
-        Subscription.create({
+        return Subscription.create({
           activationKeyId: key._id,
           role: key.role,
           expiry: Date.now() + (1000 * 60 * 60 * 24 * Number(key.length)),
