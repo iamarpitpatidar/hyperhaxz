@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as body } from 'bodymen'
-import { create } from './controller'
-import { schema } from '../user'
+import { create } from '../controllers/auth'
+import { schema } from '../models/user'
 
 const router = Router()
 const { username, password } = schema.tree
