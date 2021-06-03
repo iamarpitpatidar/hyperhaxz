@@ -4,6 +4,7 @@ import csrf from 'csurf'
 import helmet from 'helmet'
 import engine from 'ejs-locals'
 import session from 'express-session'
+import passport from 'passport'
 import compress from 'compression'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -37,9 +38,10 @@ export default function () {
       next()
     })
   }
+  app.use('/public', express.static(path.join(__dirname, '..', 'app', 'public')))
+  app.use(cookieParser())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
-  app.use(cookieParser())
   app.use(csrf({ cookie: true }))
   app.use(compress({
     filter: function (req, res) {
@@ -56,9 +58,9 @@ export default function () {
     cookie: config.session.cookie,
     secret: config.session.secret
   }))
-  // initAuth(app)
+  app.use(passport.initialize())
+  app.use(passport.session())
   app.use(routes)
-  app.use('/public', express.static(path.join(__dirname, '..', 'app', 'public')))
   app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
     res.status(403).send('Forbidden')
