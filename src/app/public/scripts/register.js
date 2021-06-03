@@ -21,7 +21,10 @@ function signupData () {
       },
       isValid: false
     },
-    submit: function () {
+    userCreated: false,
+    isLoading: false,
+    submit: async function () {
+      this.isLoading = true
       for (const _ in this.user) {
         if (_ === 'isValid') continue
         this.user[_].hasVal = true
@@ -29,11 +32,12 @@ function signupData () {
       this.validate()
 
       if (this.user.isValid === true) {
-        registerUser({
+        await registerUser({
           username: this.user.username.$val,
           password: this.user.password.$val,
           activationKey: this.user.activationKey.$val
         })
+        this.isLoading = false
       }
     },
     validate: function () {
@@ -68,11 +72,10 @@ function registerUser (user) {
     data: user
   }).then(res => res.data)
     .then(res => {
-      if (res.status) {
-        notify('success', {
-          title: 'Success',
-          message: res.message
-        })
+      if (res.status === 'ok' && res.message === 'User successfully registered') {
+        document.getElementById('signupForm').innerHTML = '<div class="text-blue-500 text-center">' +
+          '<div class="mb-2">Your account has been created successfully.</div>' +
+          '<div>You can now login to dashboard</div></div>'
       } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
     })
     .catch(function (error) {
