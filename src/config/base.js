@@ -29,6 +29,7 @@ export default {
       uri: requireProcessEnv('MONGO_URI'),
       options: {
         keepAlive: 1,
+        useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true
       }
