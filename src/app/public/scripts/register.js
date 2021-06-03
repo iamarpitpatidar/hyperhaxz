@@ -66,5 +66,21 @@ function registerUser (user) {
       'Content-Type': 'application/json'
     },
     data: user
-  })
+  }).then(res => res.json)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(function (error) {
+      if (error.response && error.response.data) {
+        notify('error', {
+          title: 'Error',
+          message: error.response.data.message
+        })
+      } else {
+        notify('error', {
+          title: 'Error',
+          message: 'Something\'s wrong. Please try again later'
+        })
+      }
+    })
 }
