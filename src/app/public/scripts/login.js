@@ -13,7 +13,9 @@ function loginData () {
       },
       isValid: false
     },
-    submit: function () {
+    isLoading: false,
+    submit: async function () {
+      this.isLoading = true
       for (const _ in this.user) {
         if (_ === 'isValid') continue
         this.user[_].hasVal = true
@@ -21,7 +23,8 @@ function loginData () {
       this.validate()
 
       if (this.user.isValid === true) {
-        loginUser(`${this.user.username.$val}:${this.user.password.$val}`)
+        await loginUser(`${this.user.username.$val}:${this.user.password.$val}`)
+        this.isLoading = false
       }
     },
     validate: function () {
@@ -53,5 +56,23 @@ function loginUser (data) {
       'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
       'Content-Type': 'application/json'
     }
-  })
+  }).then(res => res.data)
+    .then(res => {
+      if (res.status === 'ok' && res.message === 'Logged In Successfully') {
+        window.location.replace('/dashboard')
+      } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
+    })
+    .catch(function (error) {
+      if (error.response && error.response.data) {
+        notify('error', {
+          title: 'Error',
+          message: error.response.data.message
+        })
+      } else {
+        notify('error', {
+          title: 'Error',
+          message: 'Something\'s wrong. Please try again later'
+        })
+      }
+    })
 }

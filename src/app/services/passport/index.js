@@ -9,7 +9,7 @@ export const password = (req, res, next) =>
     if (user.status === 'banned') return res.status(403).json({ message: 'User is banned' })
     req.logIn(user, { session: false }, (err) => {
       if (err) return res.status(500).end()
-      return next()
+      res.send({ status: 'ok', message: 'Logged In Successfully' })
     })
   })(req, res, next)
 
