@@ -7,6 +7,7 @@ import session from 'express-session'
 import compress from 'compression'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import { errorHandler as bodyErrorHandler } from 'bodymen'
 import config from '../config'
 import logger from '../core/logger'
 import routes from '../app/routes'
@@ -62,6 +63,7 @@ export default function () {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
     res.status(403).send('Forbidden')
   })
+  app.use(bodyErrorHandler())
 
   return app
 }
