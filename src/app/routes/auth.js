@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import { middleware as body } from 'bodymen'
-import { create } from '../controllers/auth'
 import { schema } from '../models/user'
+import { create } from '../controllers/user'
+import { password as passwordAuth } from '../services/passport'
 
 const router = Router()
 const { username, password } = schema.tree
@@ -12,9 +13,8 @@ router.get('/login', (req, res) => {
     csrfToken: req.csrfToken()
   })
 })
-router.post('/login', (req, res) => {
-  res.json(req.headers)
-})
+router.post('/login',
+  passwordAuth)
 
 router.get('/register', (req, res) => {
   res.render('auth/register', {
