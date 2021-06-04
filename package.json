@@ -7,6 +7,7 @@
   "main": "src",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src",
+    "start": "cross-env NODE_ENV=development babel-node src",
     "lint": "eslint --ext=.js,.vue src",
     "lint:fix": "eslint --fix --ext=.js,.vue src",
     "madge": "madge --circular src"
