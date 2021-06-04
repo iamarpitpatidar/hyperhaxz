@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %> - HyperHaxZ</title>
+  <% if (typeof csrfToken !== "undefined") { %>
+    <meta name="session-identifier" content="<%= csrfToken  %>">
+  <% } %>
+  <%-stylesheets%>
+  <link rel="stylesheet" href="/public/styles/dashboard.css">
+  <%-scripts%>
+  <script src="/public/scripts/vendors/alpine.min.js"></script>
+  <script src="/public/scripts/menu.js"></script>
+</head>
+<body>
+<div class="flex select-none">
+  <%- includepartials/sidebar %>
+  <main class="bg-gray-900 w-full">
+    <%- includepartials/header %>
+    <%-body -%>
+    <%- includepartials/footer %>
+  </main>
+</div>
+</body>
+</html>
