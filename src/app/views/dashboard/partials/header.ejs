@@ -1,8 +1,8 @@
 <nav class="top-0 sticky bg-gray-800 mx-auto px-6 shadow">
     <div class="relative flex justify-end h-14">
         <div class="absolute inset-y-0 right-0 flex items-center pr-2">
-            <div class="ml-3 relative" x-data="menu()">
-                <button :class="[isMenuOpen ? 'text-gray-700': 'text-gray-500', 'flex focus:outline-none']" @click="toggleMenu">
+            <div class="ml-3 relative" x-data="menu()" x-init="init()">
+                <button :class="[isMenuOpen ? 'text-gray-700': 'text-gray-500', 'flex focus:outline-none']" @click="handleClick">
                     <span class="sr-only">Open user menu</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-8 w-8">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
