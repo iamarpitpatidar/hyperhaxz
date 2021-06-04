@@ -4,7 +4,6 @@ function sidebar () {
     init: function () {
       const pathArray = window.location.pathname.split('/')
       this.active = pathArray[pathArray.length - 1]
-      console.log(this.active)
     }
   }
 }
