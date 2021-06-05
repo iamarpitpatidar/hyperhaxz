@@ -7,7 +7,10 @@ const router = Router()
 const { password } = schema.tree
 
 router.put('/update-password',
-  body({ password }),
+  body({
+    currentPassword: password,
+    newPassword: password
+  }),
   updatePassword)
 
 export default router

@@ -41,10 +41,16 @@ export const create = ({ bodymen: { body } }, res) => {
   })
 }
 
-export const updatePassword = ({ bodymen: { body }, user, logout }, res, next) => {
-  User.findById(user._id)
+export const updatePassword = (req, res, next) => {
+  if (!req.user || !req.user._id || req.user._id.length < 12) return res.status(500).json({ message: 'User not logged In' })
+
+  User.findById(req.user._id)
     .then(notFound(res))
-    .then(user => user ? (user.set({ password: body.password }).save() && logout()) : null)
-    .then(user => user ? res.json({ message: 'Your password has been updated successfully' }) : res.status(500))
+    .then(async user => {
+      if (!await user.authenticate(req.body.currentPassword)) return res.status(401).json({ message: 'Incorrect Password' })
+      req.logout()
+      return user.set({ password: req.body.newPassword }).save()
+    })
+    .then(user => user ? res.json({ status: 'ok', message: 'Your password has been successfully updated' }) : res.status(500))
     .catch(next)
 }

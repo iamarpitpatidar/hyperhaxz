@@ -15,6 +15,7 @@ function update () {
         $error: false,
         minLength: 6,
         errors: {
+          isEqual: 'New password must not match the current one',
           required: 'Please enter your new password',
           minLength: 'Password must be a minimum of 6 characters'
         }
@@ -40,7 +41,10 @@ function update () {
 
       if (this.user.isValid === true) {
         this.isLoading = true
-        await updatePassword(this.user.newPassword.$val)
+        await updatePassword({
+          currentPassword: this.user.currentPassword.$val,
+          newPassword: this.user.newPassword.$val
+        })
         this.isLoading = false
       }
     },
@@ -51,7 +55,10 @@ function update () {
 
         if (value) {
           if (_ !== 'currentPassword') {
-            if (_ === 'newPassword') this.user[_].$error = value.length < this.user[_].minLength ? this.user[_].errors.minLength : ''
+            if (_ === 'newPassword') {
+              this.user[_].$error = value.length < this.user[_].minLength ? this.user[_].errors.minLength : ''
+              this.user[_].$error = value === this.user.currentPassword.$val ? this.user[_].errors.isEqual : ''
+            }
             if (_ === 'confirmPassword') this.user[_].$error = value !== this.user.newPassword.$val ? this.user[_].errors.notEqual : ''
           } else this.user[_].$error = ''
         } else this.user[_].$error = this.user[_].errors.required
@@ -66,6 +73,34 @@ function update () {
   }
 }
 
-function updatePassword (password) {
-  console.log(password)
+function updatePassword (data) {
+  axios({
+    method: 'put',
+    url: '/user/update-password',
+    credentials: 'same-origin',
+    headers: {
+      Accept: 'application/json',
+      'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  }).then(res => res.data)
+    .then(res => {
+      if (res.status === 'ok' && res.message) {
+        notify('success', { title: 'Success', message: res.message, redirect: '/auth/login' })
+      } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
+    })
+    .catch(function (error) {
+      if (error.response && error.response.data) {
+        notify('error', {
+          title: 'Error',
+          message: error.response.data.message
+        })
+      } else {
+        notify('error', {
+          title: 'Error',
+          message: 'Something\'s wrong. Please try again later'
+        })
+      }
+    })
 }
