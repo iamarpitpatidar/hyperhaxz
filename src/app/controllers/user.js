@@ -14,8 +14,15 @@ export const create = ({ bodymen: { body } }, res) => {
     if (key.used) { error(res, 'Code has already been used!', 422); return }
 
     User.create({ username: body.username, password: body.password })
-      .then(user => {
+      .then(async user => {
         logger.info(`User created with uid: ${user._id}`)
+        await Subscription.create({
+          activationKeyId: key._id,
+          role: key.role,
+          expiry: Date.now() + (1000 * 60 * 60 * 24 * Number(key.length)),
+          createdBy: user._id
+        }).then(subscription => logger.info(`Subscription created by ${body.username} with id: ${subscription._id}`))
+
         return {
           status: 'ok',
           message: 'User successfully registered'
@@ -25,14 +32,6 @@ export const create = ({ bodymen: { body } }, res) => {
       .then(() => {
         key.used = true
         return key.save().then(() => logger.info(`ActivationKey used by ${body.username} with id: ${key._id}`))
-      })
-      .then(() => {
-        return Subscription.create({
-          activationKeyId: key._id,
-          role: key.role,
-          expiry: Date.now() + (1000 * 60 * 60 * 24 * Number(key.length)),
-          createdBy: body.username
-        }).then(subscription => logger.info(`Subscription created by ${body.username} with id: ${subscription._id}`))
       })
       .catch(err => {
         if (err.name === 'MongoError' && err.code === 11000) error(res, 'username already registered', 409)

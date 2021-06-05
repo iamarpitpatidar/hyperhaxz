@@ -17,8 +17,8 @@ const subscriptionSchema = new Schema({
     default: Date.now() + (24 * 60 * 60 * 1000)
   },
   createdBy: {
-    type: String,
-    default: 'admin'
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 }, {
   timestamps: true
