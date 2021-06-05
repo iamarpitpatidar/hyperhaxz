@@ -60,7 +60,7 @@ function signupData () {
 }
 
 function registerUser (user) {
-  axios({
+  request({
     method: 'post',
     url: '/auth/register',
     credentials: 'same-origin',
@@ -70,25 +70,11 @@ function registerUser (user) {
       'Content-Type': 'application/json'
     },
     data: user
-  }).then(res => res.data)
-    .then(res => {
-      if (res.status === 'ok' && res.message === 'User successfully registered') {
-        document.getElementById('signupForm').innerHTML = '<div class="text-blue-500 text-center">' +
-          '<div class="mb-2">Your account has been created successfully.</div>' +
-          '<div>You can now login to dashboard</div></div>'
-      } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
-    })
-    .catch(function (error) {
-      if (error.response && error.response.data) {
-        notify('error', {
-          title: 'Error',
-          message: error.response.data.message
-        })
-      } else {
-        notify('error', {
-          title: 'Error',
-          message: 'Something\'s wrong. Please try again later'
-        })
-      }
-    })
+  }).then(res => {
+    if (res.status === 'ok' && res.message === 'User successfully registered') {
+      document.getElementById('signupForm').innerHTML = '<div class="text-blue-500 text-center">' +
+        '<div class="mb-2">Your account has been created successfully.</div>' +
+        '<div>You can now login to dashboard</div></div>'
+    } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
+  })
 }

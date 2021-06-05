@@ -46,7 +46,7 @@ function loginData () {
 }
 
 function loginUser (data) {
-  axios({
+  request({
     method: 'post',
     url: '/auth/login',
     credentials: 'same-origin',
@@ -56,23 +56,9 @@ function loginUser (data) {
       'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
       'Content-Type': 'application/json'
     }
-  }).then(res => res.data)
-    .then(res => {
-      if (res.status === 'ok' && res.message === 'Logged In Successfully') {
-        window.location.replace('/dashboard')
-      } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
-    })
-    .catch(function (error) {
-      if (error.response && error.response.data) {
-        notify('error', {
-          title: 'Error',
-          message: error.response.data.message
-        })
-      } else {
-        notify('error', {
-          title: 'Error',
-          message: 'Something\'s wrong. Please try again later'
-        })
-      }
-    })
+  }).then(res => {
+    if (res.status === 'ok' && res.message === 'Logged In Successfully') {
+      window.location.replace('/dashboard')
+    } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
+  })
 }

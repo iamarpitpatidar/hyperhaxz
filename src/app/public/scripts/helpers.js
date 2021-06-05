@@ -14,3 +14,24 @@ function notify (type, options) {
     }
   })
 }
+
+function request (options) {
+  return new Promise((resolve, reject) => {
+    axios(options)
+      .then(res => res.data)
+      .then(res => resolve(res))
+      .catch(function (error) {
+        if (error.response && error.response.data) {
+          notify('error', {
+            title: 'Error',
+            message: error.response.data.message
+          })
+        } else {
+          notify('error', {
+            title: 'Error',
+            message: 'Something\'s wrong. Please try again later'
+          })
+        }
+      })
+  })
+}

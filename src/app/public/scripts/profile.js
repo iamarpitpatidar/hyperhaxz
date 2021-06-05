@@ -92,7 +92,7 @@ function add () {
 }
 
 function updatePassword (data) {
-  axios({
+  request({
     method: 'put',
     url: '/user/update-password',
     credentials: 'same-origin',
@@ -102,23 +102,9 @@ function updatePassword (data) {
       'Content-Type': 'application/json'
     },
     data: data
-  }).then(res => res.data)
-    .then(res => {
-      if (res.status === 'ok' && res.message) {
-        notify('success', { title: 'Success', message: res.message, redirect: '/auth/login' })
-      } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
-    })
-    .catch(function (error) {
-      if (error.response && error.response.data) {
-        notify('error', {
-          title: 'Error',
-          message: error.response.data.message
-        })
-      } else {
-        notify('error', {
-          title: 'Error',
-          message: 'Something\'s wrong. Please try again later'
-        })
-      }
-    })
+  }).then(res => {
+    if (res.status === 'ok' && res.message) {
+      notify('success', { title: 'Success', message: res.message, redirect: '/auth/login' })
+    } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
+  })
 }
