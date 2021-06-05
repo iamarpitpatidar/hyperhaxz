@@ -6,6 +6,11 @@ function notify (type, options) {
     closeOnEscape: true,
     closeOnClick: true,
     position: 'topRight',
-    displayMode: 2
+    displayMode: 2,
+    onClosed: function () {
+      if (options.redirect) {
+        window.location.replace(options.redirect)
+      }
+    }
   })
 }
