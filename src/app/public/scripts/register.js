@@ -24,7 +24,6 @@ function signupData () {
     userCreated: false,
     isLoading: false,
     submit: async function () {
-      this.isLoading = true
       for (const _ in this.user) {
         if (_ === 'isValid') continue
         this.user[_].hasVal = true
@@ -32,6 +31,7 @@ function signupData () {
       this.validate()
 
       if (this.user.isValid === true) {
+        this.isLoading = true
         await registerUser({
           username: this.user.username.$val,
           password: this.user.password.$val,

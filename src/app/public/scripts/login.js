@@ -15,7 +15,6 @@ function loginData () {
     },
     isLoading: false,
     submit: async function () {
-      this.isLoading = true
       for (const _ in this.user) {
         if (_ === 'isValid') continue
         this.user[_].hasVal = true
@@ -23,6 +22,7 @@ function loginData () {
       this.validate()
 
       if (this.user.isValid === true) {
+        this.isLoading = true
         await loginUser(`${this.user.username.$val}:${this.user.password.$val}`)
         this.isLoading = false
       }
