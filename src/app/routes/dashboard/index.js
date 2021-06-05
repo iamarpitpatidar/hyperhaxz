@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import subscription from './subscription'
 
 const router = Router()
 
@@ -13,10 +14,6 @@ router.get('/profile', (req, res) => {
     csrfToken: req.csrfToken()
   })
 })
-router.get('/subscriptions', (req, res) => {
-  res.render('dashboard/subscriptions', {
-    title: 'Subscriptions'
-  })
-})
+router.use('/subscriptions', subscription)
 
 export default router
