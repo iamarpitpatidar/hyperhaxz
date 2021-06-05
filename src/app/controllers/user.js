@@ -2,7 +2,7 @@ import { validate as uuidValidate, version as uuidVersion } from 'uuid'
 import User from '../models/user'
 import Invite from '../models/invite'
 import Subscription from '../models/subscription'
-import { success, error } from '../services/response'
+import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
 export const create = ({ bodymen: { body } }, res) => {
@@ -39,4 +39,12 @@ export const create = ({ bodymen: { body } }, res) => {
         else error(res, 500)
       })
   })
+}
+
+export const updatePassword = ({ bodymen: { body }, user, logout }, res, next) => {
+  User.findById(user._id)
+    .then(notFound(res))
+    .then(user => user ? (user.set({ password: body.password }).save() && logout()) : null)
+    .then(user => user ? res.json({ message: 'Your password has been updated successfully' }) : res.status(500))
+    .catch(next)
 }
