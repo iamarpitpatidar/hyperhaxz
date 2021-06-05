@@ -32,7 +32,6 @@ function update () {
     },
     isLoading: false,
     submit: async function () {
-      this.isLoading = true
       for (const _ in this.user) {
         if (_ === 'isValid') continue
         this.user[_].hasVal = true
@@ -40,6 +39,7 @@ function update () {
       this.validate()
 
       if (this.user.isValid === true) {
+        this.isLoading = true
         await updatePassword(this.user.newPassword.$val)
         this.isLoading = false
       }
