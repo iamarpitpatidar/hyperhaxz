@@ -16,6 +16,11 @@ router.get('/login', (req, res) => {
 router.post('/login',
   passwordAuth)
 
+router.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/auth/login')
+})
+
 router.get('/register', (req, res) => {
   res.render('auth/register', {
     title: 'Sign Up',
