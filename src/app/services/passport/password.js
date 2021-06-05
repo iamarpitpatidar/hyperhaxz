@@ -8,10 +8,10 @@ const strategy = new BasicStrategy((username, password, done) => {
     if (err) done(err)
   })
 
-  User.findOne({ username }, function (err, user) {
+  User.findOne({ username }, async function (err, user) {
     if (err) { return done(err) }
     if (!user) { return done('INCORRECT_USERNAME', false) }
-    if (!user.authenticate(password)) { return done('INCORRECT_PASSWORD', false) }
+    if (!await user.authenticate(password)) { return done('INCORRECT_PASSWORD', false) }
     return done(null, user)
   })
 })
