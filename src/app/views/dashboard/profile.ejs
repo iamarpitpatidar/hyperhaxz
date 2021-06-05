@@ -41,19 +41,7 @@
                                 type="text"
                                 class="border-blueGray-700 bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
                                 @blur="validate"
-                                @input="input('currentPassword')">
-                        <template x-if="!!activationKey.$error">
-                            <div class="p-1 text-sm text-red-500 rounded" x-text="activationKey.$error"></div>
-                        </template>
-                    </div>
-                    <div class="mb-2">
-                        <input
-                                placeholder="username (if adding to another account)"
-                                x-model.trim="activationKey.$val"
-                                type="text"
-                                class="border-blueGray-700 bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
-                                @blur="validate"
-                                @input="input('currentPassword')">
+                                @input="input('activationKey')">
                         <template x-if="!!activationKey.$error">
                             <div class="p-1 text-sm text-red-500 rounded" x-text="activationKey.$error"></div>
                         </template>

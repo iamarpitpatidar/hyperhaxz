@@ -75,18 +75,35 @@ function update () {
 function add () {
   return {
     activationKey: {
+      hasVal: false,
       $val: '',
-      $error: false
+      $error: false,
+      minLength: 36,
+      errors: {
+        minLength: 'Activation Key must contain 36 characters'
+      },
+      isValid: false
     },
     isLoading: false,
-    submit: function () {
+    submit: async function () {
+      this.activationKey.hasVal = true
+      this.validate()
 
+      if (this.activationKey.isValid) {
+        this.isLoading = true
+        await createSub({ activationKey: this.activationKey.$val })
+        this.isLoading = false
+      }
     },
     validate: function () {
+      if (!this.activationKey.hasVal) return
+      this.activationKey.$error = this.activationKey.$val.length < this.activationKey.minLength ? this.activationKey.errors.minLength : ''
 
+      this.activationKey.isValid = !this.activationKey.$error
     },
-    input: function () {
-
+    input: function (name) {
+      if (['activationKey'].includes(name)) this.activationKey.hasVal = true
+      this.validate()
     }
   }
 }
@@ -106,5 +123,20 @@ function updatePassword (data) {
     if (res.status === 'ok' && res.message) {
       notify('success', { title: 'Success', message: res.message, redirect: '/auth/login' })
     } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
+  })
+}
+function createSub (data) {
+  request({
+    method: 'post',
+    url: '/dashboard/subscriptions/create',
+    credentials: 'same-origin',
+    headers: {
+      Accept: 'application/json',
+      'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  }).then(res => {
+    console.log(res)
   })
 }
