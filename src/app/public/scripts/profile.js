@@ -72,6 +72,24 @@ function update () {
     }
   }
 }
+function add () {
+  return {
+    activationKey: {
+      $val: '',
+      $error: false
+    },
+    isLoading: false,
+    submit: function () {
+
+    },
+    validate: function () {
+
+    },
+    input: function () {
+
+    }
+  }
+}
 
 function updatePassword (data) {
   axios({
