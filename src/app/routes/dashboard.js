@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
 })
 router.get('/profile', (req, res) => {
   res.render('dashboard/profile', {
-    title: 'Profile'
+    title: 'Profile',
+    csrfToken: req.csrfToken()
   })
 })
 router.get('/subscriptions', (req, res) => {
