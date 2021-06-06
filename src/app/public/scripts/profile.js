@@ -138,6 +138,8 @@ function createSub (data) {
     },
     data: data
   }).then(res => {
-    console.log(res)
+    if (res.status === 'ok' && res.message) {
+      notify('success', { title: 'Success', message: res.message })
+    } else notify('error', { title: 'Error', message: 'Something\'s wrong. Please try again later' })
   })
 }
