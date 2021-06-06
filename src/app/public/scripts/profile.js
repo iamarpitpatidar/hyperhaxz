@@ -56,8 +56,9 @@ function update () {
         if (value) {
           if (_ !== 'currentPassword') {
             if (_ === 'newPassword') {
-              this.user[_].$error = value.length < this.user[_].minLength ? this.user[_].errors.minLength : ''
-              this.user[_].$error = value === this.user.currentPassword.$val ? this.user[_].errors.isEqual : ''
+              if (value.length < this.user[_].minLength) this.user[_].$error = this.user[_].errors.minLength
+              else if (value === this.user.currentPassword.$val) this.user[_].$error = this.user[_].errors.isEqual
+              else this.user[_].$error = ''
             }
             if (_ === 'confirmPassword') this.user[_].$error = value !== this.user.newPassword.$val ? this.user[_].errors.notEqual : ''
           } else this.user[_].$error = ''
