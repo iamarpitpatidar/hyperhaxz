@@ -4,6 +4,16 @@ import { validate as uuidValidate, version as uuidVersion } from 'uuid'
 import { error } from '../services/response'
 import logger from '../../core/logger'
 
+export const index = async ({ user }, res, next) => {
+  await Subscription.find({ createdBy: user._id }).sort({ expiry: -1 })
+    .then(subscriptions => {
+      res.locals.subscriptions = subscriptions || []
+      ;['_id', 'activationKeyId', 'createdBy', 'updatedAt', '__v'].forEach(each => delete res.locals.subscriptions[each])
+    })
+
+  next()
+}
+
 export const create = ({ bodymen: { body }, user }, res) => {
   if (!uuidValidate(body.activationKey) || uuidVersion(body.activationKey) !== 5) { error(res, 'Invalid Activation Key', 422); return }
 
