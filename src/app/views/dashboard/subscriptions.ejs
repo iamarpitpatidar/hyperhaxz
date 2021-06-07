@@ -2,12 +2,16 @@
 
 <section class="text-gray-600 container p-6 mx-auto">
     <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <% subscriptions.forEach(each => { const active = each.expiry > Date.now() %>
-            <div class="h-full border-2 border-blue-500 px-6 py-4 rounded-lg">
-                <h2 class="tracking-widest font-medium text-blue-500 mb-4 text-center"><%= each.role.toUpperCase() %><span class="<%= active ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'%> ml-3 text-xs uppercase px-2 rounded-full"><%= active ? 'Active' : 'Expired' %></span></h2>
-                <div class="my-1">Expiry: <%= new Date(each.expiry).toDateString() %></div>
-                <div class="my-1">Created: <%= new Date(each.createdAt).toDateString() %></div>
-            </div>
-        <% }) %>
+        <% if (!!subscriptions.length) { %>
+            <% subscriptions.forEach(each => { const active = each.expiry > Date.now() %>
+                <div class="h-full border-2 border-blue-500 px-6 py-4 rounded-lg">
+                    <h2 class="tracking-widest font-medium text-blue-500 mb-4 text-center"><%= each.role.toUpperCase() %><span class="<%= active ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'%> ml-3 text-xs uppercase px-2 rounded-full"><%= active ? 'Active' : 'Expired' %></span></h2>
+                    <div class="my-1">Expiry: <%= new Date(each.expiry).toDateString() %></div>
+                    <div class="my-1">Created: <%= new Date(each.createdAt).toDateString() %></div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="text-lg">No Subscriptions Found</div>
+        <% } %>
     </div>
 </section>
