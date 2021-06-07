@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import subscription from './subscription'
+import { index } from '../../controllers/invites'
 import { allowRoles } from '../../helper'
 
 const router = Router()
@@ -17,6 +18,7 @@ router.get('/profile', (req, res) => {
 })
 router.get('/activationKeys',
   allowRoles(['seller', 'admin']),
+  index,
   (req, res) => {
     res.render('dashboard/activationKey', {
       title: 'Activation Keys'

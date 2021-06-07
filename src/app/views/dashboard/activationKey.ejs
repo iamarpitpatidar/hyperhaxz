@@ -1,3 +1,31 @@
 <% layout('./layout') -%>
 
-Activation Key Layout
+<section class="text-gray-600 container p-6 mx-auto">
+    <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% if (!!keys.length) { %>
+            <% keys.forEach(key => { const used = key.used %>
+            <div class="h-full border-2 border-blue-500 px-6 py-4 rounded-lg">
+                <h2 class="tracking-widest font-medium text-blue-500 mb-4 text-center"><%= key.code.toUpperCase() %><span class="<%= !used ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'%> ml-3 text-xs uppercase px-2 rounded-full"><%= used ? 'Used' : 'Unused' %></span></h2>
+                <table class="table-auto w-full">
+                    <tbody>
+                    <tr>
+                        <td class="px-2 py-1 whitespace-nowrap text-gray-400">Role</td>
+                        <td><%= key.role %></td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1 whitespace-nowrap text-gray-400">Validity</td>
+                        <td><%= key.length %> Days</td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1 whitespace-nowrap text-gray-400">Purchased On</td>
+                        <td><%= new Date(key.createdAt).toDateString() %></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <% }) %>
+        <% } else { %>
+            <div class="text-lg">No Activation Keys Found</div>
+        <% } %>
+    </div>
+</section>
