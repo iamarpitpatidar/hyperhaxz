@@ -34,7 +34,7 @@ const inviteSchema = new Schema({
     type: Boolean,
     default: false
   }
-})
+}, { timestamps: true })
 
 inviteSchema.methods = {
   view (full) {
