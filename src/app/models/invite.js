@@ -22,8 +22,8 @@ const inviteSchema = new Schema({
     unique: true
   },
   createdBy: {
-    type: String,
-    default: 'admin'
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   },
   soldTo: {
     type: String,
