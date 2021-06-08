@@ -13,7 +13,7 @@ export const create = ({ bodymen: { body } }, res) => {
     if (!key) { error(res, 'Code is invalid', 422); return }
     if (key.used) { error(res, 'Code has already been used!', 422); return }
 
-    User.create({ username: body.username, password: body.password })
+    User.create({ username: body.username, password: body.password, invitedBy: key.createdBy })
       .then(async user => {
         logger.info(`User created with uid: ${user._id}`)
         await Subscription.create({

@@ -34,8 +34,11 @@ const userSchema = new Schema({
   },
   secret: {
     type: String,
-    required: true,
     default: Math.random().toString(32).substring(2)
+  },
+  invitedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 }, { timestamp: true })
 
