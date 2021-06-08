@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import user from './user'
 import subscription from './subscription'
 import { index } from '../../controllers/invites'
 import { allowRoles } from '../../helper'
@@ -24,6 +25,9 @@ router.get('/activationKeys',
       title: 'Activation Keys'
     })
   })
-router.use('/subscriptions', subscription)
+router.use('/users', user)
+router.use('/subscriptions',
+  allowRoles(['seller', 'support', 'admin']),
+  subscription)
 
 export default router
