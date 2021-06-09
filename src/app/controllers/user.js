@@ -5,6 +5,16 @@ import Subscription from '../models/subscription'
 import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
+export const index = async ({ user }, res, next) => {
+  await User.find({ invitedBy: user._id })
+    .then(users => {
+      res.locals.users = users || []
+      ;['_id', 'hardwareID', 'secret', 'keywords', 'password', '__v'].forEach(each => delete res.locals.users[each])
+    })
+
+  next()
+}
+
 export const create = ({ bodymen: { body } }, res) => {
   if (!body.activationKey) { error(res, 'InviteCode Required', 401); return }
   if (!uuidValidate(body.activationKey) || uuidVersion(body.activationKey) !== 5) { error(res, 'Invalid InviteCode', 422); return }
