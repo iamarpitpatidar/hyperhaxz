@@ -40,7 +40,7 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   }
-}, { timestamp: true })
+}, { timestamps: true })
 
 userSchema.pre('save', function (next) {
   if (!this.isModified('password')) return next()
