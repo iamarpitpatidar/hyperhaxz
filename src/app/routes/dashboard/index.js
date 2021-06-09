@@ -25,9 +25,9 @@ router.get('/activationKeys',
       title: 'Activation Keys'
     })
   })
-router.use('/users', user)
-router.use('/subscriptions',
+router.use('/users',
   allowRoles(['seller', 'support', 'admin']),
-  subscription)
+  user)
+router.use('/subscriptions', subscription)
 
 export default router
