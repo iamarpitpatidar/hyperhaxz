@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { middleware as query } from 'querymen'
 import user from './user'
 import subscription from './subscription'
 import { index as indexInvites } from '../../controllers/invites'
@@ -20,6 +21,7 @@ router.get('/profile', (req, res) => {
 })
 router.get('/activationKeys',
   allowRoles(['seller', 'admin']),
+  query(),
   indexInvites,
   (req, res) => {
     res.render('dashboard/activationKey', {
