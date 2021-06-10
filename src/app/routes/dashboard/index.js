@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import user from './user'
 import subscription from './subscription'
-import { index } from '../../controllers/invites'
+import { index as indexInvites } from '../../controllers/invites'
+import { index as indexSellers } from '../../controllers/seller'
 import { allowRoles } from '../../helper'
 
 const router = Router()
@@ -19,10 +20,18 @@ router.get('/profile', (req, res) => {
 })
 router.get('/activationKeys',
   allowRoles(['seller', 'admin']),
-  index,
+  indexInvites,
   (req, res) => {
     res.render('dashboard/activationKey', {
       title: 'Activation Keys'
+    })
+  })
+router.get('/sellers',
+  allowRoles(['support', 'admin']),
+  indexSellers,
+  (req, res) => {
+    res.render('dashboard/sellers', {
+      title: 'Sellers'
     })
   })
 router.use('/users',
