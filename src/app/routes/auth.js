@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { middleware as body } from 'bodymen'
 import { schema } from '../models/user'
 import { create } from '../controllers/user'
+import { validate } from '../middlewares/subscription'
 import { password as passwordAuth } from '../services/passport'
 
 const router = Router()
@@ -13,8 +14,7 @@ router.get('/login', (req, res) => {
     csrfToken: req.csrfToken()
   })
 })
-router.post('/login',
-  passwordAuth)
+router.post('/login', passwordAuth)
 
 router.get('/logout', (req, res) => {
   req.logout()
@@ -33,6 +33,7 @@ router.post('/register',
     password,
     activationKey: { type: String, required: true }
   }),
+  validate,
   create)
 
 export default router
