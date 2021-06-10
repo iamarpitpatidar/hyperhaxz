@@ -16,8 +16,8 @@ export const index = async ({ user }, res, next) => {
 }
 
 export const create = ({ bodymen: { body } }, res) => {
-  if (!body.activationKey) { error(res, 'InviteCode Required', 401); return }
-  if (!uuidValidate(body.activationKey) || uuidVersion(body.activationKey) !== 5) { error(res, 'Invalid InviteCode', 422); return }
+  if (!body.activationKey) { error(res, 'Activation Key Required', 401); return }
+  if (!uuidValidate(body.activationKey) || uuidVersion(body.activationKey) !== 5) { error(res, 'Invalid Activation Key', 422); return }
 
   Invite.findOne({ code: body.activationKey }).then(key => {
     if (!key) { error(res, 'Code is invalid', 422); return }
