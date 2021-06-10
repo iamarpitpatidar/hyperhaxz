@@ -21,7 +21,6 @@ router.get('/profile', (req, res) => {
 })
 router.get('/activationKeys',
   allowRoles(['seller', 'admin']),
-  query(),
   indexInvites,
   (req, res) => {
     res.render('dashboard/activationKey', {
@@ -30,6 +29,7 @@ router.get('/activationKeys',
   })
 router.get('/sellers',
   allowRoles(['support', 'admin']),
+  query(),
   indexSellers,
   (req, res) => {
     res.render('dashboard/sellers', {
