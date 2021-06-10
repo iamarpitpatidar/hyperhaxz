@@ -3,12 +3,10 @@ import dotenv from 'dotenv-safe'
 import { requireProcessEnv } from '../utils'
 import pkg from '../../package.json'
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({
-    path: path.join(__dirname, '../../.env'),
-    example: path.join(__dirname, '../../.env.example')
-  })
-}
+dotenv.config({
+  path: path.join(__dirname, '../../.env'),
+  example: path.join(__dirname, '../../.env.example')
+})
 
 global.rootPath = path.normalize(path.join(__dirname, '..', '..'))
 

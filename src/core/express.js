@@ -1,14 +1,16 @@
 import path from 'path'
-import express from 'express'
 import csrf from 'csurf'
 import helmet from 'helmet'
+import express from 'express'
 import engine from 'ejs-locals'
-import session from 'express-session'
 import passport from 'passport'
+import Store from 'connect-mongo'
 import compress from 'compression'
 import bodyParser from 'body-parser'
+import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import { errorHandler as bodyErrorHandler } from 'bodymen'
+import { errorHandler as queryErrorHandler } from 'querymen'
 import config from '../config'
 import logger from '../core/logger'
 import routes from '../app/routes'
@@ -21,6 +23,7 @@ export default function () {
   app.engine('ejs', engine)
   app.set('views', path.join(serverFolder, 'views'))
   app.set('view engine', 'ejs')
+  app.set('trust proxy', 1)
   app.set('etag', config.isProductionMode)
 
   if (config.isDevMode) {
@@ -56,7 +59,14 @@ export default function () {
     resave: false,
     name: config.session.name,
     cookie: config.session.cookie,
-    secret: config.session.secret
+    secret: config.session.secret,
+    store: Store.create({
+      mongoUrl: config.database.mongo.uri,
+      mongoOptions: config.database.mongo.options,
+      crypto: {
+        secret: config.session.secret
+      }
+    })
   }))
   app.use(passport.initialize())
   app.use(passport.session())
@@ -66,6 +76,7 @@ export default function () {
     res.status(403).send('Forbidden')
   })
   app.use(bodyErrorHandler())
+  app.use(queryErrorHandler())
 
   return app
 }
