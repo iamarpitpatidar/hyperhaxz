@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { middleware as body } from 'bodymen'
 import { index, create } from '../../controllers/subscription'
+import { validate } from '../../middlewares/subscription'
 
 const router = Router()
 
@@ -20,6 +21,7 @@ router.post('/create',
       required: true
     }
   }),
+  validate,
   create)
 
 export default router

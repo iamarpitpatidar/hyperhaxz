@@ -34,9 +34,7 @@ router.get('/sellers',
       title: 'Sellers'
     })
   })
-router.use('/users',
-  allowRoles(['seller', 'support', 'admin']),
-  user)
+router.use('/users', allowRoles(['seller', 'support', 'admin']), user)
 router.use('/subscriptions', subscription)
 
 export default router
