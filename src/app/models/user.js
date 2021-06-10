@@ -52,13 +52,13 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods = {
-  view (full) {
+  view (role) {
     const view = {}
     let fields = ['_id', 'username', 'status']
 
-    if (full) {
-      fields = [...fields, 'role', 'hardwareID', 'createdAt']
-    }
+    if (role === 'seller') fields = [...fields, 'role', 'createdAt']
+    if (role === 'support') fields = [...fields, 'role', 'createdAt', 'hardwareID', 'invitedBy']
+    if (role === 'admin') fields = [...fields, 'role', 'createdAt', 'hardwareID', 'secret', 'invitedBy']
 
     fields.forEach((field) => { view[field] = this[field] })
     return view

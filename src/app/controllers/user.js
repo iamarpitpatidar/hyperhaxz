@@ -1,4 +1,3 @@
-import { validate as uuidValidate, version as uuidVersion } from 'uuid'
 import User from '../models/user'
 import Invite from '../models/invite'
 import Subscription from '../models/subscription'
@@ -7,9 +6,9 @@ import logger from '../../core/logger'
 
 export const index = async ({ user }, res, next) => {
   await User.find({ invitedBy: user._id })
+    .then((users = []) => users.map(each => each.view(user.role)))
     .then(users => {
-      res.locals.users = users || []
-      ;['_id', 'hardwareID', 'secret', 'keywords', 'password', '__v'].forEach(each => delete res.locals.users[each])
+      res.locals.users = users
     })
 
   next()
