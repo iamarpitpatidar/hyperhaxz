@@ -68,6 +68,22 @@ export default function () {
       }
     })
   }))
+  // passport session cleanup
+  app.use((req, res, next) => {
+    const _end = res.end
+    let ended = false
+
+    res.end = function end(chunk, encoding) {
+        if (ended) return
+        ended = true
+
+        if (req.session && req.session.passport && Object.keys(req.session.passport).length === 0) {
+          delete req.session.passport;
+        }
+        _end.call(res, chunk, encoding);
+      }
+    next()
+  })
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(routes)
