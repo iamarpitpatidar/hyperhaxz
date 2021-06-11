@@ -55,7 +55,7 @@ export default function () {
   }))
   app.use(helmet({ contentSecurityPolicy: false }))
   app.use(session({
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: false,
     name: config.session.name,
     cookie: config.session.cookie,
