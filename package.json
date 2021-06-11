@@ -13,6 +13,7 @@
     "madge": "madge --circular src"
   },
   "dependencies": {
+    "agenda": "^4.1.3",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
