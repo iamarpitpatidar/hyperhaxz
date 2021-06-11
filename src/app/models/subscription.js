@@ -27,7 +27,7 @@ const subscriptionSchema = new Schema({
 subscriptionSchema.methods = {
   view(full) {
     const view = {}
-    let fields = ['role', 'expiry']
+    let fields = ['role', 'expiry', 'createdAt']
 
     if (full) {
       fields = [...fields, 'activationKeyId']
