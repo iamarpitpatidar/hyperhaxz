@@ -24,6 +24,20 @@ const subscriptionSchema = new Schema({
   timestamps: true
 })
 
+subscriptionSchema.methods = {
+  view(full) {
+    const view = {}
+    let fields = ['role', 'expiry']
+
+    if (full) {
+      fields = [...fields, 'activationKeyId']
+    }
+
+    fields.forEach(field => { view[field] = this[field] })
+    return view
+  }
+}
+
 const model = mongoose.model('Subscription', subscriptionSchema)
 
 export const schema = model.schema

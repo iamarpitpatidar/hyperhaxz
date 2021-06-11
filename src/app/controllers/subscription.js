@@ -5,9 +5,9 @@ import logger from '../../core/logger'
 
 export const index = async ({ user }, res, next) => {
   await Subscription.find({ createdBy: user._id }).sort({ expiry: -1 })
+    .then((subscriptions = []) => subscriptions.map(each => each.view()))
     .then(subscriptions => {
-      res.locals.subscriptions = subscriptions || []
-      ;['_id', 'activationKeyId', 'createdBy', 'updatedAt', '__v'].forEach(each => delete res.locals.subscriptions[each])
+      res.locals.subscriptions = subscriptions
     })
 
   next()
