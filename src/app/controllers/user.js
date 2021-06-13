@@ -4,14 +4,15 @@ import Subscription from '../models/subscription'
 import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
-export const index = async ({ user }, res, next) => {
-  await User.find({ invitedBy: user._id })
-    .then((users = []) => users.map(each => each.view(user.role)))
+export const index = ({ querymen: { query, select, cursor }, user }, res, next) => {
+  query.invitedBy = user._id
+
+  User.find(query, select, cursor)
+    .then(users => users.map(each => each.view(user.role)))
     .then(users => {
       res.locals.users = users
     })
-
-  next()
+    .then(next)
 }
 
 export const create = ({ bodymen: { body } }, res) => {
