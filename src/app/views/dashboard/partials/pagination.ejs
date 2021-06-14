@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between">
       <div>
         <p class="text-sm text-gray-400">
-          Showing 1 - 5 of 100 results
+          Showing <%= cursor.skip ? cursor.skip : 1 %> - <%= cursor.skip + cursor.limit %> of <%= count %> results
         </p>
       </div>
       <div>
@@ -10,39 +10,26 @@
           class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
           aria-label="Pagination"
         >
-          <a href="#" class="relative inline-flex items-center px-2 py-1 rounded-l-md border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <% const page = url.split('?').shift() %>
+          <% const pageNum = url.split('?')[1] ? Number(url.split('?')[1].split('=')[1]) : 1 %>
+          <% pages = Math.ceil(count/cursor.limit) %>
+          <button onclick="window.location.replace('<%= page %>?page=<%= pageNum - 1 %>')" class="relative inline-flex items-center px-2 py-1 rounded-l-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum < 2 %>}" :disabled="isDisabled">
             <span class="sr-only">Previous</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
 			  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 			</svg>
-          </a>
-          <a href="#" class="relative inline-flex items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
-            1
-          </a>
-          <a href="#" class="relative inline-flex items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
-            2
-          </a>
-          <a href="#" class="hidden md:inline-flex relative items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
-            3
-          </a>
-          <span class="relative inline-flex items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500">
-            ...
-          </span>
-          <a href="#" class="hidden md:inline-flex relative items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
-            8
-          </a>
-          <a href="#" class="relative inline-flex items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
-            9
-          </a>
-          <a href="#" class="relative inline-flex items-center px-4 py-1 border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
-            10
-          </a>
-          <a href="#" class="relative inline-flex items-center px-2 py-1 rounded-r-md border border-gray-500 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50">
+          </button>
+          <% for (let i = 1; i <= pages; i++) { %>
+            <button onclick="window.location.replace('<%= page %>?page=<%= i %>')" class="relative inline-flex items-center px-4 py-1 border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= pageNum === i %>}" :disabled="isDisabled">
+              <%= i %>
+            </button>
+          <% } %>
+          <button onclick="window.location.replace('<%= page %>?page=<%= pageNum + 1 %>')" class="relative inline-flex items-center px-2 py-1 rounded-r-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum >= pages %>}" :disabled="isDisabled">
             <span class="sr-only">Next</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
 			  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 			</svg>
-          </a>
+          </button>
         </nav>
       </div>
     </div>
