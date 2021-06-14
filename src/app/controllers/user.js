@@ -7,12 +7,16 @@ import logger from '../../core/logger'
 export const index = ({ querymen: { query, select, cursor }, user }, res, next) => {
   query.invitedBy = user._id
 
-  User.find(query, select, cursor)
-    .then(users => users.map(each => each.view(user.role)))
-    .then(users => {
-      res.locals.users = users
-    })
-    .then(next)
+  User.countDocuments(query)
+    .then(count => User.find(query, select, cursor)
+      .then(users => users.map(each => each.view(user.role)))
+      .then(users => {
+        res.locals.users = users
+        res.locals.count = count
+        res.locals.cursor = cursor
+      })
+      .then(next)
+    )
 }
 
 export const create = ({ bodymen: { body } }, res) => {
