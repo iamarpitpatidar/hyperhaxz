@@ -6,6 +6,7 @@ import logger from '../../core/logger'
 
 export const index = ({ querymen: { query, select, cursor }, user }, res, next) => {
   if (user.role === 'seller') query.invitedBy = user._id
+  cursor.sort = { status: 1, createdAt: 1 }
 
   User.countDocuments(query)
     .then(count => User.find(query, select, cursor)

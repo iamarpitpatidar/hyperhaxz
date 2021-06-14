@@ -9,10 +9,6 @@ const schema = new Schema({
     min: 10,
     max: 30,
     default: 20
-  },
-  sort: {
-    type: String,
-    default: 'createdAt'
   }
 })
 
