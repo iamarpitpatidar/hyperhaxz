@@ -5,7 +5,7 @@ import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
 export const index = ({ querymen: { query, select, cursor }, user }, res, next) => {
-  query.invitedBy = user._id
+  if (user.role === 'seller') query.invitedBy = user._id
 
   User.countDocuments(query)
     .then(count => User.find(query, select, cursor)
