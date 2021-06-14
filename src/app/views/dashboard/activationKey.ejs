@@ -1,31 +1,68 @@
 <% layout('./layout') -%>
+<% script('/public/scripts/vendors/alpine.min.js') -%>
 
-<section class="text-gray-600 container p-6 mx-auto">
-    <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <% if (!!keys.length) { %>
-            <% keys.forEach(key => { const used = key.used %>
-            <div class="h-full border-2 border-blue-500 px-6 py-4 rounded-lg">
-                <h2 class="tracking-widest font-medium text-blue-500 mb-4 text-center"><%= key.code.toUpperCase() %><span class="<%= !used ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'%> ml-3 text-xs uppercase px-2 rounded-full"><%= used ? 'Used' : 'Unused' %></span></h2>
-                <table class="table-auto w-full">
-                    <tbody>
+<section class="flex flex-col mt-4" xmlns="http://www.w3.org/1999/html">
+    <div class="mx-8 p-2 align-middle inline-block">
+        <div class="overflow-hidden sm:rounded-lg">
+            <% if (!!count) { %>
+                <table class="table-auto shadow-md w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-800">
                     <tr>
-                        <td class="px-2 py-1 whitespace-nowrap text-gray-400">Role</td>
-                        <td><%= key.role %></td>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            ID
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Key
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Purchased On
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Role
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Validity
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Status
+                        </th>
                     </tr>
-                    <tr>
-                        <td class="px-2 py-1 whitespace-nowrap text-gray-400">Validity</td>
-                        <td><%= key.length %> Days</td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1 whitespace-nowrap text-gray-400">Purchased On</td>
-                        <td><%= new Date(key.createdAt).toDateString() %></td>
-                    </tr>
+                    </thead>
+                    <tbody class="bg-gray-850 divide-y divide-gray-700">
+                    <% keys.forEach((each, index) => { const used = each.used %>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500"><%= index+1+cursor.skip %></span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.code.toUpperCase() %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500"><%= new Date(each.createdAt).toDateString() %></span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500">
+                                    <%= each.role.toUpperCase() %>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500"><%= each.length %> Days</span>
+                            </td>
+                            <td class="px-6 py-4">
+                              <span class="<%= !used ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                                <%= used ? 'Used' : 'Unused' %>
+                              </span>
+                            </td>
+                        </tr>
+                    <% }) %>
                     </tbody>
                 </table>
-            </div>
-            <% }) %>
-        <% } else { %>
-            <div class="text-lg">No Activation Keys Found</div>
-        <% } %>
+                <% include partials/pagination %>
+            <% } else { %>
+                <div class="text-lg text-gray-500">You haven't purchased any key yet.</div>
+            <% } %>
+        </div>
     </div>
 </section>
