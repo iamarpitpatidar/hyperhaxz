@@ -1,5 +1,7 @@
 <aside class="h-screen top-0 sticky p-4 bg-gray-800 flex flex-col w-64 px-3 py-8 border-r border-gray-700">
-    <h2 class="text-3xl select-none font-semibold text-gray-600 w-min mx-auto">HyperHaxZ</h2>
+    <button onclick="window.location.replace('/')" class="text-3xl select-none font-semibold text-gray-400 w-min mx-auto focus:outline-none hover:text-gray-500">
+        HyperHaxZ
+    </button>
     <div class="flex flex-col justify-between flex-1">
         <nav class="mt-6" x-data="sidebar()" x-init="init()">
             <a href="/dashboard" :class="[active === 'dashboard' ? 'text-gray-700 bg-blueGray-900': 'transform hover:bg-gray-900 hover:text-gray-700 focus:outline-none', 'flex items-center px-4 py-2 my-4 rounded-md text-gray-600 transition-colors duration-200']">

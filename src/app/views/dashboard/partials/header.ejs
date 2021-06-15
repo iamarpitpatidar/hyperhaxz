@@ -24,9 +24,8 @@
                                 <span class="text-gray-500"><%= user.username %></span>
                             </div>
                         </div>
-                        <div class="py-1">
-                            <a href="/auth/logout" class="text-gray-500 block px-4 py-2 text-sm hover:bg-gray-900" role="menuitem">Sign Out</a>
-                        </div>
+                        <button onclick="window.location.replace('/dashboard')" class="text-left w-full text-gray-500 block px-4 py-2 text-sm hover:bg-gray-900">Dashboard</button>
+                        <button onclick="window.location.replace('/auth/logout')" class="text-left w-full text-gray-500 block px-4 py-2 text-sm hover:bg-gray-900">Sign Out</button>
                     </div>
                 </div>
             </div>

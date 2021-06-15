@@ -4,15 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= title %> - HyperHaxZ</title>
-  <% if (typeof csrfToken !== "undefined") { %>
+  <% if (typeof csrfToken !== 'undefined') { %>
     <meta name="session-identifier" content="<%= csrfToken  %>">
   <% } %>
   <%-stylesheets%>
   <link rel="stylesheet" href="/public/styles/dashboard.css">
   <%-scripts%>
   <script src="/public/scripts/vendors/alpine.min.js"></script>
-  <script src="/public/scripts/sidebar.js"></script>
-  <script src="/public/scripts/menu.js"></script>
+  <script src="/public/scripts/main.js"></script>
 </head>
 <body>
 <section class="flex" id="main">

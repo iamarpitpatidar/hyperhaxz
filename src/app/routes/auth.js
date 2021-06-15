@@ -9,7 +9,7 @@ const router = Router()
 const { username, password } = schema.tree
 
 router.get('/login', (req, res) => {
-  res.render('auth/login', {
+  res.render('login', {
     title: 'Login',
     csrfToken: req.csrfToken()
   })
@@ -22,7 +22,7 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/register', (req, res) => {
-  res.render('auth/register', {
+  res.render('register', {
     title: 'Sign Up',
     csrfToken: req.csrfToken()
   })
