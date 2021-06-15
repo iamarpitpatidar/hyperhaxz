@@ -6,7 +6,7 @@
       </div>
       <div>
         <% if (typeof user === 'object' && user.username !== 'undefined') { %>
-          <a href="/dashboard" class="p-0.5 px-3 m-1 text-gray-400 rounded-md hover:bg-blueGray-700 focus:outline-none">Dashboard</a>
+          <% includemenu %>
         <% } else { %>
           <a href="/auth/login" class="p-0.5 px-3 m-1 text-gray-400 rounded-md hover:bg-blueGray-700 focus:outline-none">Login</a>
           <a href="/auth/register" class="p-0.5 px-3 m-1 text-gray-900 bg-blue-500 rounded-md bg-white hover:text-gray-300 focus:outline-none">Register</a>

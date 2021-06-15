@@ -8,13 +8,14 @@
   <%-stylesheets%>
   <link rel="stylesheet" href="/public/styles/main.css">
   <script src="/public/scripts/vendors/alpine.min.js"></script>
+  <script src="/public/scripts/main.js"></script>
   <%-scripts%>
 </head>
-<body>
-<main class="flex flex-col min-h-screen bg-gray-900">
+<body class="bg-gray-900">
+<section class="flex flex-col min-h-screen" id="main">
   <%- includeheader -%>
-  <%-body -%>
+  <main class="mb-auto"><%- body -%></main>
   <%- includefooter -%>
-</main>
+</section>
 </body>
 </html>
