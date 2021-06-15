@@ -34,6 +34,14 @@
                     <span class="mx-4 font-medium text-gray-400">Sellers</span>
                 </a>
             <% } %>
+            <% if (user.role === 'seller') { %>
+                <a href="/dashboard/shop" :class="[active === 'shop' ? 'text-gray-700 bg-blueGray-900': 'transform hover:bg-gray-900 hover:text-gray-700 focus:outline-none', 'flex items-center px-4 py-2 my-4 rounded-md text-gray-600 transition-colors duration-200']">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span class="mx-4 font-medium text-gray-400">Shop</span>                    
+                </a>
+            <% } %>
             <hr class="my-6 border-t-2 border-blue-500">
             <a href="/dashboard/profile" :class="[active === 'profile' ? 'text-gray-700 bg-blueGray-900': 'transform hover:bg-gray-900 hover:text-gray-700 focus:outline-none', 'flex items-center px-4 py-2 my-4 rounded-md text-gray-600 transition-colors duration-200']">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">

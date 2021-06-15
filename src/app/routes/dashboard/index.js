@@ -18,6 +18,11 @@ router.get('/profile', (req, res) => {
     csrfToken: req.csrfToken()
   })
 })
+router.get('/shop', (req, res) => {
+  res.render('dashboard/shop', {
+    title: 'Shop'
+  })
+})
 router.use('/sellers', allowRoles(['support', 'admin']), seller)
 router.use('/activationKeys', allowRoles(['seller', 'admin']), key)
 router.use('/users', allowRoles(['seller', 'support', 'admin']), user)
