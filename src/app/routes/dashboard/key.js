@@ -6,9 +6,9 @@ const router = Router()
 const schema = new Schema({
   limit: {
     type: Number,
-    min: 10,
-    max: 30,
-    default: 20
+    min: 30,
+    max: 50,
+    default: 50
   },
   sort: {
     type: String,
