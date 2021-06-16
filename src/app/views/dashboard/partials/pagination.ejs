@@ -1,7 +1,7 @@
 <div class="bg-gray-800 block px-4 py-3 border-t border-gray-700">
   <div class="flex items-center justify-between">
     <div class="text-sm text-gray-400">
-      <p>Showing <%= cursor.skip ? cursor.skip : 1 %> - <%= cursor.skip + cursor.limit %> of <%= count %> results</p>
+      <p>Showing <%= cursor.skip ? cursor.skip : 1 %> - <%= count > cursor.limit ? cursor.skip + cursor.limit : count %> of <%= count %> results</p>
     </div>
     <div>
       <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
