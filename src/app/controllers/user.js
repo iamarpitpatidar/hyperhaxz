@@ -19,7 +19,7 @@ export const index = ({ querymen: { query, select, cursor }, originalUrl, user }
         res.locals.users = users
         res.locals.count = count
         res.locals.cursor = cursor
-        res.locals.query = parseQuery(originalUrl, cursor)
+        res.locals.query = parseQuery(originalUrl)
       })
       .then(next)
     )

@@ -1,0 +1,33 @@
+<div class="flex">
+    <div class="shadow rounded-lg" x-data="{ open: false }">
+        <div class="relative">
+            <button @click.prevent="open = !open" class="rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                    <path d="M5.5 5h13a1 1 0 0 1 0.5 1.5L14 12L14 19L10 16L10 12L5 6.5a1 1 0 0 1 0.5 -1.5" />
+                </svg>
+            </button>
+            <div
+                    x-show="open"
+                    @click.away="open = false"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform scale-90"
+                    x-transition:enter-end="opacity-100 transform scale-100"
+                    x-transition:leave="transition ease-in duration-300"
+                    x-transition:leave-start="opacity-100 transform scale-100"
+                    x-transition:leave-end="opacity-0 transform scale-90"
+            >
+                <% parseQuery = function (params, value) {
+                    const object = {...params, ...{sort: value}}
+                    if (!value) delete object.sort
+                    return Object.entries(object).map(e => e.join('=')).join('&')
+                } %>
+                <div class="absolute text-gray-400 z-10 right-0 mt-2 w-40 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <% for (const prop in sort) { if (sort.hasOwnProperty(prop)) { %>
+                        <button onclick="window.location.replace('<%= query.page %>?<%- parseQuery(query.params, sort[prop]) %>')" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">Sort by <%= prop %></button>
+                    <% } } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

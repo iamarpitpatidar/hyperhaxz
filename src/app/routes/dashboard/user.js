@@ -14,7 +14,13 @@ const schema = new Schema({
 
 router.get('/', query(schema), index, (req, res) => {
   res.render('dashboard/users', {
-    title: 'Users'
+    title: 'Users',
+    sort: {
+      Default: '',
+      Status: 'status',
+      Username: 'username',
+      'Invite Date': 'createdAt'
+    }
   })
 })
 
