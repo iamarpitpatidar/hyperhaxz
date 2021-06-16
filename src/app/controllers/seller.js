@@ -1,6 +1,7 @@
 import User from '../models/user'
+import { parseQuery } from '../helper'
 
-export const index = ({ querymen: { query, select, cursor }, user }, res, next) => {
+export const index = ({ querymen: { query, select, cursor }, originalUrl, user }, res, next) => {
   query.role = 'seller'
 
   User.countDocuments(query)
@@ -10,6 +11,7 @@ export const index = ({ querymen: { query, select, cursor }, user }, res, next) 
         res.locals.sellers = sellers
         res.locals.count = count
         res.locals.cursor = cursor
+        res.locals.query = parseQuery(originalUrl, cursor)
       })
       .then(next)
     )

@@ -14,8 +14,7 @@ const schema = new Schema({
 
 router.get('/', query(schema), index, (req, res) => {
   res.render('dashboard/users', {
-    title: 'Users',
-    url: req.originalUrl
+    title: 'Users'
   })
 })
 

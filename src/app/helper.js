@@ -16,3 +16,18 @@ export const allowRoles = (roles) => (req, res, next) => {
   if (roles.includes(req.user.role)) next()
   else res.sendStatus(404)
 }
+
+export const parseQuery = (url) => {
+  const query = url.split('?')
+  const params = {}
+  if (query[1]) {
+    query[1].split('&').forEach(each => {
+      const split = each.split('=')
+      if (split[0] && split[1]) params[split[0]] = split[1]
+    })
+  }
+  return {
+    page: query[0],
+    params: params
+  }
+}
