@@ -19,7 +19,13 @@ const schema = new Schema({
 router.get('/', query(schema), index, (req, res) => {
   res.render('dashboard/activationKey', {
     title: 'Activation Keys',
-    url: req.originalUrl
+    sort: {
+      Default: '',
+      Role: 'role',
+      Status: 'used',
+      Validity: 'length',
+      'Purchase Date': 'createdAt'
+    }
   })
 })
 
