@@ -1,7 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import User from './user'
-import Subscription from './subscription'
-import { v5 as uuidv5 } from 'uuid'
+import mongooseKeywords from 'mongoose-keywords'
 
 const inviteSchema = new Schema({
   code: {
@@ -52,6 +50,7 @@ inviteSchema.methods = {
   }
 }
 
+inviteSchema.plugin(mongooseKeywords, { paths: ['role', 'orderID', 'createdBy'] })
 const model = mongoose.model('Invite', inviteSchema)
 
 export const schema = model.schema
