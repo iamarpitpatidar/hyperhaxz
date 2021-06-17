@@ -14,8 +14,12 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'seller', 'support', 'admin'],
+    enum: ['user', 'support', 'admin'],
     default: 'user'
+  },
+  isSeller: {
+    type: Boolean,
+    default: false
   },
   status: {
     type: String,
