@@ -74,7 +74,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <button class="focus:outline-none align-middle mr-2" x-data="{isDisabled: <%= !each.hardwareID %>, tooltip: false}" :disabled="isDisabled">
                                         <div class="relative" v-cloak x-show.transition.origin.top="tooltip">
-                                            <div class="absolute top-0 z-10 w-32 p-2 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">
+                                            <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">
                                                 <%= each.status === 'banned' ? 'User is banned' : !!each.hardwareID ? 'Reset HardwareId' : 'HardwareId not set' %>
                                             </div>
                                         </div>
@@ -87,7 +87,7 @@
                                     <% if (each.status === 'active') { %>
                                         <button class="text-blue-500 hover:text-blue-600 focus:outline-none align-middle" x-data="{tooltip: false}" x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false">
                                             <div class="relative" v-cloak x-show.transition.origin.top="tooltip">
-                                                <span class="absolute top-0 z-10 w-32 p-2 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">Ban User</span>
+                                                <span class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">Ban User</span>
                                             </div>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
@@ -96,7 +96,7 @@
                                     <% } else { %>
                                         <button class="text-blue-500 hover:text-blue-600 focus:outline-none align-middle" x-data="{tooltip: false}" x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false">
                                             <div class="relative" v-cloak x-show.transition.origin.top="tooltip">
-                                                <span class="absolute top-0 z-10 w-32 p-2 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">Unban User</span>
+                                                <span class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">Unban User</span>
                                             </div>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
