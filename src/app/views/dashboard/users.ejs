@@ -3,7 +3,6 @@
 
 <div class="flex flex-col mt-4">
     <div class="mx-8 p-2 align-middle inline-block">
-        <% if (!!count) { %>
         <div class="flex justify-between bg-gray-800 sm:rounded-lg">
             <% includepartials/search %>
             <% includepartials/sort %>
@@ -35,67 +34,68 @@
                 </tr>
                 </thead>
                 <tbody class="bg-gray-850 divide-y divide-gray-700">
-                <% getClassByRole = function(role) {
-                    switch (role) {
-                    case 'user':
-                        return 'bg-gray-200 text-gray-800'
-                    case 'seller':
-                        return 'bg-yellow-100 text-yellow-800'
-                    case 'support':
-                        return 'bg-blue-200 text-blue-800'
-                    case 'admin':
-                        return 'bg-green-200 text-green-800'
-                    default:
-                        return ''
-                    }
-                } %>
-                <% users.forEach((each, index) => { %>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <%= index+1+cursor.skip %>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">
-                                <%= each.username %>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <%= new Date(each.createdAt).toDateString() %>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="<%= getClassByRole(each.role) %> px-2 mr-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                                <%= each.role %>
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <span class="<%= each.status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                            <%= each.status %>
-                          </span>
-                        </td>
-                        <% if (user.role === 'support' || user.role === 'admin') { %>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <button class="text-blue-500 hover:text-blue-600 focus:outline-none align-middle mr-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                                    </svg>
-                                </button>
-                                <button class="text-blue-500 hover:text-blue-600 focus:outline-none align-middle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-                                    </svg>
-                                </button>
-<!--                                set/remove admin-->
-<!--                                set/remove seller-->
+                <% if (!!count) {
+                    getClassByRole = function(role) {
+                        switch (role) {
+                        case 'user':
+                            return 'bg-gray-200 text-gray-800'
+                        case 'seller':
+                            return 'bg-yellow-100 text-yellow-800'
+                        case 'support':
+                            return 'bg-blue-200 text-blue-800'
+                        case 'admin':
+                            return 'bg-green-200 text-green-800'
+                        default:
+                            return ''
+                        }
+                    } %>
+                    <% users.forEach((each, index) => { %>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <%= index+1+cursor.skip %>
                             </td>
-                        <% } %>
-                    </tr>
-                <% }) %>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.username %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <%= new Date(each.createdAt).toDateString() %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="<%= getClassByRole(each.role) %> px-2 mr-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                                    <%= each.role %>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <span class="<%= each.status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                                <%= each.status %>
+                              </span>
+                            </td>
+                            <% if (user.role === 'support' || user.role === 'admin') { %>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button class="text-blue-500 hover:text-blue-600 focus:outline-none align-middle mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                        </svg>
+                                    </button>
+                                    <button class="text-blue-500 hover:text-blue-600 focus:outline-none align-middle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                        </svg>
+                                    </button>
+    <!--                                set/remove admin-->
+    <!--                                set/remove seller-->
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= query.params.q ? 'No such user' : 'No users found' %> in the database.</td></tr>
+                <% } %>
                 </tbody>
             </table>
             <% includepartials/pagination %>
         </div>
-        <% } else { %>
-            <div class="text-lg text-gray-500">You haven't invited anyone yet.</div>
-        <% } %>
     </div>
 </div>

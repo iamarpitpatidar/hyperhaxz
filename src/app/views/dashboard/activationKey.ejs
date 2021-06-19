@@ -3,7 +3,6 @@
 
 <section class="flex flex-col mt-4" xmlns="http://www.w3.org/1999/html">
     <div class="mx-8 p-2 align-middle inline-block">
-        <% if (!!count) { %>
         <div class="flex justify-between bg-gray-800 sm:rounded-lg">
             <% includepartials/search %>
             <% includepartials/sort %>
@@ -33,40 +32,41 @@
                 </tr>
                 </thead>
                 <tbody class="bg-gray-850 divide-y divide-gray-700">
-                <% keys.forEach((each, index) => { const used = each.used %>
-                    <tr>
-                        <td class="px-6 py-4">
-                            <span class="text-sm text-gray-500"><%= index+1+cursor.skip %></span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-500">
-                                <%= each.code.toUpperCase() %>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="text-sm text-gray-500"><%= new Date(each.createdAt).toDateString() %></span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="text-sm text-gray-500">
-                                <%= each.role.toUpperCase() %>
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="text-sm text-gray-500"><%= each.length %> Days</span>
-                        </td>
-                        <td class="px-6 py-4">
-                          <span class="<%= !used ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                            <%= used ? 'Used' : 'Unused' %>
-                          </span>
-                        </td>
-                    </tr>
-                <% }) %>
+                <% if (!!count) { %>
+                    <% keys.forEach((each, index) => { const used = each.used %>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500"><%= index+1+cursor.skip %></span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.code.toUpperCase() %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500"><%= new Date(each.createdAt).toDateString() %></span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500">
+                                    <%= each.role.toUpperCase() %>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-gray-500"><%= each.length %> Days</span>
+                            </td>
+                            <td class="px-6 py-4">
+                              <span class="<%= !used ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                                <%= used ? 'Used' : 'Unused' %>
+                              </span>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= query.params.q ? 'Can\'t found such key in the database' : 'You haven\'t purchased any key yet' %></td></tr>
+                <% } %>
                 </tbody>
             </table>
             <% include partials/pagination %>
         </div>
-        <% } else { %>
-            <div class="text-lg text-gray-500">You haven't purchased any key yet.</div>
-        <% } %>
     </div>
 </section>
