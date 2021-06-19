@@ -60,8 +60,8 @@ userSchema.methods = {
     const view = {}
     let fields = ['_id', 'username', 'status', 'role', 'createdAt', 'isSeller']
 
-    if (role === 'support') fields = [...fields, 'role', 'createdAt', 'isSeller', 'hardwareID', 'invitedBy']
-    if (role === 'admin') fields = [...fields, 'role', 'createdAt', 'isSeller', 'hardwareID', 'secret', 'invitedBy']
+    if (role === 'support') fields = [...fields, 'hardwareID', 'invitedBy']
+    if (role === 'admin') fields = [...fields, 'hardwareID', 'secret', 'invitedBy']
 
     fields.forEach((field) => { view[field] = this[field] })
     return view
