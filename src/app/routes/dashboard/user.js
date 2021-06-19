@@ -20,7 +20,8 @@ router.get('/', query(schema), index, (req, res) => {
       Status: 'status',
       Username: 'username',
       'Invite Date': 'createdAt'
-    }
+    },
+    search: 'search username...'
   })
 })
 
