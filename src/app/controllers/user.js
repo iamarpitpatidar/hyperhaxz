@@ -26,7 +26,7 @@ export const index = ({ querymen: { query, select, cursor }, originalUrl, user }
 }
 
 export const create = ({ bodymen: { body } }, res) => {
-  Invite.findOne({ code: body.activationKey }).then(key => {
+  Invite.findOne({ code: body.activationKey.toLowerCase() }).then(key => {
     if (!key) { error(res, 'Code is invalid', 422); return }
     if (key.used) { error(res, 'Code has already been used!', 422); return }
 
