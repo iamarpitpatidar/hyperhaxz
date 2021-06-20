@@ -5,6 +5,7 @@ import express from 'express'
 import engine from 'ejs-locals'
 import passport from 'passport'
 import Store from 'connect-mongo'
+import flash from 'connect-flash'
 import compress from 'compression'
 import bodyParser from 'body-parser'
 import session from 'express-session'
@@ -73,19 +74,20 @@ export default function () {
     const _end = res.end
     let ended = false
 
-    res.end = function end(chunk, encoding) {
-        if (ended) return
-        ended = true
+    res.end = function end (chunk, encoding) {
+      if (ended) return
+      ended = true
 
-        if (req.session && req.session.passport && Object.keys(req.session.passport).length === 0) {
-          delete req.session.passport;
-        }
-        _end.call(res, chunk, encoding);
+      if (req.session && req.session.passport && Object.keys(req.session.passport).length === 0) {
+        delete req.session.passport
       }
+      _end.call(res, chunk, encoding)
+    }
     next()
   })
   app.use(passport.initialize())
   app.use(passport.session())
+  app.use(flash())
   app.use(routes)
   app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
