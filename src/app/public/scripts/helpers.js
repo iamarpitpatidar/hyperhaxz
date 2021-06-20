@@ -22,6 +22,7 @@ function request (options) {
       .then(res => resolve(res))
       .catch(function (error) {
         if (error.response && error.response.data) {
+          reject(error.response.data.message)
           notify('error', {
             title: 'Error',
             message: error.response.data.message

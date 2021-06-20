@@ -92,8 +92,7 @@ function add () {
 
       if (this.activationKey.isValid) {
         this.isLoading = true
-        await createSub({ activationKey: this.activationKey.$val })
-        this.isLoading = false
+        await createSub({ activationKey: this.activationKey.$val }).finally(() => this.isLoading = false)
       }
     },
     validate: function () {
@@ -127,7 +126,7 @@ function updatePassword (data) {
   })
 }
 function createSub (data) {
-  request({
+  return request({
     method: 'post',
     url: '/dashboard/subscriptions/create',
     credentials: 'same-origin',

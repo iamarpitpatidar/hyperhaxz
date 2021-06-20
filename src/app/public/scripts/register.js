@@ -36,8 +36,7 @@ function signupData () {
           username: this.user.username.$val,
           password: this.user.password.$val,
           activationKey: this.user.activationKey.$val
-        })
-        this.isLoading = false
+        }).finally(() => this.isLoading = false)
       }
     },
     validate: function () {
@@ -60,7 +59,7 @@ function signupData () {
 }
 
 function registerUser (user) {
-  request({
+  return request({
     method: 'post',
     url: '/auth/register',
     credentials: 'same-origin',

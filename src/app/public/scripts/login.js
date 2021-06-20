@@ -23,8 +23,7 @@ function loginData () {
 
       if (this.user.isValid === true) {
         this.isLoading = true
-        await loginUser(`${this.user.username.$val}:${this.user.password.$val}`)
-        this.isLoading = false
+        await loginUser(`${this.user.username.$val}:${this.user.password.$val}`).finally(() => this.isLoading = false)
       }
     },
     validate: function () {
@@ -46,7 +45,7 @@ function loginData () {
 }
 
 function loginUser (data) {
-  request({
+  return request({
     method: 'post',
     url: '/auth/login',
     credentials: 'same-origin',
