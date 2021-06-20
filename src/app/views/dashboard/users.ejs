@@ -64,6 +64,9 @@
                                 <span class="<%= getClassByRole(each.role) %> px-2 mr-2 inline-flex text-xs leading-5 font-semibold rounded-full">
                                     <%= each.role %>
                                 </span>
+                                <% if (each.isSeller) { %>
+                                    <span class="bg-green-200 text-green-800 px-2 mr-2 inline-flex text-xs leading-5 font-semibold rounded-full">seller</span>
+                                <% } %>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                               <span class="<%= each.status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
