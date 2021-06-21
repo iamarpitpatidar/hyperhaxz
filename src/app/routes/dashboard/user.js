@@ -21,8 +21,16 @@ router.get('/', query(schema), index, (req, res) => {
       Username: 'username',
       'Invite Date': 'createdAt'
     },
-    search: 'search username...'
+    search: 'search username...',
+    csrfToken: req.csrfToken()
   })
+})
+
+router.post('/:id/action', (req, res, next) => {
+  console.log(req.body)
+  setTimeout(() => {
+    next()
+  }, 5000)
 })
 
 export default router
