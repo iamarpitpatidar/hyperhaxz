@@ -21,18 +21,11 @@ function request (options) {
       .then(res => res.data)
       .then(res => resolve(res))
       .catch(function (error) {
-        if (error.response && error.response.data) {
-          reject(error.response.data.message)
-          notify('error', {
-            title: 'Error',
-            message: error.response.data.message
-          })
-        } else {
-          notify('error', {
-            title: 'Error',
-            message: 'Something\'s wrong. Please try again later'
-          })
-        }
+        reject(error.response.data.message)
+        notify('error', {
+          title: 'Error',
+          message: error.response.data.message || 'Something\'s wrong. Please try again later'
+        })
       })
   })
 }
