@@ -11,17 +11,43 @@ export const action = ({ body, params }, res) => {
     case 'resetHWID':
       resetHWID(params._id, res)
       break
+
+    case 'ban':
+      ban(params._id, res)
+      break
+
+    case 'unban':
+      unban(params._id, res)
+      break
   }
 }
 const resetHWID = (_id, res) => {
   User.findById(_id)
-    .then(async user => {
+    .then(user => {
       if (!user) return res.status(404).json({ message: 'Oops! User not found' })
       if (user.status !== 'active') return res.status(400).json({ message: 'User is banned' })
       if (!user.hardwareID) return res.status(400).json({ message: 'HardwareID not set' })
 
       return user.set({ hardwareID: null }).save()
     }).then(user => user ? res.json({ status: 'ok', message: `HardwareID for ${user.username} has been successfully reset` }) : res.status(500))
+}
+const ban = (_id, res) => {
+  User.findById(_id)
+    .then(user => {
+      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
+      if (user.status === 'banned') return res.status(400).json({ message: 'User is already banned' })
+
+      return user.set({ status: 'banned' }).save()
+    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been banned!` }) : res.status(500))
+}
+const unban = (_id, res) => {
+  User.findById(_id)
+    .then(user => {
+      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
+      if (user.status === 'active') return res.status(400).json({ message: 'User is already active' })
+
+      return user.set({ status: 'active' }).save()
+    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been unbanned!` }) : res.status(500))
 }
 
 export const create = ({ bodymen: { body } }, res) => {
