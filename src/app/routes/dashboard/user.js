@@ -12,7 +12,7 @@ const schema = new Schema({
   }
 })
 
-router.get('/', query(schema), index, (req, res) => {
+router.get('/', query(schema), index(), (req, res) => {
   res.render('dashboard/users', {
     title: 'Users',
     sort: {
