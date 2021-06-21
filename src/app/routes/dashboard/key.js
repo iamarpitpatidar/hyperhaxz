@@ -26,7 +26,7 @@ router.get('/', query(schema), index, (req, res) => {
       Validity: 'length',
       'Purchase Date': 'createdAt'
     },
-    search: 'search...',
+    search: 'search...'
   })
 })
 

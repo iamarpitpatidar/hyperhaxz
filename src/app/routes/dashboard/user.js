@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
-import { index } from '../../controllers/user'
+import { index, action } from '../../controllers/user'
 
 const router = Router()
 const schema = new Schema({
@@ -26,11 +26,6 @@ router.get('/', query(schema), index, (req, res) => {
   })
 })
 
-router.post('/:id/action', (req, res, next) => {
-  console.log(req.body)
-  setTimeout(() => {
-    next()
-  }, 5000)
-})
+router.post('/:_id/action', action)
 
 export default router

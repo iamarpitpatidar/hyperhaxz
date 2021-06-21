@@ -5,24 +5,22 @@ import { parseQuery } from '../helper'
 import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
-export const index = ({ querymen: { query, select, cursor }, originalUrl, user }, res, next) => {
-  if (user.role === 'seller') query.invitedBy = user._id
-  if (cursor.sort.username) cursor.sort = { username: 1 }
-  else if (cursor.sort.status) cursor.sort = { status: 1 }
-  else if (cursor.sort.createdAt && cursor.sort.createdAt === 1) cursor.sort = { createdAt: 1 }
-  else cursor.sort = { status: 1, createdAt: 1 }
+export const action = ({ body, params }, res) => {
+  if (!body.type || params._id.length !== 24 || !['resetHWID', 'ban', 'unban'].includes(body.type)) return res.sendStatus(422)
+  switch (body.type) {
+    case 'resetHWID':
+      resetHWID(params._id, res)
+      break
+  }
+}
+const resetHWID = (_id, res) => {
+  User.findById(_id)
+    .then(async user => {
+      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
+      if (!user.hardwareID) return res.status(400).json({ message: 'HardwareID not set' })
 
-  User.countDocuments(query)
-    .then(count => User.find(query, select, cursor)
-      .then(users => users.map(each => each.view(user.role)))
-      .then(users => {
-        res.locals.users = users
-        res.locals.count = count
-        res.locals.cursor = cursor
-        res.locals.query = parseQuery(originalUrl)
-      })
-      .then(next)
-    )
+      return user.set({ hardwareID: null }).save()
+    }).then(user => user ? res.json({ status: 'ok', message: `HardwareID for ${user.username} has been successfully reset` }) : res.status(500))
 }
 
 export const create = ({ bodymen: { body } }, res) => {
@@ -56,7 +54,25 @@ export const create = ({ bodymen: { body } }, res) => {
       })
   })
 }
+export const index = ({ querymen: { query, select, cursor }, originalUrl, user }, res, next) => {
+  if (user.role === 'seller') query.invitedBy = user._id
+  if (cursor.sort.username) cursor.sort = { username: 1 }
+  else if (cursor.sort.status) cursor.sort = { status: 1 }
+  else if (cursor.sort.createdAt && cursor.sort.createdAt === 1) cursor.sort = { createdAt: 1 }
+  else cursor.sort = { status: 1, createdAt: 1 }
 
+  User.countDocuments(query)
+    .then(count => User.find(query, select, cursor)
+      .then(users => users.map(each => each.view(user.role)))
+      .then(users => {
+        res.locals.users = users
+        res.locals.count = count
+        res.locals.cursor = cursor
+        res.locals.query = parseQuery(originalUrl)
+      })
+      .then(next)
+    )
+}
 export const updatePassword = (req, res, next) => {
   if (!req.user || !req.user._id || req.user._id.length < 12) return res.status(500).json({ message: 'User not logged In' })
 

@@ -13,5 +13,13 @@ function action (type, _id) {
       'Content-Type': 'application/json'
     },
     data: { type: type }
+  }).then(res => {
+    if (!res.message) return
+    notify('success', {
+      title: 'Success',
+      message: res.message,
+      redirect: '/dashboard/users',
+      timeout: 3000
+    })
   }).finally(() => button.removeAttribute('disabled'))
 }
