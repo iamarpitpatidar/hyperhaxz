@@ -3,6 +3,7 @@ function action (type, _id) {
 
   const button = document.getElementById(`${type}-${_id}`)
   button.disabled = true
+  window.isXHRinProgress = true
   request({
     method: 'post',
     url: `/dashboard/users/${_id}/action`,
@@ -21,5 +22,8 @@ function action (type, _id) {
       redirect: '/dashboard/users',
       timeout: 3000
     })
-  }).finally(() => button.removeAttribute('disabled'))
+  }).finally(() => {
+    button.removeAttribute('disabled')
+    window.isXHRinProgress = true
+  })
 }

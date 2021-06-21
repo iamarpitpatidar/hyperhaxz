@@ -22,7 +22,7 @@
                     if (!value) delete object.sort
                     return Object.entries(object).map(e => e.join('=')).join('&')
                 } %>
-                <div class="absolute text-gray-400 z-1 right-0 mt-2 w-44 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div class="absolute text-gray-400 z-10 right-0 mt-2 w-44 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <% for (const prop in sort) { if (sort.hasOwnProperty(prop)) { %>
                         <button onclick="window.location.replace('<%= query.page %>?<%- parseQuery(query.params, sort[prop]) %>')" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">Sort by <%= prop %></button>
                     <% } } %>
