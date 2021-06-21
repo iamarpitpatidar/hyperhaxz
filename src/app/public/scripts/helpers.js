@@ -11,7 +11,8 @@ function notify (type, options) {
       if (options.redirect) {
         window.location.replace(options.redirect)
       }
-    }
+    },
+    timeout: options.timeout || 5000
   })
 }
 
