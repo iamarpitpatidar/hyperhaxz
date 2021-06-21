@@ -17,6 +17,7 @@ const resetHWID = (_id, res) => {
   User.findById(_id)
     .then(async user => {
       if (!user) return res.status(404).json({ message: 'Oops! User not found' })
+      if (user.status !== 'active') return res.status(400).json({ message: 'User is banned' })
       if (!user.hardwareID) return res.status(400).json({ message: 'HardwareID not set' })
 
       return user.set({ hardwareID: null }).save()
