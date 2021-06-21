@@ -6,7 +6,7 @@ import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
 export const action = ({ body, params }, res) => {
-  if (!body.type || params._id.length !== 24 || !['resetHWID', 'ban', 'unban'].includes(body.type)) return res.sendStatus(422)
+  if (!body.type || params._id.length !== 24 || !['resetHWID', 'ban', 'unban', 'seller'].includes(body.type)) return res.sendStatus(422)
   switch (body.type) {
     case 'resetHWID':
       resetHWID(params._id, res)
@@ -18,6 +18,10 @@ export const action = ({ body, params }, res) => {
 
     case 'unban':
       unban(params._id, res)
+      break
+
+    case 'seller':
+      seller(params._id, body, res)
       break
   }
 }
@@ -48,6 +52,28 @@ const unban = (_id, res) => {
 
       return user.set({ status: 'active' }).save()
     }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been unbanned!` }) : res.status(500))
+}
+const seller = (_id, body, res) => {
+  if (!body.data || !['remove', 'approve'].includes(body.data)) return res.status(400).json({ message: 'Bad Request' })
+
+  const props = {
+    approve: {
+      value: true,
+      message: (username, success = true) => success ? `Seller role has been added to ${username}` : `${username} is already a seller`
+    },
+    remove: {
+      value: false,
+      message: (username, success = true) => success ? `Seller role has been removed from ${username}` : `${username} doesn't have seller role to remove`
+    }
+  }
+
+  User.findById(_id)
+    .then(user => {
+      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
+      if (props[body.data].value === user.isSeller) return res.status(422).json({ message: props[body.data].message(user.username, false) })
+
+      return user.set({ isSeller: props[body.data].value }).save()
+    }).then(user => user ? res.json({ status: 'ok', message: props[body.data].message(user.username, user) }) : res.status(500))
 }
 
 export const create = ({ bodymen: { body } }, res) => {
