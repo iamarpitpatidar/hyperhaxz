@@ -12,7 +12,7 @@ function notify (type, options) {
         window.location.replace(options.redirect)
       }
     },
-    timeout: options.timeout || 5000
+    timeout: options.timeout || 3000
   })
 }
 
