@@ -41,10 +41,11 @@ export default {
   session: {
     name: 'sessionIdentifier',
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
+      secure: 'auto',
       httpOnly: true,
       domain: requireProcessEnv('DOMAIN'),
-      maxAge: 7 * 24 * (60 * 60 * 1000)
+      maxAge: 7 * 24 * (60 * 60 * 1000),
+      sameSite: true
     },
     collection: 'sessions',
     secret: 'WFQbmD59BIIm8esVS0y7mWDL2JM8h9eg'
