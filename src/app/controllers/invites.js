@@ -2,7 +2,7 @@ import Invite from '../models/invite'
 import { parseQuery } from '../helper'
 
 export const index = ({ querymen: { query, select, cursor }, originalUrl, user }, res, next) => {
-  query.createdBy = user._id
+  if (user.isSeller) query.createdBy = user._id
 
   Invite.countDocuments(query)
     .then(count => Invite.find(query, select, cursor)
