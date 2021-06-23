@@ -1,5 +1,5 @@
 function action (type, _id, data = '') {
-  if (!['resetHWID', 'ban', 'unban', 'seller'].includes(type) || _id.length !== 24) return
+  if (!['resetHWID', 'ban', 'unban', 'seller', 'role'].includes(type) || _id.length !== 24) return
 
   const button = document.getElementById(`${type}-${_id}`)
   button.disabled = true
@@ -20,7 +20,7 @@ function action (type, _id, data = '') {
       title: 'Success',
       message: res.message,
       redirect: '/dashboard/users',
-      timeout: 3000
+      timeout: 2000
     })
   }).finally(() => {
     button.removeAttribute('disabled')

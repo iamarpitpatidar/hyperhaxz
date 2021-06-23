@@ -145,16 +145,16 @@
                                                     <div class="absolute text-gray-400 z-10 right-0 mt-2 w-44 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                                     <% switch (each.role) {
                                                         case 'user': %>
-                                                        <div onclick="" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">promote to support</div>
-                                                        <div onclick="" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">promote to admin</div>
+                                                        <div onclick="action('role', '<%= each._id %>', 'support')" id="role-<%= each._id %>" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">promote to support</div>
+                                                        <div onclick="action('role', '<%= each._id %>', 'admin')" id="role-<%= each._id %>" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">promote to admin</div>
                                                         <% break
                                                         case 'support': %>
-                                                        <div onclick="" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">promote to admin</div>
-                                                        <div onclick="" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">demote to user</div>
+                                                        <div onclick="action('role', '<%= each._id %>', 'admin')" id="role-<%= each._id %>" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">promote to admin</div>
+                                                        <div onclick="action('role', '<%= each._id %>', 'user')" id="role-<%= each._id %>" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">demote to user</div>
                                                         <% break
                                                         case 'admin': %>
-                                                        <div onclick="" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">demote to support</div>
-                                                        <div onclick="" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">demote to user</div>
+                                                        <div onclick="action('role', '<%= each._id %>', 'support')" id="role-<%= each._id %>" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">demote to support</div>
+                                                        <div onclick="action('role', '<%= each._id %>', 'user')" id="role-<%= each._id %>" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">demote to user</div>
                                                     <% } %>
                                                     </div>
                                                 </div>

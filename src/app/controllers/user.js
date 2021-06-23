@@ -6,7 +6,7 @@ import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
 export const action = ({ body, params }, res) => {
-  if (!body.type || params._id.length !== 24 || !['resetHWID', 'ban', 'unban', 'seller'].includes(body.type)) return res.sendStatus(422)
+  if (!body.type || params._id.length !== 24 || !['resetHWID', 'ban', 'unban', 'seller', 'role'].includes(body.type)) return res.sendStatus(422)
   switch (body.type) {
     case 'resetHWID':
       resetHWID(params._id, res)
@@ -22,6 +22,10 @@ export const action = ({ body, params }, res) => {
 
     case 'seller':
       seller(params._id, body, res)
+      break
+
+    case 'role':
+      role(params._id, body, res)
       break
   }
 }
@@ -74,6 +78,17 @@ const seller = (_id, body, res) => {
 
       return user.set({ isSeller: props[body.data].value }).save()
     }).then(user => user ? res.json({ status: 'ok', message: props[body.data].message(user.username, user) }) : res.status(500))
+}
+const role = (_id, body, res) => {
+  if (!body.data || !['user', 'support', 'admin'].includes(body.data)) return res.status(400).json({ message: 'Bad Request' })
+
+  User.findById(_id)
+    .then(user => {
+      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
+      if (user.role === body.data) return res.status(400).json({ message: `${user.username} is already a ${user.role}` })
+
+      return user.set({ role: body.data }).save()
+    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} role has been updated to ${user.role}` }) : res.status(500))
 }
 
 export const create = ({ bodymen: { body } }, res) => {
