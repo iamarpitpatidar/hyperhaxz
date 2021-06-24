@@ -11,6 +11,18 @@
         <div class="flex justify-end sm:rounded-lg">
             <% includepartials/search %>
             <% includepartials/sort %>
+            <div class="ml-2 bg-gray-800 shadow rounded-lg" x-data="{ tooltip: false }">
+                <div class="relative">
+                    <div v-cloak x-show.transition.origin.top="tooltip">
+                        <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg width-max-content">Purge Sellers</div>
+                    </div>
+                    <button x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" class="rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="mt-4 overflow-hidden sm:rounded-lg">
             <table class="table-auto shadow-md w-full divide-y divide-gray-700">
