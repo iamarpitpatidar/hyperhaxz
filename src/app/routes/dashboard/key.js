@@ -20,11 +20,14 @@ router.get('/', query(schema), index, (req, res) => {
   res.render('dashboard/activationKey', {
     title: 'Activation Keys',
     sort: {
-      Default: '',
-      Role: 'role',
-      Status: 'used',
-      Validity: 'length',
-      'Purchase Date': 'createdAt'
+      title: 'Sort Keys',
+      props: {
+        Default: '',
+        Role: 'role',
+        Status: 'used',
+        Validity: 'length',
+        'Purchase Date': 'createdAt'        
+      }
     },
     search: 'search...'
   })

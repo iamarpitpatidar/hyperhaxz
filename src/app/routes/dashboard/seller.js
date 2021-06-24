@@ -16,10 +16,13 @@ router.get('/', query(schema), index(true), (req, res) => {
   res.render('dashboard/sellers', {
     title: 'Sellers',
     sort: {
-      Default: '',
-      Status: 'status',
-      Username: 'username',
-      'Invite Date': 'createdAt'
+      title: 'Sort Sellers',
+      props: {
+        Default: '',
+        Status: 'status',
+        Username: 'username',
+        'Invite Date': 'createdAt'        
+      }
     },
     search: 'search sellers...',
     csrfToken: req.csrfToken()
