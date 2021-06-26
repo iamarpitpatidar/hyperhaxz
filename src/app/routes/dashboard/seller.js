@@ -21,11 +21,16 @@ router.get('/', query(schema), index(true), (req, res) => {
         Default: '',
         Status: 'status',
         Username: 'username',
-        'Invite Date': 'createdAt'        
+        'Invite Date': 'createdAt'
       }
     },
+    message: req.flash('message'),
     search: 'search sellers...',
-    csrfToken: req.csrfToken()
+    csrfToken: req.csrfToken(),
+    purge: {
+      tooltip: 'Sellers',
+      isSeller: true
+    }
   })
 })
 

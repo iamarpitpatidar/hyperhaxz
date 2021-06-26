@@ -26,12 +26,20 @@ router.get('/', query(schema), index(), (req, res) => {
     },
     message: req.flash('message'),
     search: 'search username...',
-    csrfToken: req.csrfToken()
+    csrfToken: req.csrfToken(),
+    purge: {
+      tooltip: 'Users',
+      isSeller: false
+    }
   })
 })
 
 router.get('/purge',
   query({
+    role: {
+      enum: ['seller', 'user'],
+      required: true
+    },
     limit: {
       type: Number,
       enum: [30, 60, 90],

@@ -148,10 +148,18 @@ export const purge = (req, res) => {
 
   Subscription.find({ expiry: { $lt: date } })
     .then(subscriptions => subscriptions.map(each => each.createdBy))
-    .then(users => User.deleteMany({ _id: { $in: users } }))
+    .then(users => {
+      const query = { _id: { $in: users } }
+      const role = req.querymen.query.role
+      if (role === 'seller') query.isSeller = true
+
+      const bulk = User.collection.initializeUnorderedBulkOp()
+      bulk.find(query).delete()
+      return bulk.execute()
+    })
     .then(result => {
-      req.flash('message', result.ok ? `${result.deletedCount} users have been purged` : 'Internal Server Error')
-      res.redirect('/dashboard/users')
+      req.flash('message', result.ok ? `${result.nRemoved} ${req.querymen.query.role}s have been purged` : 'Internal Server Error')
+      res.redirect(`/dashboard/${req.querymen.query.role}s`)
     })
 }
 export const updatePassword = (req, res, next) => {
