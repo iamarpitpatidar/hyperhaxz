@@ -142,6 +142,18 @@ export const index = filterSellers => ({ querymen: { query, select, cursor }, or
       .then(next)
     )
 }
+export const purge = (req, res) => {
+  const date = new Date()
+  date.setDate(date.getDate() - req.querymen.cursor.limit)
+
+  Subscription.find({ expiry: { $lt: date } })
+    .then(subscriptions => subscriptions.map(each => each.createdBy))
+    .then(users => User.deleteMany({ _id: { $in: users } }))
+    .then(result => {
+      req.flash('message', result.ok ? `${result.deletedCount} users have been purged` : 'Internal Server Error')
+      res.redirect('/dashboard/users')
+    })
+}
 export const updatePassword = (req, res, next) => {
   if (!req.user || !req.user._id || req.user._id.length < 12) return res.status(500).json({ message: 'User not logged In' })
 

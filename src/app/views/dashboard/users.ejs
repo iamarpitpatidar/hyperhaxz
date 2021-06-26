@@ -178,3 +178,12 @@
         </div>
     </div>
 </div>
+<script>
+	const message = '<%= message %>'
+    if (message) {
+		notify(message === 'Internal Server Error' ? 'error' : 'success', {
+			title: message === 'Internal Server Error' ? 'Error' : 'Success',
+			message: message
+		})
+    }
+</script>
