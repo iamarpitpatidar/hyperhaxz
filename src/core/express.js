@@ -14,7 +14,8 @@ import { errorHandler as bodyErrorHandler } from 'bodymen'
 import { errorHandler as queryErrorHandler } from 'querymen'
 import config from '../config'
 import logger from '../core/logger'
-import routes from '../app/routes'
+import appRoutes from '../app/routes'
+import apiRoutes from '../app/routes/api'
 
 const serverFolder = path.join(config.rootPath, 'src', 'app')
 
@@ -46,7 +47,6 @@ export default function () {
   app.use(cookieParser())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
-  app.use(csrf({ cookie: true }))
   app.use(compress({
     filter: function (req, res) {
       return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
@@ -88,7 +88,9 @@ export default function () {
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(flash())
-  app.use(routes)
+  app.use('/api', apiRoutes)
+  app.use(csrf({ cookie: true }))
+  app.use(appRoutes)
   app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
     res.status(403).send('Forbidden')
