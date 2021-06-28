@@ -111,7 +111,7 @@ function add () {
 function updatePassword (data) {
   request({
     method: 'put',
-    url: '/user/update-password',
+    url: 'profile/update-password',
     credentials: 'same-origin',
     headers: {
       Accept: 'application/json',
@@ -128,7 +128,7 @@ function updatePassword (data) {
 function createSub (data) {
   return request({
     method: 'post',
-    url: '/dashboard/subscriptions/create',
+    url: 'subscriptions/create',
     credentials: 'same-origin',
     headers: {
       Accept: 'application/json',

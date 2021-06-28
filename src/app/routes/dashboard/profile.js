@@ -1,10 +1,17 @@
 import { Router } from 'express'
-import { updatePassword } from '../controllers/user'
 import { middleware as body } from 'bodymen'
-import { schema } from '../models/user'
+import { updatePassword } from '../../controllers/user'
+import { schema } from '../../models/user'
 
 const router = Router()
 const { password } = schema.tree
+
+router.get('/', (req, res) => {
+  res.render('dashboard/profile', {
+    title: 'Profile',
+    csrfToken: req.csrfToken()
+  })
+})
 
 router.put('/update-password',
   body({

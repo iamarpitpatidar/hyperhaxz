@@ -3,6 +3,7 @@ import key from './key'
 import shop from './shop'
 import user from './user'
 import seller from './seller'
+import profile from './profile'
 import subscription from './subscription'
 import { allowRoles } from '../../helper'
 
@@ -13,12 +14,7 @@ router.get('/', (req, res) => {
     title: 'Dashboard'
   })
 })
-router.get('/profile', (req, res) => {
-  res.render('dashboard/profile', {
-    title: 'Profile',
-    csrfToken: req.csrfToken()
-  })
-})
+router.use('/profile', profile)
 router.use('/shop', allowRoles([], true), shop)
 router.use('/sellers', allowRoles(['support', 'admin']), seller)
 router.use('/activationKeys', allowRoles(['admin'], true), key)
