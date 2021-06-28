@@ -7,7 +7,7 @@ const router = Router()
 
 router.post('/',
   body({ hardwareID: { type: String, required: true } }),
-  password,
+  password(true),
   token)
 
 export default router

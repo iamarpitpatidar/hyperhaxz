@@ -14,7 +14,7 @@ router.get('/login', (req, res) => {
     csrfToken: req.csrfToken()
   })
 })
-router.post('/login', passwordAuth)
+router.post('/login', passwordAuth())
 
 router.get('/logout', (req, res) => {
   req.logout()

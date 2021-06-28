@@ -6,7 +6,7 @@ export const token = ({ user }, res, next) => {
     id: user.id,
     token: `${user.secret}:${Date.now() + (1000 * 60 * 60)}`
   })
-    .then(token => ({ token, user: user.view() }))
+    .then(token => ({ token, user: user.view('api') }))
     .then(success(res, 201))
     .catch(next)
 }

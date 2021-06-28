@@ -60,6 +60,7 @@ userSchema.methods = {
     const view = {}
     let fields = ['_id', 'username', 'status', 'role', 'createdAt', 'isSeller']
 
+    if (role === 'api') fields = ['_id', 'username', 'status']
     if (role === 'support') fields = [...fields, 'hardwareID', 'invitedBy']
     if (role === 'admin') fields = [...fields, 'hardwareID', 'secret', 'invitedBy']
 
