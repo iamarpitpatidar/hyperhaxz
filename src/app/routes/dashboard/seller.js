@@ -18,15 +18,15 @@ router.get('/', query(schema), index(true), (req, res) => {
     title: 'Sellers',
     plugins: {
       search: 'search Products...',
-      query: parseQuery(req.originalUrl)
-    },
-    sort: {
-      title: 'Sort Sellers',
-      props: {
-        Default: '',
-        Status: 'status',
-        Username: 'username',
-        'Invite Date': 'createdAt'
+      query: parseQuery(req.originalUrl),
+      sort: {
+        title: 'Sort Sellers',
+        props: {
+          Default: '',
+          Status: 'status',
+          Username: 'username',
+          'Invite Date': 'createdAt'
+        }
       }
     },
     message: req.flash('message'),

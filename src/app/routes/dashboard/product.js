@@ -7,8 +7,15 @@ router.get('/', ({ originalUrl }, res) => {
   res.render('dashboard/products', {
     title: 'Products',
     plugins: {
-      search: 'search Products...',
-      query: parseQuery(originalUrl)
+      search: 'Search Products...',
+      query: parseQuery(originalUrl),
+      sort: {
+        title: 'sort products',
+        options: {
+          Default: '',
+          Price: 'price'
+        }
+      }
     }
   })
 })

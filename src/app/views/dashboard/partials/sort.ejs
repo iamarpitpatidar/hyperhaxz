@@ -1,7 +1,7 @@
 <div class="ml-2 bg-gray-800 shadow rounded-lg" x-data="{ open: false, tooltip: false }">
     <div class="relative">
         <div v-cloak x-show.transition.origin.top="tooltip">
-            <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg width-max-content"><%= sort.title %></div>
+            <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg width-max-content"><%= plugins.sort.title %></div>
         </div>
         <button x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" @click.prevent="open = !open" class="rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -25,8 +25,8 @@
                 return Object.entries(object).map(e => e.join('=')).join('&')
             } %>
             <div class="absolute text-gray-400 z-10 right-0 mt-2 w-44 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                <% for (const each in sort.props) { if (sort.props.hasOwnProperty(each)) { %>
-                    <button onclick="window.location.replace('<%= query.page %>?<%- parseQuery(query.params, sort.props[each]) %>')" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">Sort by <%= each %></button>
+                <% for (const each in plugins.sort.options) { if (plugins.sort.options.hasOwnProperty(each)) { %>
+                    <button onclick="window.location.replace('<%= plugins.query.page %>?<%- parseQuery(plugins.query.params, plugins.sort.options[each]) %>')" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none">Sort by <%= each %></button>
                 <% } } %>
             </div>
         </div>
