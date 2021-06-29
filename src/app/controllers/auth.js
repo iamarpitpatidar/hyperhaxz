@@ -12,7 +12,8 @@ export const token = ({ user }, res, next) => {
     .catch(next)
 }
 
-export const purge = ({ user }, res) => {
+export const purge = ({ user }, res, next) => {
   user.set({ secret: Math.random().toString(32).substring(2) }).save()
     .then(user => user ? res.status(200).json({ message: 'access token has been purged' }) : res.status(500))
+    .catch(next)
 }
