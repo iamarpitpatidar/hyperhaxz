@@ -20,7 +20,7 @@ const strategy = new Strategy({
 
     User.findById(_id).then(user => {
       if (secret !== user.secret) return next('INVALID_TOKEN')
-      return next(null, user)
+      else return next(null, user)
     }).catch(next)
   } else return next('INVALID_TOKEN')
 })

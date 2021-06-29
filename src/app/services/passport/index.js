@@ -25,7 +25,7 @@ export const token = ({ required, roles = User.roles } = {}) => (req, res, next)
     if (error === 'TOKEN_EXPIRED') return sendError(res, 'Access Token is expired', '401')
     if (error === 'INVALID_TOKEN') return sendError(res, 'Access Token is invalid', '401')
     if (user && required && !~roles.indexOf(user.role)) return sendError(res, 'Access Denied', '403')
-    if (error || (required && !user)) return res.status(403).json({ message: 'Access Denied' })
+    if (error || !user) return res.status(403).json({ message: 'Access Denied' })
 
     req.logIn(user, { session: false }, (err) => {
       if (err) return res.status(401).end()
