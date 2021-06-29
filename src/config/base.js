@@ -21,6 +21,7 @@ export default {
     contactEmail: 'support@hyperhaxz.com'
   },
   jwtSecret: requireProcessEnv('JWT_SECRET'),
+  cryptoSecret: requireProcessEnv('CRYPTO_SECRET'),
   port: requireProcessEnv('PORT'),
   rootPath: global.rootPath,
   database: {

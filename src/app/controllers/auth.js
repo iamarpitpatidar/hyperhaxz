@@ -1,10 +1,11 @@
 import { sign } from '../services/jwt'
 import { success } from '../services/response'
+import { encrypt } from '../helper'
 
 export const token = ({ user }, res, next) => {
   sign({
-    _id: user.id,
-    token: `${user.secret}:${Date.now() + (1000 * 60 * 60)}`
+    message: encrypt(`${user._id}:${user.secret}`),
+    expiry: Date.now() + (1000 * 60 * 60)
   })
     .then(token => ({ token, user: user.view('api') }))
     .then(success(res, 201))
