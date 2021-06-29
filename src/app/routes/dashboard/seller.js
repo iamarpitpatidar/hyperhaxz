@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { index } from '../../controllers/user'
+import { parseQuery } from '../../helper'
 
 const router = Router()
 const schema = new Schema({
@@ -15,6 +16,10 @@ const schema = new Schema({
 router.get('/', query(schema), index(true), (req, res) => {
   res.render('dashboard/sellers', {
     title: 'Sellers',
+    plugins: {
+      search: 'search Products...',
+      query: parseQuery(req.originalUrl)
+    },
     sort: {
       title: 'Sort Sellers',
       props: {

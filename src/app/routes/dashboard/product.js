@@ -1,10 +1,15 @@
 import { Router } from 'express'
+import { parseQuery } from '../../helper'
 
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', ({ originalUrl }, res) => {
   res.render('dashboard/products', {
-    title: 'Products'
+    title: 'Products',
+    plugins: {
+      search: 'search Products...',
+      query: parseQuery(originalUrl)
+    }
   })
 })
 
