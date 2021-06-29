@@ -1,5 +1,8 @@
 import passport from 'passport'
 import passwordStrategy from './password'
+import tokenStrategy from './token'
+import User from '../../models/user'
+import { error as sendError } from '../response'
 
 export const password = (isApi = false) => (req, res, next) =>
   passport.authenticate('password', { session: false }, (err, user) => {
@@ -17,7 +20,22 @@ export const password = (isApi = false) => (req, res, next) =>
     })
   })(req, res, next)
 
+export const token = ({ required, roles = User.roles } = {}) => (req, res, next) => {
+  passport.authenticate('token', { session: false }, (error, user) => {
+    if (error === 'TOKEN_EXPIRED') { sendError(res, 'Access Token is expired', '401'); return }
+    if (error === 'INVALID_TOKEN') { sendError(res, 'Access Token is invalid', '401'); return }
+    if (user && required && !~roles.indexOf(user.role)) { sendError(res, 'Access Denied', '403'); return }
+    if (error || (required && !user)) return res.status(403).json({ message: 'Access Denied' })
+
+    req.logIn(user, { session: false }, (err) => {
+      if (err) return res.status(401).end()
+      return next()
+    })
+  })(req, res, next)
+}
+
 passport.use('password', passwordStrategy)
+passport.use('token', tokenStrategy)
 
 passport.serializeUser((user, done) => done(null, user))
 passport.deserializeUser((user, done) => done(null, user))
