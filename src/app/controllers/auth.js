@@ -13,5 +13,5 @@ export const token = ({ user }, res, next) => {
 
 export const purge = ({ user }, res) => {
   user.set({ secret: Math.random().toString(32).substring(2) }).save()
-  return res.status(200).json({ message: 'access token has been purged' })
+    .then(user => user ? res.status(200).json({ message: 'access token has been purged' }) : res.status(500))
 }
