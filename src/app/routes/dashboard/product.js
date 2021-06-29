@@ -15,6 +15,10 @@ router.get('/', ({ originalUrl }, res) => {
           Default: '',
           Price: 'price'
         }
+      },
+      purge: {
+        tooltip: 'Products',
+        dropdown: false
       }
     }
   })

@@ -27,15 +27,19 @@ router.get('/', query(schema), index(true), (req, res) => {
           Username: 'username',
           'Invite Date': 'createdAt'
         }
+      },
+      purge: {
+        tooltip: 'Sellers',
+        dropdown: true,
+        options: {
+          role: 'seller',
+          limit: [30, 60, 90]
+        }
       }
     },
     message: req.flash('message'),
     search: 'search sellers...',
-    csrfToken: req.csrfToken(),
-    purge: {
-      tooltip: 'Sellers',
-      isSeller: true
-    }
+    csrfToken: req.csrfToken()
   })
 })
 
