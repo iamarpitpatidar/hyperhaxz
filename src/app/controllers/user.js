@@ -162,6 +162,14 @@ export const purge = (req, res) => {
       res.redirect(`/dashboard/${req.querymen.query.role}s`)
     })
 }
+export const showMe = ({ user }, res) => {
+  Subscription.find({ createdBy: user._id, expiry: { $gt: Date.now() } }, { role: true, expiry: true })
+    .then(subscriptions => {
+      const response = user.view('api')
+      response.subscriptions = subscriptions || null
+      res.json(response)
+    })
+}
 export const updatePassword = (req, res, next) => {
   if (!req.user || !req.user._id || req.user._id.length < 12) return res.status(500).json({ message: 'User not logged In' })
 
