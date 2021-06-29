@@ -6,9 +6,9 @@ import User from '../../models/user'
 
 const strategy = new Strategy({
   secretOrKey: jwtSecret,
-  jwtFromRequest: ExtractJwt.fromExtractors([
-    ExtractJwt.fromAuthHeaderWithScheme('Bearer')
-  ])
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  issuer: 'https://arpitpatidar.com<Arpit Patidar>',
+  audience: 'hyperhaxz.com'
 }, ({ message, expiry }, next) => {
   const token = decrypt(Buffer.from(message, 'hex')).split(':')
   const _id = token[0]

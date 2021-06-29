@@ -6,6 +6,9 @@ export const token = ({ user }, res, next) => {
   sign({
     message: encrypt(`${user._id}:${user.secret}`),
     expiry: Date.now() + (1000 * 60 * 60)
+  }, {
+    audience: 'hyperhaxz.com',
+    issuer: 'https://arpitpatidar.com<Arpit Patidar>'
   })
     .then(token => ({ token, user: user.view('api') }))
     .then(success(res, 201))
