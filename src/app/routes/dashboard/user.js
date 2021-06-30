@@ -21,7 +21,7 @@ router.get('/', query(schema), index(), (req, res) => {
       query: parseQuery(req.originalUrl),
       sort: {
         title: 'Sort Users',
-        props: {
+        options: {
           Default: '',
           Status: 'status',
           Username: 'username',

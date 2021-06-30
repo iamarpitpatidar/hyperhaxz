@@ -4,7 +4,7 @@ import { index } from '../../controllers/product'
 
 const router = Router()
 
-router.get('/', ({ originalUrl }, res) => {
+router.get('/', index, ({ originalUrl, csrfToken }, res) => {
   res.render('dashboard/products', {
     title: 'Products',
     plugins: {
