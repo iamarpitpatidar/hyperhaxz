@@ -17,7 +17,7 @@ router.get('/', query(schema), index(), (req, res) => {
   res.render('dashboard/users', {
     title: 'Users',
     plugins: {
-      search: 'search Products...',
+      search: 'search Users...',
       query: parseQuery(req.originalUrl),
       sort: {
         title: 'Sort Users',
@@ -38,7 +38,6 @@ router.get('/', query(schema), index(), (req, res) => {
       }
     },
     message: req.flash('message'),
-    search: 'search username...',
     csrfToken: req.csrfToken()
   })
 })

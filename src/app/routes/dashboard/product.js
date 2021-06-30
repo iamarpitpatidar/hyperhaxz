@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { parseQuery } from '../../helper'
+import { index } from '../../controllers/product'
 
 const router = Router()
 
@@ -20,7 +21,8 @@ router.get('/', ({ originalUrl }, res) => {
         tooltip: 'Products',
         dropdown: false
       }
-    }
+    },
+    csrfToken: csrfToken()
   })
 })
 
