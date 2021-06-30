@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { index } from '../../controllers/invites'
+import { parseQuery } from '../../helper'
 
 const router = Router()
 const schema = new Schema({
@@ -19,17 +20,20 @@ const schema = new Schema({
 router.get('/', query(schema), index, (req, res) => {
   res.render('dashboard/activationKey', {
     title: 'Activation Keys',
-    sort: {
-      title: 'Sort Keys',
-      props: {
-        Default: '',
-        Role: 'role',
-        Status: 'used',
-        Validity: 'length',
-        'Purchase Date': 'createdAt'        
+    plugins: {
+      search: 'search...',
+      query: parseQuery(req.originalUrl),
+      sort: {
+        title: 'Sort Keys',
+        options: {
+          Default: '',
+          Role: 'role',
+          Status: 'used',
+          Validity: 'length',
+          'Purchase Date': 'createdAt'
+        }
       }
-    },
-    search: 'search...'
+    }
   })
 })
 
