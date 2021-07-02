@@ -23,7 +23,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
 }
 
 export const save = ({ body, file, user }, res, next) => {
-  if (Object.entries(file) && Object.entries(body)) {
+  if (file && body && Object.entries(file) && Object.entries(body)) {
     if (!file.filename || !file.originalname || !file.size || !body.name) return res.status(400)
 
     File.create({

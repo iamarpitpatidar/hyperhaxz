@@ -21,18 +21,19 @@
             <div class="absolute text-gray-400 z-10 right-0 mt-2 w-64 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                 <div class="h-full border-2 border-blue-500 p-6 rounded-lg">
                     <h2 class="tracking-widest font-medium text-blue-500 mb-4 text-center">UPLOAD NEW FILE</h2>
-                    <form action="/dashboard/files/upload?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" novalidate>
+                    <form action="/dashboard/files/upload?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
                         <div class="mb-4">
                             <div class="mb-2">
                                 <input
                                         name="name"
                                         placeholder="Name"
                                         type="text"
-                                        class="border-blueGray-700 bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
+                                        class="border-blueGray-700 bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
+                                        required>
                             </div>
                             <div class="mb-2" x-data="{name: ''}">
                                 <label class="block border-blueGray-700 bg-blueGray-700 appearance-none rounded-md w-full px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm cursor-pointer">
-                                    <input type="file" name="loader" id="file" class="hidden" @change="name = $event.target.value">
+                                    <input type="file" name="loader" id="file" class="hidden" @change="name = $event.target.value" required>
                                     <span x-text="name ? name.replace('C:\\fakepath\\', '') : 'Select File'"></span>
                                 </label>
                             </div>
