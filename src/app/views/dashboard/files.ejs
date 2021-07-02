@@ -53,7 +53,12 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
-                                    <%= each.size %>
+                                    <% formatBytes = function(t,B=2) {
+                                    	if(0===t)return"0 Bytes"
+                                    	const o=B<0?0:B,a=Math.floor(Math.log(t)/Math.log(1024))
+                                    	return parseFloat((t/Math.pow(1024,a)).toFixed(o))+" "+["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"][a]
+                                    } %>
+                                    <%= formatBytes(each.size) %>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
