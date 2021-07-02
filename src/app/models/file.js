@@ -9,6 +9,11 @@ const fileSchema = new Schema({
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
+  },
+  status: {
+    type: String,
+    enum: ['archived', 'live'],
+    default: 'live'
   }
 }, { timestamps: true })
 

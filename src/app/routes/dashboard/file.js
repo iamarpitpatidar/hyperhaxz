@@ -1,10 +1,25 @@
 import { Router } from 'express'
+import { parseQuery } from '../../helper'
 
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', ({ originalUrl }, res) => {
   res.render('dashboard/files', {
-    title: 'Files'
+    title: 'Files',
+    plugins: {
+      search: 'Search Files...',
+      query: parseQuery(originalUrl),
+      sort: {
+        title: 'Sort Files',
+        options: {
+          Default: '',
+          Name: 'name',
+          createdBy: 'createdBy',
+          status: 'status',
+          'Upload Date': 'createdAt'
+        }
+      }
+    }
   })
 })
 
