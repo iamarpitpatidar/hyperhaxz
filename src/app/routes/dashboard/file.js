@@ -1,9 +1,11 @@
 import { Router } from 'express'
+import { middleware as query } from 'querymen'
+import { index } from '../../controllers/file'
 import { parseQuery } from '../../helper'
 
 const router = Router()
 
-router.get('/', ({ originalUrl }, res) => {
+router.get('/', query(), index, ({ originalUrl }, res) => {
   res.render('dashboard/files', {
     title: 'Files',
     plugins: {
