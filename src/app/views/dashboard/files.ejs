@@ -5,6 +5,7 @@
         <div class="flex justify-end sm:rounded-lg">
             <% includepartials/search %>
             <% includepartials/sort %>
+            <% includepartials/insert%>
         </div>
         <div class="mt-4 overflow-hidden sm:rounded-lg">
             <table class="table-auto shadow-md w-full divide-y divide-gray-700">
@@ -31,6 +32,22 @@
                 </tr>
                 </thead>
                 <tbody class="bg-gray-850 divide-y divide-gray-700">
+                <% if (!!count) { %>
+                    <% users.forEach((each, index) => { %>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <%= index+1+cursor.skip %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.name %>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= plugins.query.params.q ? 'No such file' : 'No files found' %> in the database.</td></tr>
+                <% } %>
                 </tbody>
             </table>
             <% includepartials/pagination %>

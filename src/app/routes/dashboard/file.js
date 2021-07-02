@@ -9,8 +9,11 @@ router.get('/', query(), index, ({ originalUrl }, res) => {
   res.render('dashboard/files', {
     title: 'Files',
     plugins: {
-      search: 'Search Files...',
+      insert: {
+        dropdown: true
+      },
       query: parseQuery(originalUrl),
+      search: 'Search Files...',
       sort: {
         title: 'Sort Files',
         options: {
