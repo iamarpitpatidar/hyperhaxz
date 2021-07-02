@@ -6,14 +6,22 @@ const fileSchema = new Schema({
     type: String,
     required: true
   },
+  filename: {
+    type: String,
+    required: true
+  },
+  size: {
+    type: String,
+    required: true
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   status: {
     type: String,
-    enum: ['archived', 'live'],
-    default: 'live'
+    enum: ['archived', 'active'],
+    default: 'active'
   }
 }, { timestamps: true })
 

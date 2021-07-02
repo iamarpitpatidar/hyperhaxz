@@ -21,6 +21,9 @@
                         Upload By
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Upload Size
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                         Upload Date
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -33,7 +36,7 @@
                 </thead>
                 <tbody class="bg-gray-850 divide-y divide-gray-700">
                 <% if (!!count) { %>
-                    <% users.forEach((each, index) => { %>
+                    <% files.forEach((each, index) => { %>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <%= index+1+cursor.skip %>
@@ -42,6 +45,42 @@
                                 <div class="text-sm text-gray-500">
                                     <%= each.name %>
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.name %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.size %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= new Date(each.createdAt).toDateString() %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.status %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button x-data="{tooltip: false, get isDisabled() { return <%= each.status !== 'active' %> }}" :disabled="isDisabled">
+                                    <div class="relative">
+                                        <div v-cloak x-show.transition.origin.top="tooltip">
+                                            <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">
+                                                <%= each.status === 'active' ? 'File is already archived' : 'Archive File' %>
+                                            </div>
+                                        </div>
+                                        <div x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" :class="isDisabled && 'opacity-50 cursor-not-allowed'" class="text-blue-500 hover:text-blue-600 rounded-md py-2 has-tooltip">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </button>
                             </td>
                         </tr>
                     <% }) %>
