@@ -11,7 +11,7 @@ const fileSchema = new Schema({
     required: true
   },
   size: {
-    type: String,
+    type: Number,
     required: true
   },
   createdBy: {
