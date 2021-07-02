@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import key from './key'
+import main from './main'
 import shop from './shop'
 import user from './user'
 import seller from './seller'
@@ -10,11 +11,7 @@ import { allowRoles } from '../../helper'
 
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.render('dashboard', {
-    title: 'Dashboard'
-  })
-})
+router.use('/', main)
 router.use('/profile', profile)
 router.use('/shop', allowRoles([], true), shop)
 router.use('/products', allowRoles(['admin']), product)
