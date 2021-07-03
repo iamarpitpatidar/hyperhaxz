@@ -30,7 +30,7 @@ export default function () {
     for (let i = 0; i < config.ignoreCSRF.length; i++) {
       if (req.originalUrl.match(config.ignoreCSRF[i])) found = true
     }
-    if (found) next()
+    if (found) csrf({ cookie: true })(req, res, next)
     else csrf(config.csrfOptions)(req, res, next)
   })
   app.use(appRoutes)
