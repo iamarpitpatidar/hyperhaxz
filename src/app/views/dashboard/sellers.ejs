@@ -52,28 +52,28 @@
                 <script>window.isXHRinProgress = false</script>
                 <% users.forEach((each, index) => { %>
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                             <%= index+1+cursor.skip %>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-2 whitespace-nowrap">
                             <div class="text-sm text-gray-500">
                                 <%= each.username %>
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                             <%= new Date(each.createdAt).toDateString() %>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-2 whitespace-nowrap">
                             <span class="<%= getClassByRole(each.role) %> px-2 mr-2 inline-flex text-xs leading-5 font-semibold rounded-full">
                                 <%= each.role %>
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-2 whitespace-nowrap">
                           <span class="<%= each.status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
                             <%= each.status %>
                           </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-2 whitespace-nowrap">
                             <button @click="action('resetHWID', '<%= each._id %>')" id="resetHWID-<%= each._id %>" class="focus:outline-none align-middle mr-1" x-data="{tooltip: false, get isDisabled() { return <%= each.status !== 'active' ? true : `isXHRinProgress || ${!each.hardwareID}` %> }}" :disabled="isDisabled">
                                 <div class="relative" v-cloak x-show.transition.origin.top="tooltip">
                                     <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">

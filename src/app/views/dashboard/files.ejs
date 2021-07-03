@@ -38,20 +38,20 @@
                 <% if (!!count) { %>
                     <% files.forEach((each, index) => { %>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                 <%= index+1+cursor.skip %>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
                                     <%= each.name %>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
                                     <%= each.createdBy %>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
                                     <% formatBytes = function(t,B=2) {
                                     	if(0===t)return"0 Bytes"
@@ -61,18 +61,18 @@
                                     <%= formatBytes(each.size) %>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
                                     <%= new Date(each.createdAt).toDateString() %>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
                                     <%= each.status %>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <button x-data="{tooltip: false, get isDisabled() { return <%= each.status !== 'active' %> }}" :disabled="isDisabled">
+                            <td class="px-6 py-2 whitespace-nowrap">
+                                <button class="focus:outline-none" x-data="{tooltip: false, get isDisabled() { return <%= each.status !== 'active' %> }}" :disabled="isDisabled">
                                     <div class="relative">
                                         <div v-cloak x-show.transition.origin.top="tooltip">
                                             <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg">

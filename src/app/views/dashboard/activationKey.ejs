@@ -35,26 +35,26 @@
                 <% if (!!count) { %>
                     <% keys.forEach((each, index) => { const used = each.used %>
                         <tr>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3">
                                 <span class="text-sm text-gray-500"><%= index+1+cursor.skip %></span>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3">
                                 <div class="text-sm text-gray-500">
                                     <%= each.code.toUpperCase() %>
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3">
                                 <span class="text-sm text-gray-500"><%= new Date(each.createdAt).toDateString() %></span>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3">
                                 <span class="text-sm text-gray-500">
                                     <%= each.role.toUpperCase() %>
                                 </span>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3">
                                 <span class="text-sm text-gray-500"><%= each.length %> Days</span>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3">
                               <span class="<%= !used ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' %> px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
                                 <%= used ? 'Used' : 'Unused' %>
                               </span>
