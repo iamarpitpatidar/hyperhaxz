@@ -1,4 +1,5 @@
 import File from '../models/file'
+import User from '../models/user'
 import { error } from '../services/response'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
@@ -13,7 +14,17 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   else cursor.sort = { createdAt: -1 }
 
   File.countDocuments(query)
-    .then(count => File.find(query, select, cursor)
+    .then(count => File.find(query, select, cursor).lean()
+      .then(async files => {
+        const UIDs = files.map(each => each.createdBy)
+        const users = await User.find({ _id: { $in: UIDs } }, { _id: true, username: true })
+
+        function findUser (_id) {
+          const found = users.find(each => each._id.toString() === _id.toString())
+          return found ? found.username : 'Deleted User'
+        }
+        return files.map(file => Object.assign({}, file, { createdBy: findUser(file.createdBy) }))
+      })
       .then(files => {
         res.locals.files = files
         res.locals.count = count
