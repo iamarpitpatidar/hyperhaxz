@@ -25,7 +25,14 @@ export default function () {
 
   plugin.init(app)
   app.use('/api', apiRoutes)
-  app.use(csrf({ cookie: true }))
+  app.use((req, res, next) => {
+    let found = false
+    for (let i = 0; i < config.ignoreCSRF.length; i++) {
+      if (req.originalUrl.match(config.ignoreCSRF[i])) found = true
+    }
+    if (found) next()
+    else csrf(config.csrfOptions)(req, res, next)
+  })
   app.use(appRoutes)
   app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
