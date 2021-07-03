@@ -7,7 +7,10 @@ const config = {
   isTestMode: false,
   ignoreCSRF: [
     /^\/$/m,
-    '/auth/login'
+    /^\/auth\/(?:login|register|logout)$/gm,
+    /^\/dashboard\/?(?:files|shop|products|sellers|activationKeys)?$/gm,
+    /^\/dashboard\/users(?:\/purge)?$/gm,
+    /^\/dashboard\/user\/(?:profile|subscriptions)$/gm
   ],
   csrfOptions: {
     cookie: true,
