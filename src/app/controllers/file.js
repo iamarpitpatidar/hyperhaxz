@@ -1,6 +1,19 @@
+import mongoose from 'mongoose'
 import File from '../models/file'
 import User from '../models/user'
 import { error } from '../services/response'
+
+export const archive = ({ querymen: { query } }, res) => {
+  if (!mongoose.Types.ObjectId.isValid(query.id)) return res.status(400)
+
+  File.findById(query.id)
+    .then(file => {
+      if (!file) return res.status(404).json({ message: 'Oops! File not found' })
+      if (file.status === query.status) return res.status(400).json({ message: `This file is already ${file.status}` })
+
+      return file.set({ status: query.status }).save()
+    }).then(file => file ? res.redirect('/dashboard/files') : res.status(500))
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   const sort = {
@@ -11,7 +24,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   }
   const key = Object.keys(cursor.sort)[0]
   if (Object.keys(sort).includes(key)) cursor.sort = sort[key]
-  else cursor.sort = { createdAt: -1 }
+  else cursor.sort = { status: 1 }
 
   File.countDocuments(query)
     .then(count => File.find(query, select, cursor).lean()
