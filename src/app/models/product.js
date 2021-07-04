@@ -21,12 +21,23 @@ const productSchema = new Schema({
   },
   stock: {
     type: Number,
-    default: 1000000
+    required: true
   },
   sellixID: {
     type: String,
     unique: true,
     index: true,
+    required: true
+  },
+  length: {
+    type: Number,
+    required: true
+  },
+  filename: {
+    type: mongoose.Schema.Types.ObjectId
+  },
+  isSeller: {
+    type: Boolean,
     required: true
   },
   gateways: {
@@ -40,7 +51,8 @@ const productSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['live', 'maintenance', 'offline']
+    enum: ['live', 'maintenance', 'offline'],
+    default: 'live'
   }
 }, { timestamps: true })
 
