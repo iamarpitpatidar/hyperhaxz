@@ -14,7 +14,11 @@ const config = {
   ],
   csrfOptions: {
     cookie: true,
-    ignoreMethods: ['HEAD', 'OPTIONS']
+    ignoreMethods: ['HEAD', 'OPTIONS'],
+    value: req => {
+      return (req.body && req.body.t) || (req.query && req.query.t) ||
+        (req.headers.t)
+    }
   }
 }
 
