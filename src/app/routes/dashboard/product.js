@@ -1,15 +1,20 @@
 import { Router } from 'express'
+import { middleware as query } from 'querymen'
 import { parseQuery } from '../../helper'
-import { index } from '../../controllers/product'
+import { index, purge } from '../../controllers/product'
 
 const router = Router()
 
-router.get('/', index, ({ originalUrl, csrfToken }, res) => {
+router.get('/', query(), index, (req, res) => {
+  const info = req.flash('message')
   res.render('dashboard/products', {
     title: 'Products',
+    metaData: {
+      message: info.length ? info : null
+    },
     plugins: {
       search: 'Search Products...',
-      query: parseQuery(originalUrl),
+      query: parseQuery(req.originalUrl),
       sort: {
         title: 'sort products',
         options: {
@@ -22,8 +27,10 @@ router.get('/', index, ({ originalUrl, csrfToken }, res) => {
         dropdown: false
       }
     },
-    csrfToken: csrfToken()
+    csrfToken: req.csrfToken()
   })
 })
+
+router.get('/purge', purge)
 
 export default router
