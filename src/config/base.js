@@ -22,6 +22,7 @@ export default {
   },
   jwtSecret: requireProcessEnv('JWT_SECRET'),
   cryptoSecret: requireProcessEnv('CRYPTO_SECRET'),
+  sellixApiKey: requireProcessEnv('SELLIX_API_KEY'),
   port: requireProcessEnv('PORT'),
   rootPath: global.rootPath,
   database: {

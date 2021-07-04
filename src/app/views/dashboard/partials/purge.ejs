@@ -22,7 +22,7 @@
             >
                 <div class="absolute text-gray-400 z-10 right-0 mt-2 w-44 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 divide-y divide-gray-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <% plugins.purge.options.limit.forEach(each => { %>
-                        <button onClick="window.location.replace('/dashboard/users/purge?role=<%= plugins.purge.options.role %>&limit=<%= each %>')" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none"><%= each %>+ Days</button>
+                        <button onClick="window.location.assign('/dashboard/users/purge?role=<%= plugins.purge.options.role %>&limit=<%= each %>')" class="text-left w-full text-gray-400 block px-4 py-2 text-sm hover:bg-gray-900 focus:outline-none"><%= each %>+ Days</button>
                     <% }) %>
                 </div>
             </div>
