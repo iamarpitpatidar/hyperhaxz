@@ -13,10 +13,14 @@
   <%-scripts%>
 </head>
 <body class="bg-gray-900">
-<section class="flex flex-col min-h-screen" id="main">
+<div class="flex flex-col min-h-screen" id="main">
   <%- includeheader -%>
   <main class="mb-auto"><%- body -%></main>
   <%- includefooter -%>
-</section>
+</div>
 </body>
+<script>
+  const width = screen.availWidth
+  if (width < 768) document.getElementById('sidebar').remove()
+</script>
 </html>
