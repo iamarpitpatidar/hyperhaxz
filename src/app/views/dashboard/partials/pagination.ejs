@@ -9,6 +9,7 @@
         <% pages = Math.ceil(count/cursor.limit) %>
         <% function parseQuery (params, value) {
           params.page = value
+          params.t = csrfToken
           return Object.entries(params).map(e => e.join('=')).join('&')
         } %>
         <button onclick="window.location.assign('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, pageNum - 1) %>')" class="relative inline-flex items-center px-2 py-1 rounded-l-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum < 2 %>}" :disabled="isDisabled">
