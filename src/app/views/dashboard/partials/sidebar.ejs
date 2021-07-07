@@ -1,4 +1,4 @@
-<aside class="hidden md:flex h-screen top-0 sticky bg-gray-800 flex-col w-64 px-3 py-4 border-r border-gray-700" id="sidebar">
+<aside class="hidden md:flex left-0 fixed bg-gray-800 flex-col w-56 px-3 py-4 border-r border-gray-700 sidebar" id="sidebar">
     <div class="flex flex-col justify-between flex-1">
         <nav x-data="sidebar()" x-init="init()">
             <a href="/dashboard" :class="[active === 'dashboard' ? 'text-gray-700 bg-blueGray-900': 'transform hover:bg-gray-900 hover:text-gray-700 focus:outline-none', 'flex items-center px-4 py-2 mb-4 rounded-md text-gray-600 transition-colors duration-200']">
@@ -34,7 +34,7 @@
             <% if (user.isSeller) { %>
                 <a href="/dashboard/shop" :class="[active === 'shop' ? 'text-gray-700 bg-blueGray-900': 'transform hover:bg-gray-900 hover:text-gray-700 focus:outline-none', 'flex items-center px-4 py-2 my-4 rounded-md text-gray-600 transition-colors duration-200']">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                     <span class="mx-4 font-medium text-gray-400">Shop</span>
                 </a>
