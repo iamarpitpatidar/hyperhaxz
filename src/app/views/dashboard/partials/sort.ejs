@@ -1,9 +1,6 @@
 <div class="ml-2 bg-gray-800 shadow rounded-lg" x-data="{ open: false, tooltip: false }">
     <div class="relative">
-        <div v-cloak x-show.transition.origin.top="tooltip">
-            <div class="absolute top-0 z-10 py-2 px-4 -mt-1 text-sm text-gray-400 transform -translate-x-1/2 -translate-y-full bg-gray-900 rounded-lg shadow-lg width-max-content"><%= plugins.sort.title %></div>
-        </div>
-        <button x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" @click.prevent="open = !open" class="rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
+        <button data-tooltip="<%= plugins.sort.title %>" @click.prevent="open = !open" class="has-tooltip rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
                 <path d="M5.5 5h13a1 1 0 0 1 0.5 1.5L14 12L14 19L10 16L10 12L5 6.5a1 1 0 0 1 0.5 -1.5" />
