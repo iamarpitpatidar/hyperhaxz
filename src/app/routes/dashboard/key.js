@@ -33,7 +33,8 @@ router.get('/', query(schema), index, (req, res) => {
           'Purchase Date': 'createdAt'
         }
       }
-    }
+    },
+    csrfToken: req.csrfToken()
   })
 })
 
