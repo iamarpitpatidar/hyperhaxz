@@ -11,18 +11,18 @@
           params.page = value
           return Object.entries(params).map(e => e.join('=')).join('&')
         } %>
-        <button onclick="window.location.replace('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, pageNum - 1) %>')" class="relative inline-flex items-center px-2 py-1 rounded-l-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum < 2 %>}" :disabled="isDisabled">
+        <button onclick="window.location.assign('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, pageNum - 1) %>')" class="relative inline-flex items-center px-2 py-1 rounded-l-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum < 2 %>}" :disabled="isDisabled">
           <span class="sr-only">Previous</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         <% for (let i = 1; i <= pages; i++) { %>
-          <button onclick="window.location.replace('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, i ) %>')" class="relative inline-flex items-center px-4 py-1 border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= pageNum === i %>}" :disabled="isDisabled">
+          <button onclick="window.location.assign('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, i ) %>')" class="relative inline-flex items-center px-4 py-1 border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= pageNum === i %>}" :disabled="isDisabled">
             <%= i %>
           </button>
         <% } %>
-        <button onclick="window.location.replace('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, pageNum + 1) %>')" class="relative inline-flex items-center px-2 py-1 rounded-r-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum >= pages %>}" :disabled="isDisabled">
+        <button onclick="window.location.assign('<%= plugins.query.page %>?<%= parseQuery(plugins.query.params, pageNum + 1) %>')" class="relative inline-flex items-center px-2 py-1 rounded-r-md border border-gray-600 bg-gray-850 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none disabled" x-data="{isDisabled: <%= Number.isNaN(pageNum) || pageNum >= pages %>}" :disabled="isDisabled">
           <span class="sr-only">Next</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
