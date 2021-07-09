@@ -25,7 +25,7 @@ export const purge = (req, res) => {
           stock: product.stock !== -1 ? product.stock : 99999,
           sellixID: product.uniqid,
           length: Number(product.custom_fields.filter(each => each.name === 'length').default) || 1,
-          isSeller: Boolean(product.custom_fields.filter(each => each.name === 'seller').default) || false,
+          isSeller: product.custom_fields.filter(each => each.name === 'seller')[0].default === 'true',
           gateways: product.gateways.filter(each => each).length ? product.gateways : ['FREE']
         })
       })
