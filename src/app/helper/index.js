@@ -38,7 +38,7 @@ export const parseQuery = (url) => {
 }
 
 export const getActivePage = (url) => {
-  const pathArray = url.split('/')
+  const pathArray = url.split('?')[0].split('/')
   return pathArray[pathArray.length - 1]
 }
 
