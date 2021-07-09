@@ -18,99 +18,101 @@
                 <%= metaData.message %>
             </div>
         <% } %>
-        <div class="mt-4 overflow-auto sm:rounded-lg">
-            <table class="table-auto shadow-md w-full divide-y divide-gray-700">
-                <thead class="bg-gray-800">
-                <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        ID
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Name
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Price
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Filename
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Seller
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Length
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Version
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Status
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody class="bg-gray-850 divide-y divide-gray-700">
-                <% if (!!count) { %>
-                    <% products.forEach((each, index) => { %>
-                        <tr>
-                            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                                <%= index+1+cursor.skip %>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.name %>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.price %>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.name %>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.isSeller %>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.length %> Day(s)
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.version %>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">
-                                    <%= each.status %>
-                                </div>
-                            </td>
-                            <td class="px-6 py-2 whitespace-nowrap">
-                                <button class="focus:outline-none" x-data="{tooltip: false}">
-                                    <div class="relative">
-                                        <div data-tooltip="Edit Product" class="text-blue-500 hover:text-blue-600 rounded-md py-2 has-tooltip">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </div>
+        <div class="mt-4 rounded-lg">
+            <div class="scrollbar-none overflow-auto rounded-t-md">
+                <table class="table-auto shadow-md w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-800">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            ID
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Price
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Filename
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Seller
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Length
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Version
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Status
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-gray-850 divide-y divide-gray-700">
+                    <% if (!!count) { %>
+                        <% products.forEach((each, index) => { %>
+                            <tr>
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                                    <%= index+1+cursor.skip %>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.name %>
                                     </div>
-                                </button>
-                            </td>
-                        </tr>
-                    <% }) %>
-                <% } else { %>
-                    <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= plugins.query.params.q ? 'No such product' : 'No products found' %> in the database.</td></tr>
-                <% } %>
-                </tbody>
-            </table>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.price %>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.filename || '-' %>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.isSeller %>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.length %> Day(s)
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.version %>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        <%= each.status %>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <button class="focus:outline-none" x-data="{tooltip: false}">
+                                        <div class="relative">
+                                            <div data-tooltip="Edit Product" class="text-blue-500 hover:text-blue-600 rounded-md py-2 has-tooltip">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= plugins.query.params.q ? 'No such product' : 'No products found' %> in the database.</td></tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
             <% includepartials/pagination %>
         </div>
     </div>

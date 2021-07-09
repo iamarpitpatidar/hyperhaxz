@@ -13,46 +13,47 @@
             <% includepartials/sort %>
             <% includepartials/purge %>
         </div>
-        <div class="mt-4 overflow-users sm:rounded-lg">
-            <table class="table-auto shadow-md w-full divide-y divide-gray-700">
-                <thead class="bg-gray-800">
-                <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        ID
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Username
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Invited on
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Role
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                        Status
-                    </th>
-                    <% if (user.role === 'support' || user.role === 'admin') { %>
+        <div class="mt-4 rounded-lg">
+            <div class="scrollbar-none overflow-auto rounded-t-md">
+                <table class="table-auto shadow-md w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-800">
+                    <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                            Actions
+                            ID
                         </th>
-                    <% } %>
-                </tr>
-                </thead>
-                <tbody class="bg-gray-850 divide-y divide-gray-700">
-                <% if (!!count) {
-                    getClassByRole = function(role) {
-                        switch (role) {
-                        case 'user':
-                            return 'bg-gray-200 text-gray-800'
-                        case 'support':
-                            return 'bg-yellow-100 text-yellow-800'
-                        case 'admin':
-                            return 'bg-blue-200 text-blue-800'
-                        default:
-                            return ''
-                        }
-                    } %>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Username
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Invited on
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Role
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Status
+                        </th>
+                        <% if (user.role === 'support' || user.role === 'admin') { %>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        <% } %>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-gray-850 divide-y divide-gray-700">
+                    <% if (!!count) {
+                        getClassByRole = function(role) {
+                            switch (role) {
+                            case 'user':
+                                return 'bg-gray-200 text-gray-800'
+                            case 'support':
+                                return 'bg-yellow-100 text-yellow-800'
+                            case 'admin':
+                                return 'bg-blue-200 text-blue-800'
+                            default:
+                                return ''
+                            }
+                        } %>
                     <script>window.isXHRinProgress = false</script>
                     <% users.forEach((each, index) => { %>
                         <tr>
@@ -180,11 +181,12 @@
                             <% } %>
                         </tr>
                     <% }) %>
-                <% } else { %>
-                    <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= query.params.q ? 'No such user' : 'No users found' %> in the database.</td></tr>
-                <% } %>
-                </tbody>
-            </table>
+                    <% } else { %>
+                        <tr class="text-lg text-gray-500"><td colspan="10" class="text-center"><%= query.params.q ? 'No such user' : 'No users found' %> in the database.</td></tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
             <% includepartials/pagination %>
         </div>
     </div>
