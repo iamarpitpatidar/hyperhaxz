@@ -59,20 +59,20 @@ const init = (app) => {
 }
 
 const dev = (app) => {
-    const lmStream = new stream.Stream()
+  const lmStream = new stream.Stream()
 
-    lmStream.writable = true
-    lmStream.write = data => logger.debug(data)
-    app.use(morgan('dev', {
-      stream: lmStream
-    }))
-    app.get('/*', (req, res, next) => {
-      res.setHeader('Last-Modified', (new Date()).toUTCString())
-      next()
-    })
+  lmStream.writable = true
+  lmStream.write = data => logger.debug(data)
+  app.use(morgan('dev', {
+    stream: lmStream
+  }))
+  app.get('/*', (req, res, next) => {
+    res.setHeader('Last-Modified', (new Date()).toUTCString())
+    next()
+  })
 }
 
 export default {
-	init: init,
-	dev: dev
+  init: init,
+  dev: dev
 }
