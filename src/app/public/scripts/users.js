@@ -10,7 +10,7 @@ function action (type, _id, data = '') {
     credentials: 'same-origin',
     headers: {
       Accept: 'application/json',
-      'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
+      t: document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
       'Content-Type': 'application/json'
     },
     data: { type: type, data: data }
