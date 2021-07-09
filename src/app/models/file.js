@@ -25,6 +25,17 @@ const fileSchema = new Schema({
   }
 }, { timestamps: true })
 
+fileSchema.methods = {
+  view (full) {
+    const view = {}
+    let fields = ['_id', 'name']
+    if (full) fields = ['createdBy', 'status']
+
+    fields.forEach((field) => { view[field] = this[field] })
+    return view
+  }
+}
+
 fileSchema.plugin(mongooseKeywords, { paths: ['name'] })
 const model = mongoose.model('File', fileSchema)
 
