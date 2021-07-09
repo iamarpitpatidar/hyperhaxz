@@ -1,13 +1,21 @@
 import Product from '../models/product'
+import File from '../models/file'
 import { sellix } from '../helper'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   Product.countDocuments(query)
-    .then(count => Product.find(query, select, cursor).lean()
+    .then(count => Product.find(query, select, cursor)
+      .then(products => products.map(each => each.view(false)))
       .then(products => {
         res.locals.products = products
         res.locals.count = count
         res.locals.cursor = cursor
+      })
+      .then(async () => {
+        await File.find({ status: 'active' })
+          .then(files => {
+            res.locals.files = files.map(each => each.view(false))
+          })
       })
       .then(next))
 }

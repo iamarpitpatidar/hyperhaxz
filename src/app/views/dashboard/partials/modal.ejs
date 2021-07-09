@@ -1,0 +1,85 @@
+<div id="modal" class="fixed z-10 inset-0 overflow-y-auto hidden" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="bg-gray-800 border-2 border-blue-500 inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
+            <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-gray-400">Edit Product</h3>
+                        <div class="mt-2">
+                            <form novalidate>
+                                <div class="mb-4 grid grid-cols-2 gap-2">
+                                    <label>
+                                        <div class="text-left text-gray-500">Name</div>
+                                        <input
+                                                x-model.trim="data.name"
+                                                type="text"
+                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
+                                                disabled>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Price</div>
+                                        <input
+                                                x-model.number="data.price"
+                                                type="number"
+                                                min="0"
+                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
+                                                disabled>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">sellixID</div>
+                                        <input
+                                                x-model.trim="data.sellixID"
+                                                type="text"
+                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
+                                                disabled>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Seller</div>
+                                        <select id="isSeller" class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Filename</div>
+                                        <select id="filename" class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"></select>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Status</div>
+                                        <select id="status" class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
+                                            <option value="live">Live</option>
+                                            <option value="maintenance">Maintenance</option>
+                                            <option value="offline">Offline</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Length</div>
+                                        <input
+                                                x-model.number="data.length"
+                                                type="number"
+                                                min="1"
+                                                class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Version</div>
+                                        <input
+                                                x-model.number="data.version"
+                                                type="number"
+                                                min="0"
+                                                class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button @click="submit()" class="mr-1 group relative w-full flex justify-center py-2 px-4 rounded-md bg-blue-600 text-gray-300 shadow-md focus:outline-none">Confirm</button>
+                <button @click="close()" type="button" class="ml-1 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-200 text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

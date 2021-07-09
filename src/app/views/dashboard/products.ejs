@@ -6,7 +6,7 @@
 <% script('/public/scripts/helpers.js') -%>
 <% script('/public/scripts/products.js') -%>
 
-<div class="flex flex-col mt-4">
+<div class="flex flex-col mt-4" x-data="product()">
     <div class="mx-8 p-2 align-middle inline-block">
         <div class="flex justify-end sm:rounded-lg">
             <% includepartials/search %>
@@ -53,7 +53,8 @@
                     </tr>
                     </thead>
                     <tbody class="bg-gray-850 divide-y divide-gray-700">
-                    <% if (!!count) { %>
+                        <% if (!!count) { %>
+                            <div class="hidden" id="files"><%= JSON.stringify(files)%></div>
                         <% products.forEach((each, index) => { %>
                             <tr>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
@@ -95,7 +96,7 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap">
-                                    <button class="focus:outline-none" x-data="{tooltip: false}">
+                                    <button class="focus:outline-none" data-modal="<%= JSON.stringify(each) %>" id="<%= each._id %>" @click="edit('<%= each._id %>')">
                                         <div class="relative">
                                             <div data-tooltip="Edit Product" class="text-blue-500 hover:text-blue-600 rounded-md py-2 has-tooltip">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -116,4 +117,5 @@
             <% includepartials/pagination %>
         </div>
     </div>
+    <% includepartials/modal %>
 </div>
