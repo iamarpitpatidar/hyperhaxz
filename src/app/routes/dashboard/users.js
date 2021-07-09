@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { index, action, purge } from '../../controllers/user'
-import { parseQuery } from '../../helper'
+import { parseQuery, getActivePage } from '../../helper'
 
 const router = Router()
 const schema = new Schema({
@@ -35,6 +35,9 @@ router.get('/', query(schema), index(), (req, res) => {
           role: 'user',
           limit: [30, 60, 90]
         }
+      },
+      sidebar: {
+        active: getActivePage(req.originalUrl)
       }
     },
     message: req.flash('message'),

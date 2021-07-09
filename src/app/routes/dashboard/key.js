@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { index } from '../../controllers/invites'
-import { parseQuery } from '../../helper'
+import { getActivePage, parseQuery } from '../../helper'
 
 const router = Router()
 const schema = new Schema({
@@ -32,6 +32,9 @@ router.get('/', query(schema), index, (req, res) => {
           Validity: 'length',
           'Purchase Date': 'createdAt'
         }
+      },
+      sidebar: {
+        active: getActivePage(req.originalUrl)
       }
     },
     csrfToken: req.csrfToken()

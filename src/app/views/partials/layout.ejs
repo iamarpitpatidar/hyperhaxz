@@ -22,5 +22,8 @@
 <script>
   const width = screen.availWidth
   if (width < 768) document.getElementById('sidebar').remove()
+  window.onload = function () {
+    document.querySelectorAll('.dropdown.hidden').forEach(each => each.removeAttribute('class'))
+  }
 </script>
 </html>

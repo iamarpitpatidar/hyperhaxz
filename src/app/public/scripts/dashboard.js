@@ -1,13 +1,3 @@
-function sidebar () {
-  return {
-    active: null,
-    init: function () {
-      const pathArray = window.location.pathname.split('/')
-      this.active = pathArray[pathArray.length - 1]
-    }
-  }
-}
-
 window.onload = function () {
   document.querySelectorAll('.dropdown.hidden').forEach(each => each.removeAttribute('class'))
   const tooltipButton = document.querySelectorAll('.has-tooltip')

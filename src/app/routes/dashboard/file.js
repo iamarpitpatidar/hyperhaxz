@@ -2,7 +2,7 @@ import multer from 'multer'
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { archive, index, save } from '../../controllers/file'
-import { parseQuery } from '../../helper'
+import { getActivePage, parseQuery } from '../../helper'
 
 const router = Router()
 const upload = multer({
@@ -33,6 +33,9 @@ router.get('/', query(), index, ({ originalUrl, csrfToken }, res) => {
           createdBy: 'user',
           'Upload Date': 'date'
         }
+      },
+      sidebar: {
+        active: getActivePage(originalUrl)
       }
     },
     csrfToken: csrfToken()

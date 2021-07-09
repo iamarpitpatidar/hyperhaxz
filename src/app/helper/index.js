@@ -37,6 +37,11 @@ export const parseQuery = (url) => {
   }
 }
 
+export const getActivePage = (url) => {
+  const pathArray = url.split('/')
+  return pathArray[pathArray.length - 1]
+}
+
 export const formatBytes = (bytes, decimals = 2) => {
   if (bytes === 0) return '0 Bytes'
   const k = 1024

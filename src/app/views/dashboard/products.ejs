@@ -35,6 +35,9 @@
                         Filename
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Seller
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                         Length
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -68,6 +71,11 @@
                             <td class="px-6 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">
                                     <%= each.name %>
+                                </div>
+                            </td>
+                            <td class="px-6 py-2 whitespace-nowrap">
+                                <div class="text-sm text-gray-500">
+                                    <%= each.isSeller %>
                                 </div>
                             </td>
                             <td class="px-6 py-2 whitespace-nowrap">
