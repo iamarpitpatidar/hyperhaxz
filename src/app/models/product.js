@@ -56,6 +56,18 @@ const productSchema = new Schema({
   }
 }, { timestamps: true })
 
+productSchema.methods = {
+  view (full) {
+    const view = {}
+    let fields = ['_id', 'name', 'price', 'filename', 'isSeller', 'length', 'version', 'status', 'sellixID']
+
+    if (full) fields = ['username', 'status']
+
+    fields.forEach((field) => { view[field] = this[field] })
+    return view
+  }
+}
+
 productSchema.plugin(mongooseKeywords, { paths: ['name', 'sellixID', 'gateways', 'status'] })
 const model = mongoose.model('Product', productSchema)
 
