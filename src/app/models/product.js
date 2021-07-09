@@ -33,7 +33,7 @@ const productSchema = new Schema({
     type: Number,
     required: true
   },
-  filename: {
+  file: {
     type: mongoose.Schema.Types.ObjectId
   },
   isSeller: {
@@ -59,7 +59,7 @@ const productSchema = new Schema({
 productSchema.methods = {
   view (full) {
     const view = {}
-    let fields = ['_id', 'name', 'price', 'filename', 'isSeller', 'length', 'version', 'status', 'sellixID']
+    let fields = ['_id', 'name', 'price', 'file', 'isSeller', 'length', 'version', 'status', 'sellixID']
 
     if (full) fields = ['username', 'status']
 

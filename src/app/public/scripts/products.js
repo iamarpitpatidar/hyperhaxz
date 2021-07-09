@@ -6,9 +6,10 @@ function purge () {
 function product () {
   return {
     data: {
+      _id: null,
       name: null,
       price: null,
-      filename: null,
+      file: null,
       isSeller: false,
       length: 0,
       version: 0,
@@ -24,13 +25,13 @@ function product () {
         this.data[prop] = model[prop]
       }
       let options = ''
-      filenames.forEach(each => options += `<option value="${each._id}">${each.name}</option>`)
+      filenames.forEach(each => {
+        options += `<option value="${each._id}">${each.name}</option>`
+      })
       document.getElementById('filename').insertAdjacentHTML('afterbegin', options)
       document.getElementById('isSeller').value = this.data.isSeller
+      document.getElementById('status').value = this.data.status
       document.getElementById('modal').classList.remove('hidden')
-    },
-    submit: function () {
-
     },
     close () {
       document.getElementById('modal').classList.add('hidden')

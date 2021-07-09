@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import Product from '../models/product'
 import File from '../models/file'
 import { sellix } from '../helper'
@@ -19,7 +20,6 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
       })
       .then(next))
 }
-
 export const purge = (req, res) => {
   Product.deleteMany({})
     .then(() => sellix.getAllProducts())
@@ -40,4 +40,28 @@ export const purge = (req, res) => {
       req.flash('message', 'Products cache have been purged')
       res.redirect('/dashboard/products')
     })
+}
+export const edit = async (req, res) => {
+  const { _id, isSeller, file, status, length, version } = req.body
+  if (!mongoose.Types.ObjectId.isValid(_id) ||
+    !mongoose.Types.ObjectId.isValid(file) ||
+    !['live', 'maintenance', 'offline'].includes(status) ||
+    !['true', 'false'].includes(isSeller)) return res.status(400)
+
+  const fileExists = await File.exists({ _id: file })
+  if (fileExists) {
+    Product.findById(_id)
+      .then(async product => {
+        product.markModified('isSeller')
+        const update = {
+          isSeller: isSeller,
+          file: file,
+          status: status,
+          length: length,
+          version: version
+        }
+        return product.set(update).save()
+      })
+      .then(product => product ? (req.flash('message', 'Product has been edited') && res.redirect('/dashboard/products')) : res.status(500))
+  }
 }
