@@ -9,6 +9,7 @@ function sidebar () {
 }
 
 window.onload = function () {
+  document.querySelectorAll('.dropdown.hidden').forEach(each => each.removeAttribute('class'))
   const tooltipButton = document.querySelectorAll('.has-tooltip')
   let hasTooltip = !1
   tooltipButton.forEach(each => {
