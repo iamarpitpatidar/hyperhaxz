@@ -115,7 +115,7 @@ function updatePassword (data) {
     credentials: 'same-origin',
     headers: {
       Accept: 'application/json',
-      'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
+      t: document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
       'Content-Type': 'application/json'
     },
     data: data
@@ -132,7 +132,7 @@ function createSub (data) {
     credentials: 'same-origin',
     headers: {
       Accept: 'application/json',
-      'XSRF-Token': document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
+      t: document.querySelector('meta[name="session-identifier"]').getAttribute('content'),
       'Content-Type': 'application/json'
     },
     data: data
