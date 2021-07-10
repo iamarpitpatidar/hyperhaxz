@@ -17,20 +17,35 @@ function product () {
         sellixID: null
       }
     },
-    edit: function (_id) {
-      this.data.action = 'Edit Product'
-      const dataset = document.getElementById(_id).dataset
-      const model = JSON.parse(dataset.modal)
+    init () {
       const filenames = JSON.parse(document.getElementById('files').innerHTML)
-
-      for (const prop in model) {
-        this.data.product[prop] = model[prop]
-      }
       let options = ''
       filenames.forEach(each => {
         options += `<option value="${each._id}">${each.name}</option>`
       })
       document.getElementById('filename').innerHTML = options
+    },
+    add () {
+      this.data.action = 'Add Product'
+      // setting values to null
+      Object.keys(this.data.product).forEach(each => { this.data.product[each] = null })
+      this.data.product.sellixID = 'Random ID'
+      document.getElementById('product_modal').setAttribute('action', 'products/new')
+      document.getElementById('filename').value = this.data.product.file
+      document.getElementById('isSeller').value = this.data.product.isSeller
+      document.getElementById('modal').classList.remove('hidden')
+    },
+    edit: function (_id) {
+      this.data.action = 'Edit Product'
+      // setting values to null
+      Object.keys(this.data.product).forEach(each => { this.data.product[each] = null })
+      const dataset = document.getElementById(_id).dataset
+      const model = JSON.parse(dataset.modal)
+
+      for (const prop in model) {
+        this.data.product[prop] = model[prop]
+      }
+      document.getElementById('product_modal').setAttribute('action', 'products/edit')
       document.getElementById('filename').value = this.data.product.file
       document.getElementById('isSeller').value = this.data.product.isSeller
       document.getElementById('status').value = this.data.product.status

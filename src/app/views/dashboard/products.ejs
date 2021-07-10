@@ -6,12 +6,21 @@
 <% script('/public/scripts/helpers.js') -%>
 <% script('/public/scripts/products.js') -%>
 
-<div class="flex flex-col mt-4" x-data="product()">
+<div class="flex flex-col mt-4" x-data="product()" x-init="init()">
     <div class="mx-8 p-2 align-middle inline-block">
         <div class="flex justify-end sm:rounded-lg">
             <% includepartials/search %>
             <% includepartials/sort %>
             <% includepartials/purge %>
+            <div class="ml-2 bg-gray-800 shadow rounded-lg">
+                <div class="relative">
+                    <button data-tooltip="Add Product" @click="add()" class="has-tooltip rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
         <% if (metaData.message) { %>
             <div class="my-4 py-2 text-gray-400 text-center bg-gray-800 shadow rounded-lg w-full">
