@@ -39,20 +39,20 @@ router.get('/purge', purge)
 router.post('/edit',
   body({
     _id: { type: String, required: true },
-    isSeller: { type: Boolean, required: true },
+    name: { type: String, required: true },
     file: { type: String, required: true },
-    status: { type: String, required: true },
-    length: { type: Number, min: 1, required: true },
+    isSeller: { type: Boolean, enum: ['true', 'false'], required: true },
+    status: { type: String, enum: ['live', 'maintenance', 'offline'], required: true },
     version: { type: Number, min: 0, required: true }
   }),
   edit)
 router.post('/new',
   body({
     name: { type: String, required: true },
-    isSeller: { type: Boolean, required: true },
     file: { type: String, required: true },
-    status: { type: String, required: true },
-    version: { type: Number, required: true }
+    isSeller: { type: Boolean, enum: ['true', 'false'], required: true },
+    status: { type: String, enum: ['live', 'maintenance', 'offline'], required: true },
+    version: { type: Number, min: 0, required: true }
   }),
   add)
 

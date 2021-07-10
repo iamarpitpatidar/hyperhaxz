@@ -44,9 +44,7 @@ export const purge = (req, res) => {
 export const edit = async (req, res) => {
   const { _id, isSeller, file, status, length, version } = req.body
   if (!mongoose.Types.ObjectId.isValid(_id) ||
-    !mongoose.Types.ObjectId.isValid(file) ||
-    !['live', 'maintenance', 'offline'].includes(status) ||
-    !['true', 'false'].includes(isSeller)) return res.status(400)
+    !mongoose.Types.ObjectId.isValid(file)) return res.status(400)
 
   const fileExists = await File.exists({ _id: file })
   if (fileExists) {
@@ -66,7 +64,7 @@ export const edit = async (req, res) => {
   }
 }
 export const add = (req, res) => {
-  if (!['live', 'maintenance', 'offline'].includes(req.body.status)) res.status(400)
+  if (!mongoose.Types.ObjectId.isValid(req.body.file) || !['live', 'maintenance', 'offline'].includes(req.body.status)) res.status(400)
 
   const fileExists = File.exists({ _id: req.body.file })
   if (fileExists) {
