@@ -12,7 +12,7 @@ export const error = (res, message, status) => {
       requestId: Math.random().toString(32).substring(2)
     })
   }
-  res.status(404).end()
+  res.sendStatus(404)
   return null
 }
 
@@ -20,6 +20,6 @@ export const notFound = (res) => (entity) => {
   if (entity) {
     return entity
   }
-  res.status(404).end()
+  res.sendStatus(404)
   return null
 }

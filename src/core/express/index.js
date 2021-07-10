@@ -36,7 +36,7 @@ export default function () {
   app.use(appRoutes)
   app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
-    res.status(403).send('Forbidden')
+    res.sendStatus(403)
   })
   app.use(bodyErrorHandler())
   app.use(queryErrorHandler())

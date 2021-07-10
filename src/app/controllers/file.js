@@ -5,10 +5,10 @@ import User from '../models/user'
 import { error } from '../services/response'
 
 export const purge = (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.query.id)) return res.status(400)
+  if (!mongoose.Types.ObjectId.isValid(req.query.id)) return res.sendStatus(400)
 
   File.findByIdAndDelete(req.query.id, (error, file) => {
-    if (error) res.status(500)
+    if (error) res.sendStatus(500)
 
     unlinkSync(`uploads/${file.filename}`)
     return existsSync(`uploads/${file.filename}`)
@@ -48,19 +48,19 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
       })
       .then(next))
 }
-export const save = ({ body, file, user }, res, next) => {
+export const save = ({ body, file, user }, res) => {
   if (file && body && Object.entries(file) && Object.entries(body)) {
-    if (!file.filename || !file.originalname || !file.size || !body.name) return res.status(400)
+    if (!file.filename || !file.originalname || !file.size || !body.name) return res.sendStatus(400)
 
     File.create({
       name: body.name,
       filename: file.filename,
       size: file.size,
       createdBy: user._id
-    }).then(file ? res.redirect('/dashboard/files') : res.status(500))
+    }).then(file ? res.redirect('/dashboard/files') : res.sendStatus(500))
       .catch(err => {
         if (err.name === 'MongoError' && err.code === 11000) error(res, 'username already registered', 409)
         else error(res, 500)
       })
-  } else res.status(400)
+  } else res.sendStatus(400)
 }

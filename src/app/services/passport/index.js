@@ -9,11 +9,11 @@ export const password = (isApi = false) => (req, res, next) =>
     if (err) {
       if (err === 'INCORRECT_PASSWORD' || err === 'INCORRECT_USERNAME') return res.status(401).json({ message: 'username or password incorrect' })
       else if (err.param) return res.status(400).json(err)
-    } else if (!user) return res.status(401).end()
+    } else if (!user) return res.sendStatus(401)
 
     if (user.status === 'banned') return res.status(403).json({ message: 'User is banned' })
     req.logIn(user, { session: !isApi }, (err) => {
-      if (err) return res.status(500).end()
+      if (err) return res.sendStatus(500)
 
       if (isApi) return next()
       else return res.send({ status: 'ok', message: 'Logged In Successfully' })
@@ -28,7 +28,7 @@ export const token = ({ required, roles = User.roles } = {}) => (req, res, next)
     if (error || !user) return res.status(403).json({ message: 'Access Denied' })
 
     req.logIn(user, { session: false }, (err) => {
-      if (err) return res.status(401).end()
+      if (err) return res.sendStatus(401)
       return next()
     })
   })(req, res, next)

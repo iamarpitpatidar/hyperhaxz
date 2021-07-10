@@ -39,7 +39,7 @@ const resetHWID = (req, res) => {
       return user.set({ hardwareID: null }).save()
     }).then(user => {
       if (user) (req.flash('message', `HardwareID for ${user.username} has been successfully reset`) && res.redirect('/dashboard/users'))
-      else res.status(500)
+      else res.sendStatus(500)
     })
 }
 const ban = (_id, res) => {
@@ -49,7 +49,7 @@ const ban = (_id, res) => {
       if (user.status === 'banned') return res.status(400).json({ message: 'User is already banned' })
 
       return user.set({ status: 'banned' }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been banned!` }) : res.status(500))
+    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been banned!` }) : res.sendStatus(500))
 }
 const unban = (_id, res) => {
   User.findById(_id)
@@ -58,7 +58,7 @@ const unban = (_id, res) => {
       if (user.status === 'active') return res.status(400).json({ message: 'User is already active' })
 
       return user.set({ status: 'active' }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been unbanned!` }) : res.status(500))
+    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been unbanned!` }) : res.sendStatus(500))
 }
 const seller = (_id, body, res) => {
   if (!body.data || !['remove', 'approve'].includes(body.data)) return res.status(400).json({ message: 'Bad Request' })
@@ -80,7 +80,7 @@ const seller = (_id, body, res) => {
       if (props[body.data].value === user.isSeller) return res.status(422).json({ message: props[body.data].message(user.username, false) })
 
       return user.set({ isSeller: props[body.data].value }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: props[body.data].message(user.username, user) }) : res.status(500))
+    }).then(user => user ? res.json({ status: 'ok', message: props[body.data].message(user.username, user) }) : res.sendStatus(500))
 }
 const role = (_id, body, res) => {
   if (!body.data || !['user', 'support', 'admin'].includes(body.data)) return res.status(400).json({ message: 'Bad Request' })
@@ -91,7 +91,7 @@ const role = (_id, body, res) => {
       if (user.role === body.data) return res.status(400).json({ message: `${user.username} is already a ${user.role}` })
 
       return user.set({ role: body.data }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} role has been updated to ${user.role}` }) : res.status(500))
+    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} role has been updated to ${user.role}` }) : res.sendStatus(500))
 }
 
 export const create = ({ bodymen: { body } }, res) => {
@@ -183,6 +183,6 @@ export const updatePassword = (req, res, next) => {
       req.logout()
       return user.set({ password: req.body.newPassword }).save()
     })
-    .then(user => user ? res.json({ status: 'ok', message: 'Your password has been successfully updated' }) : res.status(500))
+    .then(user => user ? res.json({ status: 'ok', message: 'Your password has been successfully updated' }) : res.sendStatus(500))
     .catch(next)
 }

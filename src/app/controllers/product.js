@@ -64,7 +64,7 @@ export const edit = async (req, res) => {
   }
 }
 export const add = (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.body.file) || !['live', 'maintenance', 'offline'].includes(req.body.status)) res.status(400)
+  if (!mongoose.Types.ObjectId.isValid(req.body.file) || !['live', 'maintenance', 'offline'].includes(req.body.status)) res.sendStatus(400)
 
   const fileExists = File.exists({ _id: req.body.file })
   if (fileExists) {
@@ -74,6 +74,6 @@ export const add = (req, res) => {
       isSeller: req.body.isSeller,
       version: req.body.version,
       status: req.body.status
-    }).then(product => product ? (req.flash('message', 'Product has been created') && res.redirect('/dashboard/products')) : res.status(500))
+    }).then(product => product ? (req.flash('message', 'Product has been created') && res.redirect('/dashboard/products')) : res.sendStatus(500))
   }
 }
