@@ -24,7 +24,7 @@ fileSchema.methods = {
   view (full) {
     const view = {}
     let fields = ['_id', 'name']
-    if (full) fields = ['createdBy', 'status']
+    if (full) fields = ['createdBy']
 
     fields.forEach((field) => { view[field] = this[field] })
     return view
