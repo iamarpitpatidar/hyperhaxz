@@ -10,8 +10,6 @@
     <div class="mx-8 p-2 align-middle inline-block">
         <div class="flex justify-end sm:rounded-lg">
             <% includepartials/search %>
-            <% includepartials/sort %>
-            <% includepartials/purge %>
             <div class="ml-2 bg-gray-800 shadow rounded-lg">
                 <div class="relative">
                     <button data-tooltip="Add Product" @click="add()" class="has-tooltip rounded-lg inline-flex items-center hover:text-blue-500 focus:outline-none text-gray-500 py-2 px-2">
@@ -21,6 +19,8 @@
                     </button>
                 </div>
             </div>
+            <% includepartials/sort %>
+            <% includepartials/purge %>
         </div>
         <% if (metaData.message) { %>
             <div class="my-4 py-2 text-gray-400 text-center bg-gray-800 shadow rounded-lg w-full">
