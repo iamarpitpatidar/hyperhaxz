@@ -13,7 +13,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
         res.locals.cursor = cursor
       })
       .then(async () => {
-        await File.find({ status: 'active' })
+        await File.find({})
           .then(files => {
             res.locals.files = files.map(each => each.view(false))
           })

@@ -72,7 +72,7 @@
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap">
                                     <div class="text-sm text-gray-500">
-                                        <%= each.file ? files.filter(file => file._id.toString() === each.file.toString()) ? files.filter(file => file._id.toString() === each.file.toString())[0].name : 'Deleted File' : '-' %>
+                                        <%= each.file ? files.filter(file => file._id.toString() === each.file.toString()).length ? files.filter(file => file._id.toString() === each.file.toString())[0].name : 'Deleted File' : '-' %>
                                     </div>
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap">
