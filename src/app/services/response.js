@@ -11,8 +11,7 @@ export const error = (res, message, status) => {
       message: message,
       requestId: Math.random().toString(32).substring(2)
     })
-  }
-  res.sendStatus(404)
+  } else res.sendStatus(404)
   return null
 }
 

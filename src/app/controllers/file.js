@@ -7,12 +7,12 @@ import { error } from '../services/response'
 export const purge = (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.query.id)) return res.sendStatus(400)
 
-  File.findByIdAndDelete(req.query.id, (error, { filename }) => {
+  File.findByIdAndDelete(req.query.id, (error, file) => {
     if (error) res.sendStatus(500)
 
-    const file = `uploads/${filename}`
-    if (existsSync(file)) unlinkSync(file)
-    return existsSync(file)
+    const filename = `uploads/${file.filename}`
+    if (existsSync(filename)) unlinkSync(filename)
+    return existsSync(filename)
   }).then(file => {
     req.flash('message', file ? 'Something\'s wrong. File not deleted' : 'File has been successfully deleted')
     res.redirect('/dashboard/files')
