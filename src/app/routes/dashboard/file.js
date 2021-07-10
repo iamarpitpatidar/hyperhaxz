@@ -15,14 +15,18 @@ const upload = multer({
   })
 })
 
-router.get('/', query(), index, ({ originalUrl, csrfToken }, res) => {
+router.get('/', query(), index, (req, res) => {
+  const info = req.flash('message')
   res.render('dashboard/files', {
     title: 'Files',
+    metaData: {
+      message: info.length ? info : null
+    },
     plugins: {
       insert: {
         dropdown: true
       },
-      query: parseQuery(originalUrl),
+      query: parseQuery(req.originalUrl),
       search: 'Search Files...',
       sort: {
         title: 'Sort Files',
@@ -35,10 +39,10 @@ router.get('/', query(), index, ({ originalUrl, csrfToken }, res) => {
         }
       },
       sidebar: {
-        active: getActivePage(originalUrl)
+        active: getActivePage(req.originalUrl)
       }
     },
-    csrfToken: csrfToken()
+    csrfToken: req.csrfToken()
   })
 })
 

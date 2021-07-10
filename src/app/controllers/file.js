@@ -1,18 +1,21 @@
+import { unlinkSync, existsSync } from 'fs'
 import mongoose from 'mongoose'
 import File from '../models/file'
 import User from '../models/user'
 import { error } from '../services/response'
 
-export const purge = ({ querymen: { query } }, res) => {
-  if (!mongoose.Types.ObjectId.isValid(query.id)) return res.status(400)
+export const purge = (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.query.id)) return res.status(400)
 
-  File.findById(query.id)
-    .then(file => {
-      if (!file) return res.status(404).json({ message: 'Oops! File not found' })
-      if (file.status === query.status) return res.status(400).json({ message: `This file is already ${file.status}` })
+  File.findByIdAndDelete(req.query.id, (error, file) => {
+    if (error) res.status(500)
 
-      return file.set({ status: query.status }).save()
-    }).then(file => file ? res.redirect('/dashboard/files') : res.status(500))
+    unlinkSync(`uploads/${file.filename}`)
+    return existsSync(`uploads/${file.filename}`)
+  }).then(file => {
+    req.flash('message', file ? 'Something\'s wrong. File not deleted' : 'File has been successfully deleted')
+    res.redirect('/dashboard/files')
+  })
 }
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
@@ -45,7 +48,6 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
       })
       .then(next))
 }
-
 export const save = ({ body, file, user }, res, next) => {
   if (file && body && Object.entries(file) && Object.entries(body)) {
     if (!file.filename || !file.originalname || !file.size || !body.name) return res.status(400)
