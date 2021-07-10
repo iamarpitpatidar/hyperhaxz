@@ -8,33 +8,16 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  description: {
-    type: String
-  },
-  image: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: Int32,
-    required: true
-  },
-  stock: {
-    type: Number,
-    required: true
-  },
-  sellixID: {
-    type: String,
-    unique: true,
-    index: true,
-    required: true
-  },
-  length: {
-    type: Number,
-    required: true
+  sellix: {
+    type: [{
+      _id: { type: String, required: true },
+      price: { type: Int32, required: true },
+      length: { type: Number, required: true }
+    }]
   },
   file: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   },
   isSeller: {
     type: Boolean,
@@ -43,11 +26,11 @@ const productSchema = new Schema({
   gateways: {
     type: [String],
     enum: ['FREE', 'PAYPAL', 'BITCOIN', 'ETHEREUM', 'LITECOIN', 'PERFECT_MONEY', 'BITCOIN_CASH', 'SKRILL', 'STRIPE', 'CASH_APP'],
-    required: true
+    default: ['BITCOIN', 'CASH_APP']
   },
   version: {
     type: Number,
-    default: 0.1
+    required: true
   },
   status: {
     type: String,
@@ -68,7 +51,7 @@ productSchema.methods = {
   }
 }
 
-productSchema.plugin(mongooseKeywords, { paths: ['name', 'sellixID', 'gateways', 'status'] })
+productSchema.plugin(mongooseKeywords, { paths: ['name', 'gateways', 'status'] })
 const model = mongoose.model('Product', productSchema)
 
 export const schema = model.schema

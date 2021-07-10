@@ -65,3 +65,17 @@ export const edit = async (req, res) => {
       .then(product => product ? (req.flash('message', 'Product has been edited') && res.redirect('/dashboard/products')) : res.status(500))
   }
 }
+export const add = (req, res) => {
+  if (!['live', 'maintenance', 'offline'].includes(req.body.status)) res.status(400)
+
+  const fileExists = File.exists({ _id: req.body.file })
+  if (fileExists) {
+    Product.create({
+      name: req.body.name,
+      file: req.body.file,
+      isSeller: req.body.isSeller,
+      version: req.body.version,
+      status: req.body.status
+    }).then(product => product ? (req.flash('message', 'Product has been created') && res.redirect('/dashboard/products')) : res.status(500))
+  }
+}

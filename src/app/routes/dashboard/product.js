@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as body } from 'bodymen'
 import { middleware as query } from 'querymen'
 import { getActivePage, parseQuery } from '../../helper'
-import { index, purge, edit } from '../../controllers/product'
+import { index, purge, edit, add } from '../../controllers/product'
 
 const router = Router()
 
@@ -38,7 +38,6 @@ router.get('/', query(), index, (req, res) => {
 router.get('/purge', purge)
 router.post('/edit',
   body({
-    t: { type: String, required: true },
     _id: { type: String, required: true },
     isSeller: { type: Boolean, required: true },
     file: { type: String, required: true },
@@ -47,5 +46,14 @@ router.post('/edit',
     version: { type: Number, min: 0, required: true }
   }),
   edit)
+router.post('/new',
+  body({
+    name: { type: String, required: true },
+    isSeller: { type: Boolean, required: true },
+    file: { type: String, required: true },
+    status: { type: String, required: true },
+    version: { type: Number, required: true }
+  }),
+  add)
 
 export default router
