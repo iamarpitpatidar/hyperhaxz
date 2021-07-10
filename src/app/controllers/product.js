@@ -42,26 +42,24 @@ export const purge = (req, res) => {
     })
 }
 export const edit = async (req, res) => {
-  const { _id, isSeller, file, status, length, version } = req.body
-  if (!mongoose.Types.ObjectId.isValid(_id) ||
-    !mongoose.Types.ObjectId.isValid(file)) return res.status(400)
+  if (!mongoose.Types.ObjectId.isValid(req.body._id) || !mongoose.Types.ObjectId.isValid(req.body.file)) return res.sendStatus(400)
 
-  const fileExists = await File.exists({ _id: file })
+  const fileExists = await File.exists({ _id: req.body.file })
   if (fileExists) {
-    Product.findById(_id)
+    Product.findById(req.body._id)
       .then(async product => {
         product.markModified('isSeller')
         const update = {
-          isSeller: isSeller,
-          file: file,
-          status: status,
-          length: length,
-          version: version
+          name: req.body.name,
+          isSeller: req.body.isSeller,
+          file: req.body.file,
+          status: req.body.status,
+          version: req.body.version
         }
         return product.set(update).save()
       })
       .then(product => product ? (req.flash('message', 'Product has been edited') && res.redirect('/dashboard/products')) : res.status(500))
-  }
+  } else res.sendStatus(400)
 }
 export const add = (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.body.file) || !['live', 'maintenance', 'offline'].includes(req.body.status)) res.sendStatus(400)

@@ -37,11 +37,15 @@ router.get('/', query(), index, (req, res) => {
 
 router.get('/purge', purge)
 router.post('/edit',
+  (req, res, next) => {
+    console.log('foo')
+    next()
+  },
   body({
     _id: { type: String, required: true },
     name: { type: String, required: true },
     file: { type: String, required: true },
-    isSeller: { type: Boolean, enum: ['true', 'false'], required: true },
+    isSeller: { type: Boolean, required: true },
     status: { type: String, enum: ['live', 'maintenance', 'offline'], required: true },
     version: { type: Number, min: 0, required: true }
   }),
@@ -50,7 +54,7 @@ router.post('/new',
   body({
     name: { type: String, required: true },
     file: { type: String, required: true },
-    isSeller: { type: Boolean, enum: ['true', 'false'], required: true },
+    isSeller: { type: Boolean, required: true },
     status: { type: String, enum: ['live', 'maintenance', 'offline'], required: true },
     version: { type: Number, min: 0, required: true }
   }),

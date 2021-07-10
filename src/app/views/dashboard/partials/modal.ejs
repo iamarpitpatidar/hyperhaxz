@@ -11,7 +11,7 @@
                             <div class="mt-2">
                                 <div class="mb-4 grid grid-cols-2 gap-2">
                                     <input name="t" class="hidden" type="text" value="<%= csrfToken %>">
-                                    <input name="_id" class="hidden" type="text" value="data.product._id">
+                                    <input name="_id" class="hidden" type="text" :value="data.product._id">
                                     <label x-show="data.action === 'Edit Product'">
                                         <div class="text-left text-gray-500">sellixID</div>
                                         <input
