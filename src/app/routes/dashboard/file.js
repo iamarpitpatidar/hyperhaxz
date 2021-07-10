@@ -1,7 +1,7 @@
 import multer from 'multer'
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
-import { archive, index, save } from '../../controllers/file'
+import { purge, index, save } from '../../controllers/file'
 import { getActivePage, parseQuery } from '../../helper'
 
 const router = Router()
@@ -42,13 +42,12 @@ router.get('/', query(), index, ({ originalUrl, csrfToken }, res) => {
   })
 })
 
-router.get('/action',
+router.get('/delete',
   query({
     id: { type: String, required: true },
-    type: { type: String, required: true, enum: ['archive'] },
-    status: { type: String, required: true, enum: ['active', 'archived'] }
+    t: { type: String, required: true }
   }),
-  archive)
+  purge)
 router.post('/upload', upload.single('loader'), save)
 
 export default router

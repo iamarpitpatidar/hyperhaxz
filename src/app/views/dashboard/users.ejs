@@ -13,6 +13,11 @@
             <% includepartials/sort %>
             <% includepartials/purge %>
         </div>
+        <% if (metaData.message) { %>
+            <div class="my-4 py-2 text-gray-400 text-center bg-gray-800 shadow rounded-lg w-full">
+                <%= metaData.message %>
+            </div>
+        <% } %>
         <div class="mt-4 rounded-lg">
             <div class="scrollbar-none overflow-auto rounded-t-md">
                 <table class="table-auto shadow-md w-full divide-y divide-gray-700">
@@ -191,12 +196,3 @@
         </div>
     </div>
 </div>
-<script>
-	const message = '<%= message %>'
-    if (message) {
-		notify(message === 'Internal Server Error' ? 'error' : 'success', {
-			title: message === 'Internal Server Error' ? 'Error' : 'Success',
-			message: message
-		})
-    }
-</script>

@@ -3,7 +3,7 @@ import File from '../models/file'
 import User from '../models/user'
 import { error } from '../services/response'
 
-export const archive = ({ querymen: { query } }, res) => {
+export const purge = ({ querymen: { query } }, res) => {
   if (!mongoose.Types.ObjectId.isValid(query.id)) return res.status(400)
 
   File.findById(query.id)

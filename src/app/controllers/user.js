@@ -5,39 +5,42 @@ import { parseQuery } from '../helper'
 import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
-export const action = ({ body, params }, res) => {
-  if (!body.type || params._id.length !== 24 || !['resetHWID', 'ban', 'unban', 'seller', 'role'].includes(body.type)) return res.sendStatus(422)
-  switch (body.type) {
+export const action = (req, res) => {
+  if (!req.body.type || req.params._id.length !== 24 || !['resetHWID', 'ban', 'unban', 'seller', 'role'].includes(req.body.type)) return res.sendStatus(422)
+  switch (req.body.type) {
     case 'resetHWID':
-      resetHWID(params._id, res)
+      resetHWID(req, res)
       break
 
     case 'ban':
-      ban(params._id, res)
+      ban(req.params._id, res)
       break
 
     case 'unban':
-      unban(params._id, res)
+      unban(req.params._id, res)
       break
 
     case 'seller':
-      seller(params._id, body, res)
+      seller(req.params._id, req.body, res)
       break
 
     case 'role':
-      role(params._id, body, res)
+      role(req.params._id, req.body, res)
       break
   }
 }
-const resetHWID = (_id, res) => {
-  User.findById(_id)
+const resetHWID = (req, res) => {
+  User.findById(req.params._id)
     .then(user => {
       if (!user) return res.status(404).json({ message: 'Oops! User not found' })
       if (user.status !== 'active') return res.status(400).json({ message: 'User is banned' })
       if (!user.hardwareID) return res.status(400).json({ message: 'HardwareID not set' })
 
       return user.set({ hardwareID: null }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `HardwareID for ${user.username} has been successfully reset` }) : res.status(500))
+    }).then(user => {
+      if (user) (req.flash('message', `HardwareID for ${user.username} has been successfully reset`) && res.redirect('/dashboard/users'))
+      else res.status(500)
+    })
 }
 const ban = (_id, res) => {
   User.findById(_id)

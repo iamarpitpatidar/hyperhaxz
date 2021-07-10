@@ -14,8 +14,12 @@ const schema = new Schema({
 })
 
 router.get('/', query(schema), index(), (req, res) => {
+  const info = req.flash('message')
   res.render('dashboard/users', {
     title: 'Users',
+    metaData: {
+      message: info.length ? info : null
+    },
     plugins: {
       search: 'search Users...',
       query: parseQuery(req.originalUrl),
@@ -40,7 +44,6 @@ router.get('/', query(schema), index(), (req, res) => {
         active: getActivePage(req.originalUrl)
       }
     },
-    message: req.flash('message'),
     csrfToken: req.csrfToken()
   })
 })
