@@ -4,6 +4,7 @@ import File from '../models/file'
 import { sellix } from '../helper'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
+  if (cursor.sort.createdAt === -1) cursor.sort = { status: 1, createdAt: -1 }
   Product.countDocuments(query)
     .then(count => Product.find(query, select, cursor)
       .then(products => products.map(each => each.view(false)))
