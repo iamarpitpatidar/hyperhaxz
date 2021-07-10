@@ -6,31 +6,34 @@ function purge () {
 function product () {
   return {
     data: {
-      _id: null,
-      name: null,
-      price: null,
-      file: null,
-      isSeller: false,
-      length: 0,
-      version: 0,
-      status: null,
-      sellixID: null
+      action: null,
+      product: {
+        _id: null,
+        name: null,
+        file: null,
+        isSeller: false,
+        version: 0,
+        status: null,
+        sellixID: null
+      }
     },
     edit: function (_id) {
+      this.data.action = 'Edit Product'
       const dataset = document.getElementById(_id).dataset
       const model = JSON.parse(dataset.modal)
       const filenames = JSON.parse(document.getElementById('files').innerHTML)
 
       for (const prop in model) {
-        this.data[prop] = model[prop]
+        this.data.product[prop] = model[prop]
       }
       let options = ''
       filenames.forEach(each => {
         options += `<option value="${each._id}">${each.name}</option>`
       })
-      document.getElementById('filename').insertAdjacentHTML('afterbegin', options)
-      document.getElementById('isSeller').value = this.data.isSeller
-      document.getElementById('status').value = this.data.status
+      document.getElementById('filename').innerHTML = options
+      document.getElementById('filename').value = this.data.product.file
+      document.getElementById('isSeller').value = this.data.product.isSeller
+      document.getElementById('status').value = this.data.product.status
       document.getElementById('modal').classList.remove('hidden')
     },
     close () {

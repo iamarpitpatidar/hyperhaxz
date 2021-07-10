@@ -7,35 +7,26 @@
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-400">Edit Product</h3>
+                            <h3 class="text-lg leading-6 font-medium text-gray-400" x-text="data.action"></h3>
                             <div class="mt-2">
                                 <div class="mb-4 grid grid-cols-2 gap-2">
                                     <input name="t" class="hidden" type="text" value="<%= csrfToken %>">
-                                    <input name="_id" class="hidden" type="text" :value="data._id">
-                                    <label>
-                                        <div class="text-left text-gray-500">Name</div>
-                                        <input
-                                                x-model.trim="data.name"
-                                                type="text"
-                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
-                                                disabled>
-                                    </label>
-                                    <label>
-                                        <div class="text-left text-gray-500">Price</div>
-                                        <input
-                                                x-model.number="data.price"
-                                                type="number"
-                                                min="0"
-                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
-                                                disabled>
-                                    </label>
+                                    <input name="_id" class="hidden" type="text" :value="data.product._id">
                                     <label>
                                         <div class="text-left text-gray-500">sellixID</div>
                                         <input
-                                                x-model.trim="data.sellixID"
+                                                x-model.trim="data.product.sellixID"
                                                 type="text"
                                                 class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
                                                 disabled>
+                                    </label>
+                                    <label>
+                                        <div class="text-left text-gray-500">Name</div>
+                                        <input
+                                                x-model.trim="data.product.name"
+                                                name="name"
+                                                type="text"
+                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
                                     </label>
                                     <label>
                                         <div class="text-left text-gray-500">Seller</div>
@@ -57,18 +48,9 @@
                                         </select>
                                     </label>
                                     <label>
-                                        <div class="text-left text-gray-500">Length</div>
-                                        <input
-                                                x-model.number="data.length"
-                                                name="length"
-                                                type="number"
-                                                min="1"
-                                                class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">
-                                    </label>
-                                    <label>
                                         <div class="text-left text-gray-500">Version</div>
                                         <input
-                                                x-model.number="data.version"
+                                                x-model.number="data.product.version"
                                                 name="version"
                                                 type="number"
                                                 min="0"
