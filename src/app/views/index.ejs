@@ -1,6 +1,7 @@
 <% layout('partials/layout') -%>
+<% script('/public/scripts/shop.js') -%>
 
-<div class="flex flex-col mt-4">
+<div class="flex flex-col mt-4" x-data="shop()">
   <div class="max-w-xl sm:mx-auto lg:max-w-2xl my-6">
     <div class="max-w-xl mb-5 mx-auto text-center lg:max-w-2xl">
       <span class="text-gray-600 text-3xl md:text-4xl lg:text-5xl">
@@ -17,12 +18,12 @@
       <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch mt-12">
       <% products.forEach(each => { %>
           <div class="h-full border-2 border-blue-500 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg">
-              <a href="#">
+              <div data-modal="<%= JSON.stringify(each.sellix) %>" id="<%= each._id %>" @click="open('<%= each._id %>')">
                 <img alt="<%= each.name %> image" class="w-full rounded-md" src="https://media.discordapp.net/attachments/835610803985055824/863680761906855946/unknown.png?width=333&height=417">
                 <div class="py-4">
                   <div class="tracking-widest font-medium mb-4 text-gray-400 text-center text-xl capitalize"><%= each.name %></div>
                 </div>
-              </a>
+              </div>
           </div>
       <% }) %>
       </div>
@@ -30,4 +31,5 @@
       <div class="text-lg text-gray-500 text-center"><%= plugins.query.params.q ? 'No such product' : 'No products found' %> in the shop.</div>
     <% } %>
   </div>
+  <%- includepartials/modal %>
 </div>
