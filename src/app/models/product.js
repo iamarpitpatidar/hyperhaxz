@@ -12,7 +12,12 @@ const productSchema = new Schema({
     type: [{
       _id: { type: String, required: true },
       price: { type: Int32, required: true },
-      length: { type: Number, required: true }
+      length: { type: Number, required: true },
+      gateways: {
+        type: [String],
+        enum: ['FREE', 'PAYPAL', 'BITCOIN', 'ETHEREUM', 'LITECOIN', 'PERFECT_MONEY', 'BITCOIN_CASH', 'SKRILL', 'STRIPE', 'CASH_APP'],
+        default: ['BITCOIN', 'CASH_APP']
+      }
     }]
   },
   file: {
@@ -22,11 +27,6 @@ const productSchema = new Schema({
   isSeller: {
     type: Boolean,
     required: true
-  },
-  gateways: {
-    type: [String],
-    enum: ['FREE', 'PAYPAL', 'BITCOIN', 'ETHEREUM', 'LITECOIN', 'PERFECT_MONEY', 'BITCOIN_CASH', 'SKRILL', 'STRIPE', 'CASH_APP'],
-    default: ['BITCOIN', 'CASH_APP']
   },
   version: {
     type: Number,
@@ -42,7 +42,7 @@ const productSchema = new Schema({
 productSchema.methods = {
   view (full) {
     const view = {}
-    let fields = ['_id', 'name', 'price', 'file', 'isSeller', 'length', 'version', 'status', 'sellixID']
+    let fields = ['_id', 'name', 'file', 'isSeller', 'version', 'status', 'sellix']
 
     if (full) fields = ['username', 'status']
 
@@ -51,7 +51,7 @@ productSchema.methods = {
   }
 }
 
-productSchema.plugin(mongooseKeywords, { paths: ['name', 'gateways', 'status'] })
+productSchema.plugin(mongooseKeywords, { paths: ['name', 'status'] })
 const model = mongoose.model('Product', productSchema)
 
 export const schema = model.schema

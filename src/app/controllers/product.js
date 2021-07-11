@@ -22,23 +22,22 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
       .then(next))
 }
 export const purge = (req, res) => {
-  Product.deleteMany({})
-    .then(() => sellix.getAllProducts())
-    .then(products => {
-      products.forEach(async product => {
-        await Product.create({
-          name: product.title,
-          description: product.description,
-          image: product.image ? product.image : 'default',
-          price: product.price,
-          stock: product.stock !== -1 ? product.stock : 99999,
-          sellixID: product.uniqid,
-          length: Number(product.custom_fields.filter(each => each.name === 'length').default) || 1,
-          isSeller: product.custom_fields.filter(each => each.name === 'seller')[0].default === 'true',
-          gateways: product.gateways.filter(each => each).length ? product.gateways : ['FREE']
-        })
-      })
-      req.flash('message', 'Products cache have been purged')
+  sellix.getAllSortedProducts()
+    .then(async products => {
+      let errors = 0
+
+      for (const each in products) {
+        try {
+          Product.findById(each)
+            .then(product => {
+              return product.set({ sellix: products[each] }).save()
+            }).then(product => product ? (`Product updated: ${product._id}`) : console.log('Error while updating product'))
+        } catch (e) {
+          console.error(`Error while updating product: ${e.code}`)
+          errors++
+        }
+      }
+      req.flash('message', `Products cache have been purged with ${errors} errors`)
       res.redirect('/dashboard/products')
     })
 }

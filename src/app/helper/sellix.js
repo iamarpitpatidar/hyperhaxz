@@ -1,4 +1,5 @@
 import axios from 'axios'
+import mongoose from 'mongoose'
 import { sellixApiKey } from '../../config'
 
 class Client {
@@ -19,6 +20,34 @@ class Client {
 
   getAllProducts () {
     return this.get('products', 'get', body => body.data.products)
+  }
+
+  getAllSortedProducts () {
+    const sort = body => {
+      const filtered = {}
+      body.data.products.forEach(product => {
+        if (!this.validateCustomFields(product.custom_fields)) return
+        const length = product.custom_fields.filter(each => each.name === 'length')[0].default
+        const productId = product.custom_fields.filter(each => each.name === 'productId')[0].default
+        const productData = {
+          _id: product.id,
+          price: product.price,
+          length: length,
+          gateways: product.gateways.filter(each => each).length ? product.gateways : ['FREE']
+        }
+        if (filtered[productId]) filtered[productId].push(productData)
+        else filtered[productId] = [productData]
+      })
+      return filtered
+    }
+    return this.get('products', 'get', sort)
+  }
+
+  validateCustomFields (fields) {
+    const length = fields.filter(each => each.name === 'length')[0]
+    const productId = fields.filter(each => each.name === 'productId')[0]
+
+    return length && !!length.default && productId && !!productId.default && mongoose.Types.ObjectId.isValid(productId.default)
   }
 
   get (route, type, callback) {

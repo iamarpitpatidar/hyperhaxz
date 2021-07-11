@@ -14,7 +14,7 @@ function product () {
         isSeller: false,
         version: 0,
         status: null,
-        sellixID: null
+        sellix: []
       }
     },
     init () {

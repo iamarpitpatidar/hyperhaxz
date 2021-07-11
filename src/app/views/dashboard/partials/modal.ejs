@@ -12,14 +12,6 @@
                                 <div class="mb-4 grid grid-cols-2 gap-2">
                                     <input name="t" class="hidden" type="text" value="<%= csrfToken %>">
                                     <input name="_id" class="hidden" type="text" :value="data.product._id">
-                                    <label x-show="data.action === 'Edit Product'">
-                                        <div class="text-left text-gray-500">sellixID</div>
-                                        <input
-                                                x-model.trim="data.product.sellixID"
-                                                type="text"
-                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
-                                                disabled>
-                                    </label>
                                     <label>
                                         <div class="text-left text-gray-500">Name</div>
                                         <input
@@ -28,6 +20,14 @@
                                             type="text"
                                             class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
                                             required>
+                                    </label>
+                                    <label x-show="data.action === 'Edit Product'">
+                                        <div class="text-left text-gray-500">Length</div>
+                                        <input
+                                                x-model.trim="data.product.sellix.map(each => each.length)"
+                                                type="text"
+                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
+                                                disabled>
                                     </label>
                                     <label x-show="data.action === 'Add Product'">
                                         <div class="text-left text-gray-500">Price</div>
@@ -39,15 +39,15 @@
                                                 disabled>
                                     </label>
                                     <label>
+                                        <div class="text-left text-gray-500">Filename</div>
+                                        <select name="file" id="filename" class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm" required></select>
+                                    </label>
+                                    <label>
                                         <div class="text-left text-gray-500">Seller</div>
                                         <select name="isSeller" id="isSeller" class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm" required>
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
                                         </select>
-                                    </label>
-                                    <label>
-                                        <div class="text-left text-gray-500">Filename</div>
-                                        <select name="file" id="filename" class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm" required></select>
                                     </label>
                                     <label>
                                         <div class="text-left text-gray-500">Status</div>
