@@ -16,13 +16,12 @@
     <% if (!!count) { %>
       <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch mt-6">
       <% products.forEach(each => { %>
-          <div class="h-full border-2 border-blue-500 px-6 py-8 rounded-2xl">
+          <div class="h-full border-2 border-blue-500 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg">
               <a href="#">
-                <img class="transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg rounded-md" src="https://media.discordapp.net/attachments/835610803985055824/863680761906855946/unknown.png?width=333&height=417">
-                <div class="pt-3 flex items-center justify-between">
-                  <h2 class="tracking-widest font-medium text-blue-500 mb-4 text-center"><%= each.name %></h2>
+                <img alt="<%= each.name %> image" class="rounded-md" src="https://media.discordapp.net/attachments/835610803985055824/863680761906855946/unknown.png?width=333&height=417">
+                <div class="py-4">
+                  <div class="tracking-widest font-medium mb-4 text-gray-400 text-center text-xl capitalize"><%= each.name %></div>
                 </div>
-                <p class="pt-1 text-gray-900">£9.99</p>
               </a>
           </div>
       <% }) %>
