@@ -13,6 +13,7 @@ function shop () {
         options += `<option value="${each.length}">${each.length}</option>`
       })
       document.getElementById('length').innerHTML = options
+      document.getElementById('payment_gateways').innerHTML = '' // clear gateways before opening a new product
       document.getElementById('modal').classList.remove('hidden')
     },
     update () {
