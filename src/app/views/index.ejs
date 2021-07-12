@@ -17,7 +17,7 @@
     <% if (!!count) { %>
       <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch mt-12">
       <% products.forEach(each => { %>
-          <div class="h-full border-2 border-blue-500 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg">
+          <div class="h-full border-2 border-blue-500 rounded-md transition transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg cursor-pointer">
               <div data-modal="<%= JSON.stringify(each.sellix) %>" id="<%= each._id %>" @click="open('<%= each._id %>')">
                 <img alt="<%= each.name %> image" class="w-full rounded-md" src="https://media.discordapp.net/attachments/835610803985055824/863680761906855946/unknown.png?width=333&height=417">
                 <div class="py-4">
