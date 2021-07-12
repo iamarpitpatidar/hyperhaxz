@@ -18,8 +18,12 @@ class Client {
       })
   }
 
+  createOrder (object) {
+    this.query({ route: 'payments', type: 'post', data: object }, 'post')
+  }
+
   getAllProducts () {
-    return this.get('products', 'get', body => body.data.products)
+    return this.query({ route: 'products', type: 'get' }, body => body.data.products)
   }
 
   getAllSortedProducts () {
@@ -40,7 +44,7 @@ class Client {
       })
       return filtered
     }
-    return this.get('products', 'get', sort)
+    return this.query({ route: 'products', type: 'get' }, sort)
   }
 
   validateCustomFields (fields) {
@@ -50,7 +54,7 @@ class Client {
     return length && !!length.default && productId && !!productId.default && mongoose.Types.ObjectId.isValid(productId.default)
   }
 
-  get (route, type, callback) {
+  query ({ route, type, data }, callback) {
     return new Promise((resolve, reject) => {
       axios[type](`https://dev.sellix.io/v1/${route}`, {
         headers: this.headers

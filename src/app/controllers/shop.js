@@ -1,4 +1,5 @@
 import Product from '../models/product'
+import { sellix } from '../helper'
 
 export const index = (seller) => ({ querymen: { query, select, cursor } }, res, next) => {
   query.isSeller = seller
@@ -11,4 +12,8 @@ export const index = (seller) => ({ querymen: { query, select, cursor } }, res, 
         res.locals.cursor = cursor
       })
       .then(next))
+}
+export const order = (req, res) => {
+  // sellix.createOrder()
+  console.log(req.body)
 }
