@@ -19,7 +19,10 @@ class Client {
   }
 
   createOrder (object) {
-    this.query({ route: 'payments', type: 'post', data: object }, 'post')
+    return this.query({ route: 'payments', type: 'post', data: object }, 'post', body => {
+      console.log(body)
+      return body
+    })
   }
 
   getAllProducts () {

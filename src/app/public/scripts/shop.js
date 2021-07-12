@@ -67,7 +67,7 @@ function shop () {
       }
       currentProduct.gateways.forEach(each => {
         gateways += `<label class="cursor-pointer">
-                      <input type="radio" class="hidden" name="gateway" value="${each}">
+                      <input type="radio" class="hidden" name="gateway" value="${each}" required>
                       <div class="label w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm">${gatewayData[each].name}</div>
                   </label>`
       })

@@ -1,5 +1,5 @@
 import Product from '../models/product'
-import { sellix } from '../helper'
+import { sellix, isValidEmail } from '../helper'
 
 export const index = (seller) => ({ querymen: { query, select, cursor } }, res, next) => {
   query.isSeller = seller
@@ -14,6 +14,26 @@ export const index = (seller) => ({ querymen: { query, select, cursor } }, res, 
       .then(next))
 }
 export const order = (req, res) => {
-  // sellix.createOrder()
-  console.log(req.body)
+  if (!isValidEmail(req.body.email)) return req.flash('message', 'Invalid email') && res.redirect('/')
+
+  Product.findById(req.body._id)
+    .then(product => {
+      if (product) {
+        if (product.sellix.filter(each => each._id === req.body.variant).length) {
+          const orderObject = {
+            product_id: req.body.variant,
+            quantity: req.body.quantity,
+            gateway: req.body.gateway,
+            email: req.body.email,
+            white_label: true
+          }
+
+          // creating a sellix order
+          sellix.createOrder(orderObject)
+            .then(res => {
+              console.log(res)
+            })
+        } else return req.flash('message', 'Invalid product length') && res.redirect('/')
+      } else return req.flash('message', 'Invalid product') && res.redirect('/')
+    })
 }

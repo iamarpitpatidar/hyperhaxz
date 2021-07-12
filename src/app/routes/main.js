@@ -9,8 +9,12 @@ router.get('/',
   query(),
   index(false),
   (req, res) => {
+    const info = req.flash('message')
     res.render('index', {
       title: 'Home',
+      metaData: {
+        message: info.length ? info : null
+      },
       plugins: {
         search: 'Search Products...',
         query: parseQuery(req.originalUrl),
