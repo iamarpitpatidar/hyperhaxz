@@ -68,10 +68,15 @@ export const add = (req, res) => {
   if (fileExists) {
     Product.create({
       name: req.body.name,
+      role: req.body.role,
       file: req.body.file,
       isSeller: req.body.isSeller,
       version: req.body.version,
       status: req.body.status
     }).then(product => product ? (req.flash('message', 'Product has been created') && res.redirect('/dashboard/products')) : res.sendStatus(500))
+      .catch(error => {
+        if (error.name === 'MongoError' && error.code === 11000) return req.flash('message', `Product with role ${req.body.role} already exists`) && res.redirect('/dashboard/products')
+        else res.sendStatus(500)
+      })
   }
 }

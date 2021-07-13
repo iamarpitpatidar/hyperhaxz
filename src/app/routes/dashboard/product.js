@@ -53,6 +53,7 @@ router.post('/edit',
 router.post('/new',
   body({
     name: { type: String, required: true },
+    role: { type: String, required: true },
     file: { type: String, required: true },
     isSeller: { type: Boolean, required: true },
     status: { type: String, enum: ['live', 'maintenance', 'offline'], required: true },

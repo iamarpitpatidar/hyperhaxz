@@ -8,6 +8,12 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
+  role: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
+  },
   sellix: {
     type: [{
       _id: { type: String, required: true },
@@ -51,7 +57,7 @@ productSchema.methods = {
   }
 }
 
-productSchema.plugin(mongooseKeywords, { paths: ['name', 'status'] })
+productSchema.plugin(mongooseKeywords, { paths: ['name', 'role', 'status'] })
 const model = mongoose.model('Product', productSchema)
 
 export const schema = model.schema

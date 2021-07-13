@@ -21,19 +21,18 @@
                                             class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
                                             required>
                                     </label>
+                                    <label x-show="data.action === 'Add Product'">
+                                        <div class="text-left text-gray-500">Role <span class="text-sm">(must be unique)</span></div>
+                                        <input
+                                                name="role"
+                                                type="text"
+                                                class="w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
+                                                required>
+                                    </label>
                                     <label x-show="data.action === 'Edit Product'">
                                         <div class="text-left text-gray-500">Length</div>
                                         <input
                                                 x-model.trim="data.product.sellix.map(each => each.length)"
-                                                type="text"
-                                                class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
-                                                disabled>
-                                    </label>
-                                    <label x-show="data.action === 'Add Product'">
-                                        <div class="text-left text-gray-500">Price</div>
-                                        <input
-                                                value="0.1"
-                                                name="price"
                                                 type="text"
                                                 class="disabled w-full border-blueGray-700 bg-blueGray-700 appearance-none rounded-md px-3 py-2 border-2 text-gray-300 focus:outline-none sm:text-sm"
                                                 disabled>
