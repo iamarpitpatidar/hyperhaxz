@@ -5,64 +5,55 @@ import { parseQuery } from '../helper'
 import { success, error, notFound } from '../services/response'
 import logger from '../../core/logger'
 
-export const action = (req, res) => {
-  if (!req.body.type || req.params._id.length !== 24 || !['resetHWID', 'ban', 'unban', 'seller', 'role'].includes(req.body.type)) return res.sendStatus(422)
-  switch (req.body.type) {
-    case 'resetHWID':
-      resetHWID(req, res)
-      break
+export const resetHWID = (req, res) => {
+  if (req.params._id.length !== 24) return res.sendStatus(422)
+  const route = req.query.type === 'seller' ? 'sellers' : 'users'
 
-    case 'ban':
-      ban(req.params._id, res)
-      break
-
-    case 'unban':
-      unban(req.params._id, res)
-      break
-
-    case 'seller':
-      seller(req.params._id, req.body, res)
-      break
-
-    case 'role':
-      role(req.params._id, req.body, res)
-      break
-  }
-}
-const resetHWID = (req, res) => {
   User.findById(req.params._id)
     .then(user => {
-      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
-      if (user.status !== 'active') return res.status(400).json({ message: 'User is banned' })
-      if (!user.hardwareID) return res.status(400).json({ message: 'HardwareID not set' })
+      if (!user) return req.flash('message', 'Oops! User not found') && res.redirect(`/dashboard/${route}`)
+      if (user.status !== 'active') return req.flash('message', 'Oops! User is banned') && res.redirect(`/dashboard/${route}`)
+      if (!user.hardwareID) return req.flash('message', 'HardwareID not set') && res.redirect(`/dashboard/${route}`)
 
       return user.set({ hardwareID: null }).save()
     }).then(user => {
-      if (user) (req.flash('message', `HardwareID for ${user.username} has been successfully reset`) && res.redirect('/dashboard/users'))
-      else res.sendStatus(500)
+      if (user) req.flash('message', `HardwareID for ${user.username} has been successfully reset`) && res.redirect(`/dashboard/${route}`)
+      else req.flash('message', 'Internal Server Error') && res.redirect(`/dashboard/${route}`)
     })
 }
-const ban = (_id, res) => {
-  User.findById(_id)
+export const ban = (req, res) => {
+  if (req.params._id.length !== 24) return res.sendStatus(422)
+  const route = req.query.type === 'seller' ? 'sellers' : 'users'
+
+  User.findById(req.params._id)
     .then(user => {
-      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
-      if (user.status === 'banned') return res.status(400).json({ message: 'User is already banned' })
+      if (!user) return req.flash('message', 'Oops! User not found') && res.redirect(`/dashboard/${route}`)
+      if (user.status === 'banned') return req.flash('message', 'User is already banned') && res.redirect(`/dashboard/${route}`)
 
       return user.set({ status: 'banned' }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been banned!` }) : res.sendStatus(500))
+    }).then(user => {
+      if (user) req.flash('message', `${user.username} has been banned!`) && res.redirect(`/dashboard/${route}`)
+      else req.flash('message', 'Internal Server Error') && res.redirect(`/dashboard/${route}`)
+    })
 }
-const unban = (_id, res) => {
-  User.findById(_id)
+export const unban = (req, res) => {
+  if (req.params._id.length !== 24) return res.sendStatus(422)
+  const route = req.query.type === 'seller' ? 'sellers' : 'users'
+
+  User.findById(req.params._id)
     .then(user => {
-      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
-      if (user.status === 'active') return res.status(400).json({ message: 'User is already active' })
+      if (!user) return req.flash('message', 'Oops! User not found') && res.redirect(`/dashboard/${route}`)
+      if (user.status === 'active') return req.flash('message', 'User is already active') && res.redirect(`/dashboard/${route}`)
 
       return user.set({ status: 'active' }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} has been unbanned!` }) : res.sendStatus(500))
+    }).then(user => {
+      if (user) req.flash('message', `${user.username} has been unbanned!`) && res.redirect(`/dashboard/${route}`)
+      else req.flash('message', 'Internal Server Error') && res.redirect(`/dashboard/${route}`)
+    })
 }
-const seller = (_id, body, res) => {
-  if (!body.data || !['remove', 'approve'].includes(body.data)) return res.status(400).json({ message: 'Bad Request' })
-
+export const seller = (req, res) => {
+  if (req.params._id.length !== 24) return res.sendStatus(422)
+  const route = req.query.type === 'seller' ? 'sellers' : 'users'
   const props = {
     approve: {
       value: true,
@@ -74,26 +65,32 @@ const seller = (_id, body, res) => {
     }
   }
 
-  User.findById(_id)
+  User.findById(req.params._id)
     .then(user => {
-      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
-      if (props[body.data].value === user.isSeller) return res.status(422).json({ message: props[body.data].message(user.username, false) })
+      if (!user) return req.flash('message', 'Oops! User not found') && res.redirect(`/dashboard/${route}`)
+      if (props[req.query.data].value === user.isSeller) return req.flash('message', props[req.query.data].message(user.username, false))
 
-      return user.set({ isSeller: props[body.data].value }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: props[body.data].message(user.username, user) }) : res.sendStatus(500))
+      return user.set({ isSeller: props[req.query.data].value }).save()
+    }).then(user => {
+      if (user) req.flash('message', props[req.query.data].message(user.username, user)) && res.redirect(`/dashboard/${route}`)
+      else req.flash('message', 'Internal Server Error') && res.redirect(`/dashboard/${route}`)
+    })
 }
-const role = (_id, body, res) => {
-  if (!body.data || !['user', 'support', 'admin'].includes(body.data)) return res.status(400).json({ message: 'Bad Request' })
+export const role = (req, res) => {
+  if (req.params._id.length !== 24) return res.sendStatus(422)
+  const route = req.query.type === 'seller' ? 'sellers' : 'users'
 
-  User.findById(_id)
+  User.findById(req.params._id)
     .then(user => {
-      if (!user) return res.status(404).json({ message: 'Oops! User not found' })
-      if (user.role === body.data) return res.status(400).json({ message: `${user.username} is already a ${user.role}` })
+      if (!user) return req.flash('message', 'Oops! User not found') && res.redirect(`/dashboard/${route}`)
+      if (user.role === req.query.new) return req.flash('message', `${user.username} is already a ${user.role}`) && res.redirect(`/dashboard/${route}`)
 
-      return user.set({ role: body.data }).save()
-    }).then(user => user ? res.json({ status: 'ok', message: `${user.username} role has been updated to ${user.role}` }) : res.sendStatus(500))
+      return user.set({ role: req.query.new }).save()
+    }).then(user => {
+      if (user) req.flash(`${user.username} role has been updated to ${user.role}`) && res.redirect(`/dashboard/${route}`)
+      else req.flash('message', 'Internal Server Error') && res.redirect(`/dashboard/${route}`)
+    })
 }
-
 export const create = ({ bodymen: { body } }, res) => {
   Invite.findOne({ code: body.activationKey.toLowerCase() }).then(key => {
     if (!key) { error(res, 'Code is invalid', 422); return }

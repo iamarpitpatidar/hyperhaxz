@@ -14,8 +14,12 @@ const schema = new Schema({
 })
 
 router.get('/', query(schema), index(true), (req, res) => {
+  const info = req.flash('message')
   res.render('dashboard/sellers', {
     title: 'Sellers',
+    metaData: {
+      message: info.length ? info : null
+    },
     plugins: {
       search: 'search Sellers...',
       query: parseQuery(req.originalUrl),

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
-import { index, action, purge } from '../../controllers/user'
+import { index, ban, unban, seller, role, resetHWID, purge } from '../../controllers/user'
 import { parseQuery, getActivePage } from '../../helper'
 
 const router = Router()
@@ -62,6 +62,38 @@ router.get('/purge',
   }),
   purge)
 
-router.post('/:_id/action', action)
+router.get('/:_id/ban', ban)
+router.get('/:_id/role',
+  query({
+    new: {
+      type: String,
+      required: true,
+      enum: ['user', 'support', 'admin']
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ['user', 'seller']
+    }
+  }),
+  role)
+
+router.get('/:_id/unban', unban)
+router.get('/:_id/seller',
+  query({
+    data: {
+      type: String,
+      required: true,
+      enum: ['remove', 'approve']
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ['user', 'seller']
+    }
+  }),
+  seller)
+
+router.get('/:_id/resetHWID', resetHWID)
 
 export default router
