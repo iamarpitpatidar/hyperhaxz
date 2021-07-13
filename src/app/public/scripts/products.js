@@ -27,9 +27,6 @@ function product () {
     },
     add () {
       this.data.action = 'Add Product'
-      // setting values to null
-      Object.keys(this.data.product).forEach(each => { this.data.product[each] = null })
-      this.data.product.sellixID = 'Random ID'
       document.getElementById('product_modal').setAttribute('action', 'products/new')
       document.getElementById('filename').value = this.data.product.file
       document.getElementById('isSeller').value = this.data.product.isSeller
@@ -37,8 +34,6 @@ function product () {
     },
     edit: function (_id) {
       this.data.action = 'Edit Product'
-      // setting values to null
-      Object.keys(this.data.product).forEach(each => { this.data.product[each] = null })
       const dataset = document.getElementById(_id).dataset
       const model = JSON.parse(dataset.modal)
 
@@ -52,6 +47,8 @@ function product () {
       document.getElementById('modal').classList.remove('hidden')
     },
     close () {
+      // setting default values
+      this.data.product = { _id: null, name: null, file: null, isSeller: false, version: 0, status: null, sellix: [] }
       document.getElementById('modal').classList.add('hidden')
     }
   }
