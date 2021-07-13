@@ -48,7 +48,7 @@ const productSchema = new Schema({
 productSchema.methods = {
   view (full) {
     const view = {}
-    let fields = ['_id', 'name', 'file', 'isSeller', 'version', 'status', 'sellix']
+    let fields = ['_id', 'name', 'role', 'file', 'isSeller', 'version', 'status', 'sellix']
 
     if (full) fields = ['username', 'status']
 

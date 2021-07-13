@@ -51,6 +51,7 @@ export const edit = async (req, res) => {
         product.markModified('isSeller')
         const update = {
           name: req.body.name,
+          role: req.body.role,
           isSeller: req.body.isSeller,
           file: req.body.file,
           status: req.body.status,
@@ -58,7 +59,10 @@ export const edit = async (req, res) => {
         }
         return product.set(update).save()
       })
-      .then(product => product ? (req.flash('message', 'Product has been edited') && res.redirect('/dashboard/products')) : res.status(500))
+      .then(product => {
+        req.flash('message', product ? 'Product has been edited' : 'Internal Server Error')
+        res.redirect('/dashboard/products')
+      })
   } else res.sendStatus(400)
 }
 export const add = (req, res) => {
@@ -73,14 +77,13 @@ export const add = (req, res) => {
       isSeller: req.body.isSeller,
       version: req.body.version,
       status: req.body.status
-    }).then(product => product ? (req.flash('message', 'Product has been created') && res.redirect('/dashboard/products')) : res.sendStatus(500))
+    }).then(product => product ? req.flash('message', 'Product has been created') && res.redirect('/dashboard/products') : res.sendStatus(500))
       .catch(error => {
         if (error.name === 'MongoError' && error.code === 11000) return req.flash('message', `Product with role ${req.body.role} already exists`) && res.redirect('/dashboard/products')
-        else res.sendStatus(500)
+        else req.flash('message', 'Internal Server Error') && res.redirect('/dashboard/products')
       })
   }
 }
-
 export const destroy = (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params._id)) return res.sendStatus(400)
 
