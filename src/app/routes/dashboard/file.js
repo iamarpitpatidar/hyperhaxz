@@ -9,8 +9,8 @@ const upload = multer({
   storage: multer.diskStorage({
     destination: 'uploads/',
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, `${uniqueSuffix}-${file.originalname}`)
+      const uniquePrefix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, `${uniquePrefix}-${file.originalname}`)
     }
   })
 })

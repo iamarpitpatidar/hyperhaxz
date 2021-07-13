@@ -2,22 +2,6 @@ import { unlinkSync, existsSync } from 'fs'
 import mongoose from 'mongoose'
 import File from '../models/file'
 import User from '../models/user'
-import { error } from '../services/response'
-
-export const purge = (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.query.id)) return res.sendStatus(400)
-
-  File.findByIdAndDelete(req.query.id, (error, file) => {
-    if (error) res.sendStatus(500)
-
-    const filename = `uploads/${file.filename}`
-    if (existsSync(filename)) unlinkSync(filename)
-    return existsSync(filename)
-  }).then(file => {
-    req.flash('message', file ? 'Something\'s wrong. File not deleted' : 'File has been successfully deleted')
-    res.redirect('/dashboard/files')
-  })
-}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   const sort = {
@@ -49,19 +33,33 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
       })
       .then(next))
 }
-export const save = ({ body, file, user }, res) => {
-  if (file && body && Object.entries(file) && Object.entries(body)) {
-    if (!file.filename || !file.originalname || !file.size || !body.name) return res.sendStatus(400)
+export const purge = (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.query.id)) return res.sendStatus(400)
+
+  File.findByIdAndDelete(req.query.id, (error, file) => {
+    if (error) res.sendStatus(500)
+
+    const filename = `uploads/${file.filename}`
+    if (existsSync(filename)) unlinkSync(filename)
+    return existsSync(filename)
+  }).then(file => {
+    req.flash('message', file ? 'Something\'s wrong. File not deleted' : 'File has been successfully deleted')
+    res.redirect('/dashboard/files')
+  })
+}
+export const save = (req, res) => {
+  if (req.file && req.body && Object.entries(req.file) && Object.entries(req.body)) {
+    if (!req.file.filename || !req.file.originalname || !req.file.size || !req.body.name) return res.sendStatus(400)
 
     File.create({
-      name: body.name,
-      filename: file.filename,
-      size: file.size,
-      createdBy: user._id
-    }).then(file ? res.redirect('/dashboard/files') : res.sendStatus(500))
+      name: req.body.name,
+      filename: req.file.filename,
+      size: req.file.size,
+      createdBy: req.user._id
+    }).then(file => file ? req.flash('message', 'File uploaded!') && res.redirect('/dashboard/files') : res.sendStatus(500))
       .catch(err => {
-        if (err.name === 'MongoError' && err.code === 11000) error(res, 'username already registered', 409)
-        else error(res, 500)
+        if (err.name === 'MongoError' && err.code === 11000) return req.flash('message', 'File already exists') && res.redirect('/dashboard/files')
+        else req.flash('message', 'Internal server Error') && res.redirect('/dashboard/files')
       })
   } else res.sendStatus(400)
 }

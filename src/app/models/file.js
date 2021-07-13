@@ -8,7 +8,9 @@ const fileSchema = new Schema({
   },
   filename: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    index: true
   },
   size: {
     type: Number,
