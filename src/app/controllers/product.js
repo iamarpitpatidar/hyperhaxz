@@ -80,3 +80,16 @@ export const add = (req, res) => {
       })
   }
 }
+
+export const destroy = (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params._id)) return res.sendStatus(400)
+
+  Product.findOneAndRemove({ _id: req.params._id })
+    .exec(function (err, product) {
+      if (err) req.flash('message', 'Cannot remove Product')
+      else if (!product) req.flash('message', 'Product not found')
+      else req.flash('message', 'Product has been successfully deleted!')
+
+      res.redirect('/dashboard/products')
+    })
+}

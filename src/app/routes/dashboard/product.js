@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as body } from 'bodymen'
 import { middleware as query } from 'querymen'
 import { getActivePage, parseQuery } from '../../helper'
-import { index, purge, edit, add } from '../../controllers/product'
+import { index, purge, edit, add, destroy } from '../../controllers/product'
 
 const router = Router()
 
@@ -35,12 +35,10 @@ router.get('/', query(), index, (req, res) => {
   })
 })
 
+router.get('/:_id/delete', destroy)
+
 router.get('/purge', purge)
 router.post('/edit',
-  (req, res, next) => {
-    console.log('foo')
-    next()
-  },
   body({
     _id: { type: String, required: true },
     name: { type: String, required: true },
